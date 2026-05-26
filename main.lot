@@ -1,0 +1,34 @@
+\babel@toc {french}{}\relax 
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {1.1}{\ignorespaces Comparaison multicritère des solutions existantes et de SmartPlay}}{8}{table.caption.23}%
+\contentsline {table}{\numberline {1.2}{\ignorespaces Planification des sprints du projet SmartPlay}}{11}{table.caption.25}%
+\contentsline {table}{\numberline {1.3}{\ignorespaces Fiche technique de SmartPlay}}{14}{table.caption.27}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {2.1}{\ignorespaces Composants principaux de SmartPlayAI et technologies associées}}{17}{table.caption.30}%
+\contentsline {table}{\numberline {2.2}{\ignorespaces Huit lignes du terrain reconstruites à partir des douze points de référence.}}{21}{table.caption.37}%
+\contentsline {table}{\numberline {2.3}{\ignorespaces Paramètres d'inférence de YOLOv8-Pose pour la localisation des points de référence du terrain.}}{21}{table.caption.41}%
+\contentsline {table}{\numberline {2.4}{\ignorespaces Comparaison entre le Mode statique et le Mode dynamique}}{22}{table.caption.43}%
+\contentsline {table}{\numberline {2.5}{\ignorespaces Précision comparative des sources de localisation des points de référence.}}{23}{table.caption.48}%
+\contentsline {table}{\numberline {2.6}{\ignorespaces Comparaison des performances avant et après post-traitement}}{28}{table.caption.60}%
+\contentsline {table}{\numberline {2.7}{\ignorespaces Comparaison des performances des modèles TrackNet}}{29}{table.caption.61}%
+\contentsline {table}{\numberline {2.8}{\ignorespaces Paramètres d'inférence du détecteur YOLO pour la localisation des joueurs}}{31}{table.caption.66}%
+\contentsline {table}{\numberline {2.9}{\ignorespaces Composants principaux de YOLOv8-Pose}}{36}{table.caption.83}%
+\contentsline {table}{\numberline {2.10}{\ignorespaces Applications des points clés dans SmartPlay}}{37}{table.caption.84}%
+\contentsline {table}{\numberline {2.11}{\ignorespaces Dimensions réglementaires et repère de coordonnées du terrain.}}{38}{table.caption.85}%
+\contentsline {table}{\numberline {2.12}{\ignorespaces Colonnes de base du DataFrame brut.}}{39}{table.caption.90}%
+\contentsline {table}{\numberline {2.13}{\ignorespaces Intervalles temporels et niveaux de lissage associés.}}{39}{table.caption.93}%
+\contentsline {table}{\numberline {2.14}{\ignorespaces Plages de vitesse caractéristiques observées en padel.}}{40}{table.caption.97}%
+\contentsline {table}{\numberline {2.15}{\ignorespaces Plages d'accélération caractéristiques observées en padel.}}{41}{table.caption.100}%
+\contentsline {table}{\numberline {2.16}{\ignorespaces Paramètres de configuration du module \texttt {ShotCounter}.}}{42}{table.caption.103}%
+\contentsline {table}{\numberline {2.17}{\ignorespaces Flux entrée $\to $ traitement $\to $ sortie du module \texttt {DataAnalytics}.}}{43}{table.caption.110}%
+\contentsline {table}{\numberline {2.18}{\ignorespaces Canaux de communication entre \texttt {DataAnalytics}, le backend et le frontend.}}{45}{table.caption.114}%
+\contentsline {table}{\numberline {2.19}{\ignorespaces Correspondance donnée $\to $ composant de visualisation côté client.}}{47}{table.caption.116}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {3.1}{\ignorespaces Fonctionnalités primaires de l'interface SmartPlay}}{50}{table.caption.122}%
+\contentsline {table}{\numberline {3.2}{\ignorespaces Fonctionnalités secondaires de l'interface SmartPlay}}{50}{table.caption.123}%
+\contentsline {table}{\numberline {3.3}{\ignorespaces Configuration matérielle utilisée pour le développement de SmartPlay}}{53}{table.caption.126}%
+\contentsline {table}{\numberline {3.4}{\ignorespaces Stack Backend — Couche traitement IA}}{54}{table.caption.127}%
+\contentsline {table}{\numberline {3.5}{\ignorespaces Stack API — Couche communication}}{54}{table.caption.128}%
+\contentsline {table}{\numberline {3.6}{\ignorespaces Stack Frontend — Couche interface utilisateur}}{55}{table.caption.129}%
+\contentsline {table}{\numberline {3.7}{\ignorespaces KPIs globaux du match — Tableau de Bord Tactique}}{59}{table.caption.132}%
+\contentsline {table}{\numberline {3.8}{\ignorespaces Métriques biométriques et tactiques par joueur}}{59}{table.caption.133}%

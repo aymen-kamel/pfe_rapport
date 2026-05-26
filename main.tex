@@ -1,0 +1,201 @@
+% #######################################
+%
+% Author: Montasser AKERMI
+% Date:   2022-05-20 08:09:06
+% Last Modified by: Montasser AKERMI
+% Last Modified time: 2022-08-06 17:20:22
+%
+% (*) THIS IS THE MAIN FILE
+% (*) Pages like title, author's declaration, abstract, etc are located in "misc" directory
+% (*) Chapters are located in "chapters" directory, and included using the "chapters_main.tex" file
+% (*) Figures are located in "figures" directory
+% (*) Add references in references.bib file in BibTeX format
+%
+% #######################################
+
+\documentclass[12pt, a4paper]{report}
+
+% Basic packages (replacing the external `thesis` package to avoid class/package conflict)
+\usepackage{ifthen}
+\usepackage{datetime}
+\usepackage{fontspec} % use XeLaTeX/LuaLaTeX fonts
+\usepackage[french]{babel}
+\usepackage[a4paper,top=2.5cm,bottom=2.5cm,left=2.5cm,right=2.5cm]{geometry}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{tikz}
+\usetikzlibrary{positioning,arrows.meta}
+\usepackage{tabularx}
+% Simple fallback for `synthesebox` environment used in chapters (was in original thesis.sty)
+\newenvironment{synthesebox}[1][]% optional title
+{\begin{center}\begin{minipage}{0.95\textwidth}\vspace{6pt}\hrule\vspace{4pt}\textbf{#1}\par\vspace{4pt}}%
+{\vspace{4pt}\hrule\end{minipage}\end{center}}
+\newcommand{\smartplayai}{SmartPlayAI}
+\usepackage{graphicx}
+\usepackage{float}        % Provides the H float placement option
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{textcomp}
+\usepackage[table]{xcolor}
+\definecolor{headerblue}{RGB}{220,230,245}
+\definecolor{tablehead}{RGB}{220,230,245}
+\definecolor{rowalt}{RGB}{248,248,248}
+\definecolor{smartblue}{RGB}{0, 102, 204}
+\definecolor{smartgray}{RGB}{80, 80, 80}
+\definecolor{tableheadtext}{RGB}{255, 255, 255}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{listings}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\titleformat{\chapter}[block]
+  {\normalfont\Large\bfseries\color{smartblue}}
+  {Chapitre \thechapter}{1em}{}
+
+\titleformat{\section}
+  {\normalfont\large\bfseries\color{smartblue}}
+  {\thesection}{1em}{}
+
+\titleformat{\subsection}
+  {\normalfont\normalsize\bfseries\color{smartgray}}
+  {\thesubsection}{1em}{}
+
+\titleformat{\subsubsection}
+  {\normalfont\normalsize\bfseries\color{smartblue}}
+  {\thesubsubsection}{1em}{}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\nouppercase{\leftmark}}
+\fancyhead[R]{\small \textbf{SmartPlay}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\newcommand{\figureURL}[4]{%
+  \begin{figure}[H]
+    \centering
+    \fbox{\parbox{#4\textwidth}{\centering\vspace{2cm}
+      \textcolor{gray}{\textbf{[IMAGE PLACEHOLDER]}}\\[0.3em]
+      \textcolor{gray}{\small \texttt{#1}}
+      \vspace{2cm}}}
+    \caption{#2}
+    \label{#3}
+  \end{figure}%
+}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage[backend=biber,style=numeric]{biblatex}
+\addbibresource{references.bib}
+
+% graphicspath for chapter images
+\graphicspath{{images_chap1/}{images_chap2/}{images_chap3/}{images/}}
+
+% Safe image include: inserts a placeholder if the image file is missing
+\newcommand{\maybeincludegraphics}[2][]{%
+  \IfFileExists{#2}{\includegraphics[#1]{#2}}{\fbox{Image manquante: #2}}%
+}
+
+\renewcommand{\dateseparator}{-} % The ISO standard uses hyphens
+
+% Document title and type
+\newcommand{\doctitle}{Titre du mémoire} % Le titre du mémoire
+\newcommand{\doctype}{Mémoire de Master} 
+
+% Information sur l'université
+\newcommand{\department}{Département Informatique et Communication} % département
+\newcommand{\degree}{Master de recherche} % votre diplôme
+\newcommand{\major}{Informatique} % spécialité
+\newcommand{\defenseDate}{Juillet 2020} % date de soutenance
+
+% Auteur du mémoire
+\newcommand{\authorName}{Nom de l'auteur}
+
+% Encadrant principal
+\newcommand{\supervisor}{M. Encadrant}
+
+% Co-encadrant. Si vous n'en avez qu'un seul, laissez tel quel
+\newcommand{\cosupervisor}{M. Co-Encadrant}
+
+% Membres du jury
+\newcommand{\president}{M. Président}
+\newcommand{\reviewer}{Mme. Rapporteur}
+\newcommand{\secondReviewer}{M. Second Rapporteur}
+\newcommand{\thirdReviewer}{M. Troisième Rapporteur}
+
+% Dates. Par défaut la date du jour.
+\newcommand{\Year}{\the\year{}}
+
+% Date de signature (par défaut aujourd'hui).
+\newcommand{\signatureDate}{\ddmmyyyydate\today}
+
+% Métadonnées PDF
+\newcommand{\keywords}{analyse vidéo, padel, intelligence artificielle, scoring automatique}
+
+\newcommand{\university}{Université de Sfax}
+\newcommand{\school}{Faculté des Sciences de Sfax}
+
+% PDF settings
+\hypersetup
+{
+    pdfauthor={\authorName},
+    pdfsubject={\doctitle},
+    pdfkeywords={\keywords}
+}
+
+% begin document
+\begin{document}
+
+% ------------------ Front matter ------------------
+% Title page, declaration, acknowledgements, abstract
+\input{misc/titlepage}
+\cleardoublepage
+\input{misc/declaration}
+\cleardoublepage
+\input{misc/acknowledgements}
+\cleardoublepage
+\input{misc/abstract}
+\cleardoublepage
+
+% ------------------ Table of contents and lists ------------------
+\pagenumbering{roman}
+\setcounter{page}{1}
+\tableofcontents
+\cleardoublepage
+\listoffigures
+\cleardoublepage
+\listoftables
+\cleardoublepage
+\input{misc/abbreviations}
+\cleardoublepage
+
+% switch to main numbering
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+% ------------------ Chapters ------------------
+% Use the chapter files present in the workspace. If you prefer to move them
+% into a `chapters/` folder I can do that for you.
+% Include the general introduction
+\cleardoublepage
+\input{introduction_generale.tex}
+\cleardoublepage
+\input{chapitre1 (2).tex}
+\input{Chapitre2.tex}
+\input{chapitre3.tex}
+
+% Include general conclusion
+\cleardoublepage
+\input{conclusion_generale.tex}
+
+% ------------------ Bibliography ------------------
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{Références}
+% Si vous utilisez biblatex, assurez-vous que le fichier `references.bib` existe.
+\printbibliography[title=Références]
+
+\renewcommand{\thechapter}{\arabic{chapter}}
+
+\end{document}
