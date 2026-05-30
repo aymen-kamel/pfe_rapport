@@ -1,21 +1,21 @@
 \babel@toc {french}{}\relax 
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {1.1}{\ignorespaces Logo de l’entreprise Ultima}}{5}{figure.caption.11}%
-\contentsline {figure}{\numberline {1.2}{\ignorespaces Cycle Scrum adopté dans le projet SmartPlay}}{10}{figure.caption.24}%
-\contentsline {figure}{\numberline {1.3}{\ignorespaces Roadmap des sprints du projet SmartPlay}}{12}{figure.caption.26}%
+\contentsline {figure}{\numberline {1.2}{\ignorespaces Cycle Scrum adopté dans le projet SmartPlay}}{16}{figure.caption.27}%
+\contentsline {figure}{\numberline {1.3}{\ignorespaces Roadmap des sprints du projet SmartPlay}}{18}{figure.caption.29}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2.1}{\ignorespaces Vue externe (boîte noire) de SmartPlayAI}}{16}{figure.caption.28}%
-\contentsline {figure}{\numberline {2.2}{\ignorespaces Vue interne (boîte blanche) de SmartPlayAI}}{16}{figure.caption.29}%
-\contentsline {figure}{\numberline {2.3}{\ignorespaces Flux de traitement image par image dans SmartPlayAI}}{17}{figure.caption.31}%
-\contentsline {figure}{\numberline {2.4}{\ignorespaces Pipeline de traitement du module de détection du terrain.}}{19}{figure.caption.34}%
-\contentsline {figure}{\numberline {2.5}{\ignorespaces Schéma des douze points de référence et des lignes reconstructibles du terrain de padel.}}{20}{figure.caption.36}%
-\contentsline {figure}{\numberline {2.6}{\ignorespaces Architecture du modèle TrackNet pour le suivi de la balle.}}{26}{figure.caption.55}%
-\contentsline {figure}{\numberline {2.7}{\ignorespaces Schéma de l'ensemble temporel par fenêtres glissantes et fusion pondérée des cartes de chaleur.}}{26}{figure.caption.57}%
-\contentsline {figure}{\numberline {2.8}{\ignorespaces Pipeline de suivi des joueurs et modules d'identification des équipes.}}{30}{figure.caption.62}%
-\contentsline {figure}{\numberline {2.9}{\ignorespaces Représentation schématique du terrain de padel avec la zone de filtrage polygonale.}}{32}{figure.caption.69}%
-\contentsline {figure}{\numberline {2.10}{\ignorespaces Machine à états finis du module \texttt {PadelScorer}.}}{43}{figure.caption.109}%
-\contentsline {figure}{\numberline {2.11}{\ignorespaces Flux de données de \texttt {DataAnalytics} vers le frontend.}}{44}{figure.caption.112}%
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Vue externe (boîte noire) de SmartPlayAI}}{22}{figure.caption.31}%
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Vue interne (boîte blanche) de SmartPlayAI}}{22}{figure.caption.32}%
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Flux de traitement image par image dans SmartPlayAI}}{23}{figure.caption.34}%
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Pipeline de traitement du module de détection du terrain.}}{25}{figure.caption.37}%
+\contentsline {figure}{\numberline {2.5}{\ignorespaces Schéma des douze points de référence et des lignes reconstructibles du terrain de padel.}}{26}{figure.caption.39}%
+\contentsline {figure}{\numberline {2.6}{\ignorespaces Architecture du modèle TrackNet pour le suivi de la balle.}}{32}{figure.caption.58}%
+\contentsline {figure}{\numberline {2.7}{\ignorespaces Schéma de l'ensemble temporel par fenêtres glissantes et fusion pondérée des cartes de chaleur.}}{32}{figure.caption.60}%
+\contentsline {figure}{\numberline {2.8}{\ignorespaces Pipeline de suivi des joueurs et modules d'identification des équipes.}}{36}{figure.caption.65}%
+\contentsline {figure}{\numberline {2.9}{\ignorespaces Représentation schématique du terrain de padel avec la zone de filtrage polygonale.}}{38}{figure.caption.72}%
+\contentsline {figure}{\numberline {2.10}{\ignorespaces Machine à états finis du module \texttt {PadelScorer}.}}{49}{figure.caption.112}%
+\contentsline {figure}{\numberline {2.11}{\ignorespaces Flux de données de \texttt {DataAnalytics} vers le frontend.}}{50}{figure.caption.115}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Diagramme de cas d'utilisation}}{51}{figure.caption.124}%
-\contentsline {figure}{\numberline {3.2}{\ignorespaces Panneau de configuration SmartPlay — zones 1 à 6}}{56}{figure.caption.130}%
-\contentsline {figure}{\numberline {3.3}{\ignorespaces Workflow utilisateur complet d'une session d'analyse SmartPlay}}{60}{figure.caption.134}%
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Diagramme de cas d'utilisation}}{57}{figure.caption.127}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Panneau de configuration SmartPlay — zones 1 à 6}}{62}{figure.caption.133}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Workflow utilisateur complet d'une session d'analyse SmartPlay}}{66}{figure.caption.137}%

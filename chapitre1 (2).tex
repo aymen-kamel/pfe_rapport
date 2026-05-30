@@ -177,6 +177,405 @@ L'analyse comparative met en évidence trois lacunes structurelles communes aux 
 
 SmartPlay se positionne comme une réponse directe à ces trois lacunes. La solution combine une spécialisation disciplinaire complète pour le padel, une architecture modulaire permettant un déploiement progressif sans infrastructure lourde, et un moteur de recommandations tactiques fondé sur l'apprentissage automatique. Son modèle de déploiement vise explicitement l'accessibilité aux clubs amateurs, segment non couvert par les acteurs actuels du marché.
 
+% ════════════════════════════════════════════════════════════════════════════
+\section{TrackNet : Détection et Suivi d'Objets Sportifs Rapides}
+% ════════════════════════════════════════════════════════════════════════════
+
+% ────────────────────────────────────────────────────────────────────────────
+\subsection{Introduction}
+% ────────────────────────────────────────────────────────────────────────────
+
+Le suivi d'objets de petite taille se déplaçant à haute vitesse dans des vidéos
+sportives constitue l'un des problèmes les plus exigeants de la vision par
+ordinateur. Des objets tels que les balles de tennis ou les volants de badminton
+occupent rarement plus d'une dizaine de pixels à l'écran, subissent un
+\textbf{flou de mouvement} important à haute cadence, et peuvent être
+temporairement occultés par les joueurs, le filet ou d'autres obstacles. Les
+approches de détection généralistes, fondées sur des boîtes englobantes, se
+révèlent inadaptées à ces contraintes.
+
+C'est dans ce contexte qu'a émergé la famille de modèles \textbf{TrackNet},
+initialement développée pour le tennis puis étendue au badminton et à d'autres
+sports de raquette. L'idée centrale de TrackNet est de remplacer la détection par
+boîte englobante par la génération de \textbf{cartes de chaleur gaussiennes}
+(\textit{heatmaps}), permettant une localisation sub-pixel beaucoup plus précise.
+De plus, en analysant plusieurs images consécutives simultanément, le réseau
+apprend à exploiter le \textbf{contexte temporel} pour distinguer l'objet cible du
+bruit visuel et reconstruire des trajectoires cohérentes même en cas de détection
+partielle.
+
+Depuis sa première version en 2019, la série TrackNet a connu plusieurs évolutions
+majeures, chacune répondant aux limitations identifiées dans la version précédente.
+Ces améliorations successives ont porté sur la vitesse de traitement, la robustesse
+aux occlusions, et la compréhension du mouvement, jusqu'à atteindre des
+performances état de l'art en 2025.
+
+% ────────────────────────────────────────────────────────────────────────────
+\subsection{Présentation des Versions}
+% ────────────────────────────────────────────────────────────────────────────
+
+\textbf{TrackNetV1 (2019)} a posé les fondations de la série en adoptant une
+architecture encodeur-décodeur combinant VGG16 et U-Net pour générer des heatmaps
+gaussiennes. Le modèle prend en entrée plusieurs images consécutives et produit une
+carte de chaleur indiquant la position probable de l'objet. Il atteint un score F1
+de 98,5\,\% sur des séquences de tennis, mais sa vitesse de seulement 2,6 FPS le
+rend inutilisable en temps réel.
+
+\textbf{TrackNetV2 (2020)} a résolu le problème de vitesse en passant d'une
+architecture MISO (une seule sortie) à une architecture
+\textbf{MIMO (\textit{Multiple-In Multiple-Out})} : trois images en entrée
+produisent simultanément trois heatmaps en sortie. Cette refonte a multiplié la
+cadence par douze, atteignant 31,8 FPS, tout en réduisant la consommation mémoire
+GPU grâce à l'utilisation de tableaux 2D à la place de tableaux 3D.
+
+\textbf{TrackNetV3 (2023)} — version retenue dans ce projet — s'est concentré sur
+la gestion des \textbf{occlusions}, problématique restée sans réponse dans les
+versions précédentes. Il introduit un module de rectification de trajectoire par
+\textbf{inpainting} et intègre l'image de fond estimé comme données auxiliaires,
+permettant d'interpoler les positions manquantes et de mieux distinguer la cible
+des distractions visuelles. Ces apports sont détaillés dans la section suivante.
+
+\textbf{TrackNetV4 (2024)} a introduit les \textbf{Motion Attention Maps},
+générées par différence inter-images, pour guider le réseau vers les zones de
+mouvement actif. Ce mécanisme préserve les caractéristiques des petits objets lors
+des convolutions profondes mais souffre d'une ambiguïté directionnelle : la
+différence d'images indique qu'un mouvement a eu lieu, sans en préciser le sens.
+
+\textbf{TrackNetV5 (2025)} résout cette ambiguïté grâce au module
+\textbf{MDD (\textit{Motion Direction Decoupling})}, qui encode explicitement la
+direction du déplacement via des champs de polarité signés. Il ajoute également une
+tête de raffinement \textbf{R-STR} basée sur les Transformers pour exploiter le
+contexte spatio-temporel global. Ces innovations portent le score F1 à 0,9859 à
+114 FPS, définissant l'état de l'art actuel.
+
+% ────────────────────────────────────────────────────────────────────────────
+\subsection{Comparaison des Versions}
+% ────────────────────────────────────────────────────────────────────────────
+
+Le tableau suivant synthétise les caractéristiques et performances des différentes
+versions de TrackNet. La version \textbf{V3}, retenue pour ce projet, est mise en
+évidence en raison de son équilibre entre robustesse aux occlusions et complexité
+d'implémentation.
+
+\begin{table}[H]
+  \centering
+  \renewcommand{\arraystretch}{1.3}
+  \begin{tabularx}{\textwidth}{C{2cm} X C{3cm} C{2cm} C{2cm}}
+    \rowcolor{tablehead}
+    \textcolor{white}{\textbf{Version}} &
+    \textcolor{white}{\textbf{Innovation Principale}} &
+    \textcolor{white}{\textbf{Gestion Occlusions}} &
+    \textcolor{white}{\textbf{Vitesse}} &
+    \textcolor{white}{\textbf{Score F1}} \\
+    \rowcolor{rowalt}
+    V1 (2019) &
+    Encodeur-Décodeur VGG16 + U-Net, heatmaps gaussiennes &
+    Aucune &
+    2,6 FPS &
+    98,5\,\% \\
+    V2 (2020) &
+    Architecture MIMO, 3 heatmaps en sortie simultanées &
+    Aucune &
+    31,8 FPS &
+    — \\
+    \rowcolor{tablehead}
+    \textcolor{white}{\textbf{V3 (2023)}} &
+    \textcolor{white}{\textbf{Inpainting de trajectoire + fond estimé comme donnée auxiliaire}} &
+    \textcolor{white}{\textbf{Interpolation des trames manquantes}} &
+    \textcolor{white}{\textbf{Temps réel}} &
+    \textcolor{white}{\textbf{Meilleure robustesse}} \\
+    \rowcolor{rowalt}
+    V4 (2024) &
+    Motion Attention Maps (différence inter-images) &
+    Partielle (attention visuelle) &
+    Temps réel &
+    — \\
+    V5 (2025) &
+    Module MDD + tête R-STR (Transformer) &
+    Récupération spatio-temporelle &
+    114 FPS &
+    0,9859 \\
+  \end{tabularx}
+  \caption{Comparaison des versions de TrackNet — performances et innovations}
+  \label{tab:tracknet_versions}
+\end{table}
+
+% ────────────────────────────────────────────────────────────────────────────
+\subsection{Justification du Choix de TrackNetV3}
+% ────────────────────────────────────────────────────────────────────────────
+
+Le choix de \textbf{TrackNetV3} pour ce projet repose sur plusieurs considérations
+complémentaires. D'une part, la problématique des occlusions est particulièrement
+présente dans le contexte sportif visé — les échanges rapides impliquent
+fréquemment des passages de la balle derrière les joueurs ou les filets. TrackNetV3
+est la première version de la série à traiter ce problème de manière explicite, via
+son module d'inpainting de trajectoire.
+
+D'autre part, l'intégration de \textbf{l'image de fond estimé} comme donnée
+auxiliaire constitue une amélioration ciblée et interprétable, qui améliore la
+discrimination entre l'objet cible et les distractions sans alourdir
+significativement l'architecture. Comparé à V4 et V5, TrackNetV3 présente une
+complexité architecturale moindre, ce qui facilite son adaptation, son entraînement
+et son débogage dans le cadre d'un projet de fin d'études à ressources limitées.
+
+% ════════════════════════════════════════════════════════════════════════════
+\section{Le Modèle YOLO (\textit{You Only Look Once})}
+% ════════════════════════════════════════════════════════════════════════════
+
+Introduit en 2016 par Joseph Redmon et ses collaborateurs, le modèle
+\textbf{YOLO} (\textit{You Only Look Once}) a marqué un changement de paradigme
+dans le domaine de la détection d'objets. Contrairement aux méthodes
+traditionnelles telles que R-CNN, qui reposent sur un pipeline à plusieurs étapes
+— proposition de régions, extraction de caractéristiques, puis classification —
+YOLO traite la détection comme un problème de régression unique, en parcourant
+l'image entière en une seule passe réseau. Cette conception lui confère des vitesses
+de traitement en temps réel remarquables, qui en ont fait la référence pour les
+applications sportives.
+
+% ────────────────────────────────────────────────────────────────────────────
+\subsection{Principe de Fonctionnement}
+% ────────────────────────────────────────────────────────────────────────────
+
+L'architecture de YOLO repose sur la division de l'image d'entrée en une grille de
+cellules $S \times S$. Lorsque le centre d'un objet se trouve dans une cellule
+donnée, c'est cette cellule qui est responsable de sa détection. Pour chaque
+cellule, le modèle prédit simultanément trois types d'informations :
+
+\begin{itemize}[leftmargin=1.5em]
+  \item \textbf{les coordonnées des boîtes de délimitation} (\textit{bounding
+        boxes}), encodant la position et les dimensions de l'objet détecté ;
+  \item \textbf{un score de confiance} exprimant la probabilité qu'un objet soit
+        effectivement présent dans la boîte prédite ;
+  \item \textbf{les probabilités de classe}, permettant d'identifier la nature de
+        l'objet (joueur, balle, arbitre, etc.).
+\end{itemize}
+
+Cette formulation unifiée élimine la redondance des pipelines multi-étapes et
+réduit considérablement la latence d'inférence, ce qui est essentiel pour
+l'analyse vidéo sportive en temps réel.
+
+% ────────────────────────────────────────────────────────────────────────────
+\subsection{Évolution et Versions Clés}
+% ────────────────────────────────────────────────────────────────────────────
+
+Depuis sa création, la famille YOLO a connu de nombreuses itérations qui
+améliorent continuellement le compromis entre précision et vitesse. Les versions
+les plus significatives dans le contexte sportif sont les suivantes.
+
+\textbf{YOLOv3 et YOLOv4} ont introduit la détection multi-échelle, permettant de
+localiser simultanément des objets de tailles très différentes au sein d'une même
+image. YOLOv4 y ajoute des techniques d'augmentation de données telles que le
+Mosaic, particulièrement utile pour entraîner le modèle sur des configurations
+variées rencontrées sur un terrain de sport.
+
+\textbf{YOLOv8}, largement adopté dans les systèmes d'analyse sportive actuels,
+propose une architecture \textit{anchor-free} — sans ancres prédéfinies — ainsi
+qu'une tête de détection découplée séparant la prédiction de la classe de celle des
+coordonnées. Cette architecture améliore la précision de localisation pour des
+objets aussi bien grands (joueurs) que petits (balle).
+
+\textbf{YOLOv10} marque une évolution importante pour le déploiement en
+supprimant le besoin de post-traitement par NMS
+(\textit{Non-Maximum Suppression}). Cette détection de bout en bout réduit la
+latence d'inférence et simplifie le pipeline de traitement, ce qui est avantageux
+pour les systèmes embarqués ou diffusés en direct.
+
+\textbf{YOLOv12 et YOLO26}, les versions les plus récentes, intègrent des
+mécanismes d'attention spatiale (\textit{Area Attention}) et des optimisations pour
+le calcul en périphérie (\textit{edge computing}). Ces avancées permettent de gérer
+des scènes visuelles complexes et des mouvements rapides tout en maintenant une
+compatibilité avec des appareils à ressources limitées.
+
+Le tableau~\ref{tab:yolo_versions} synthétise les principales contributions de
+chaque version.
+
+\begin{table}[H]
+  \centering
+  \renewcommand{\arraystretch}{1.3}
+  \begin{tabularx}{\textwidth}{C{2cm} X X C{2.8cm}}
+    \rowcolor{tablehead}
+    \textcolor{white}{\textbf{Version}} &
+    \textcolor{white}{\textbf{Innovation Principale}} &
+    \textcolor{white}{\textbf{Apport pour le Sport}} &
+    \textcolor{white}{\textbf{Architecture}} \\
+    \rowcolor{rowalt}
+    v3 / v4 &
+    Détection multi-échelle, augmentation Mosaic &
+    Objets de tailles variées (joueurs + balle) &
+    Anchor-based \\
+    v8 &
+    Tête découplée, architecture \textit{anchor-free} &
+    Précision de localisation accrue &
+    Anchor-free \\
+    \rowcolor{rowalt}
+    v10 &
+    Suppression du NMS, détection bout en bout &
+    Réduction de la latence d'inférence &
+    Anchor-free \\
+    v12 / 26 &
+    Area Attention, optimisation \textit{edge computing} &
+    Scènes complexes, déploiement embarqué &
+    Transformer \\
+  \end{tabularx}
+  \caption{Évolution des principales versions de la famille YOLO et leur pertinence
+           pour l'analyse sportive}
+  \label{tab:yolo_versions}
+\end{table}
+
+% ────────────────────────────────────────────────────────────────────────────
+\subsection{Application au Padel et aux Sports de Raquette}
+% ────────────────────────────────────────────────────────────────────────────
+
+Dans des disciplines comme le football ou le padel, YOLO constitue la référence
+pour la détection et le suivi multi-entités. La balle demeure l'objet le plus
+difficile à détecter en raison de sa petite taille et de sa vitesse élevée ;
+l'utilisation de résolutions d'entrée élevées (par exemple $1280 \times 1280$
+pixels) permet néanmoins d'extraire des informations spatiales suffisamment
+précises pour le suivi.
+
+Pour le padel spécifiquement, la complexité des arrière-plans — vitres
+transparentes laissant voir le public, grilles métalliques, lignes de terrain
+superposées — rend la tâche de détection particulièrement exigeante. YOLO y
+apporte une réponse robuste grâce à sa capacité à traiter simultanément les
+joueurs, les arbitres et la balle dans une même passe réseau.
+
+Afin de garantir la continuité du suivi malgré les occlusions fréquentes entre
+joueurs, YOLO est généralement couplé à des algorithmes de ré-identification tels
+que ByteTrack ou DeepSORT. Ces algorithmes maintiennent des identifiants uniques
+pour chaque acteur du match d'une image à l'autre, permettant de reconstruire des
+trajectoires cohérentes même lors de passages occultés.
+
+% ════════════════════════════════════════════════════════════════════════════
+\section{Synthèse Comparative : YOLO et TrackNet}
+% ════════════════════════════════════════════════════════════════════════════
+
+Les deux familles de modèles présentées dans les sections précédentes — YOLO et
+TrackNet — abordent la problématique du suivi d'objets sportifs selon des philosophies
+fondamentalement différentes. L'une est généraliste et orientée détection multi-entités,
+l'autre est spécialisée dans la localisation précise d'objets de petite taille à haute
+vitesse. Comprendre leurs forces et limitations respectives est essentiel pour justifier
+les choix architecturaux retenus dans ce projet.
+
+% ────────────────────────────────────────────────────────────────────────────
+\subsection{Deux Paradigmes Complémentaires}
+% ────────────────────────────────────────────────────────────────────────────
+
+YOLO adopte une approche de détection par régression directe : l'image est divisée en
+grille et chaque cellule prédit simultanément la présence, la position et la classe de
+tous les objets qu'elle contient. Ce paradigme est extrêmement efficace pour détecter
+des entités multiples et de tailles variées — joueurs, arbitres, filet — en une seule
+passe réseau. En revanche, il traite chaque image de manière indépendante, sans
+exploiter explicitement la continuité temporelle entre les trames.
+
+TrackNet, à l'inverse, repose sur un paradigme de localisation par heatmap
+temporelle : il analyse plusieurs images consécutives pour inférer la trajectoire d'un
+objet unique à partir du contexte de mouvement. Cette dépendance temporelle est
+précisément ce qui lui permet de gérer le flou de mouvement et les occlusions, là où
+YOLO échoue à maintenir la cohérence du suivi. En contrepartie, TrackNet n'est pas
+conçu pour la détection multi-classes simultanée.
+
+% ────────────────────────────────────────────────────────────────────────────
+\subsection{Comparaison Structurée}
+% ────────────────────────────────────────────────────────────────────────────
+
+Le tableau~\ref{tab:yolo_vs_tracknet} met en regard les caractéristiques clés des deux
+approches selon les critères les plus pertinents pour l'analyse vidéo en padel.
+
+\begin{table}[H]
+  \centering
+  \renewcommand{\arraystretch}{1.3}
+  \begin{tabularx}{\textwidth}{X C{2.8cm} C{2.8cm} C{2.8cm}}
+    \rowcolor{tablehead}
+    \textcolor{white}{\textbf{Critère}} &
+    \textcolor{white}{\textbf{YOLO}} &
+    \textcolor{white}{\textbf{TrackNet (V3)}} &
+    \textcolor{white}{\textbf{Avantage}} \\
+    \rowcolor{rowalt}
+    Objets ciblés &
+    Multi-classes (joueurs, balle, arbitre) &
+    Objet unique (balle uniquement) &
+    YOLO \\
+    Exploitation temporelle &
+    Aucune (image par image) &
+    Oui (3 trames consécutives) &
+    TrackNet \\
+    \rowcolor{rowalt}
+    Précision sur petits objets &
+    Moyenne (dépend résolution) &
+    Élevée (localisation sub-pixel) &
+    TrackNet \\
+    Gestion des occlusions &
+    Nécessite ByteTrack / DeepSORT &
+    Module d'inpainting intégré &
+    TrackNet \\
+    \rowcolor{rowalt}
+    Vitesse d'inférence &
+    Très élevée (30--200+ FPS) &
+    Élevée (temps réel, V3) &
+    YOLO \\
+    Robustesse arrière-plan complexe &
+    Bonne (augmentation Mosaic) &
+    Bonne (fond estimé auxiliaire) &
+    Équivalent \\
+    \rowcolor{rowalt}
+    Facilité d'entraînement &
+    Écosystème mature, nombreux outils &
+    Architecture plus spécialisée &
+    YOLO \\
+    Déploiement embarqué &
+    Oui (v10, v12, edge computing) &
+    Possible mais moins optimisé &
+    YOLO \\
+  \end{tabularx}
+  \caption{Comparaison entre YOLO et TrackNetV3 selon les critères de l'analyse vidéo en padel}
+  \label{tab:yolo_vs_tracknet}
+\end{table}
+
+% ────────────────────────────────────────────────────────────────────────────
+\subsection{Forces et Limites dans le Contexte du Padel}
+% ────────────────────────────────────────────────────────────────────────────
+
+YOLO excelle dans la détection rapide et simultanée des différents acteurs d'une scène
+sportive. Sa capacité à identifier et localiser les joueurs en temps réel, à des
+résolutions élevées ($1280 \times 1280$), en fait un composant indispensable pour
+toute analyse tactique. Cependant, appliqué seul à la balle de padel, YOLO présente
+des limites importantes : sa petite taille ($<$ 10 pixels dans beaucoup de situations),
+son flou de mouvement et les occlusions fréquentes engendrent un taux de faux négatifs
+élevé. Pour pallier cela, il est nécessaire de le coupler à des algorithmes de
+ré-identification comme ByteTrack, ce qui alourdit le pipeline et augmente la latence
+globale.
+
+TrackNetV3, en revanche, est précisément conçu pour les scénarios où l'objet suivi est
+petit, rapide et temporairement occulté. Son module d'inpainting de trajectoire et
+l'intégration du fond estimé le rendent particulièrement adapté aux spécificités du
+padel : arrière-plans riches (vitres, grilles, public), rebonds multiples sur les
+parois, et échanges au cours desquels la balle peut disparaître momentanément derrière
+un joueur. Sa limite principale reste son incapacité à détecter simultanément plusieurs
+classes d'objets.
+
+% ────────────────────────────────────────────────────────────────────────────
+\subsection{Complémentarité et Choix Architecturaux du Projet}
+% ────────────────────────────────────────────────────────────────────────────
+
+L'analyse comparative révèle que YOLO et TrackNet ne sont pas des alternatives
+concurrentes mais des approches complémentaires, chacune répondant à un sous-problème
+distinct de l'analyse vidéo sportive :
+
+\begin{itemize}
+    \item \textbf{YOLO} est retenu pour la détection des joueurs, des arbitres et de
+    toute entité multi-classe nécessitant une localisation rapide par boîte englobante.
+
+    \item \textbf{TrackNetV3} est retenu pour le suivi précis de la balle, en
+    exploitant le contexte temporel et le module d'inpainting pour maintenir la
+    trajectoire même lors des occlusions.
+\end{itemize}
+
+Cette architecture hybride, combinant la polyvalence de YOLO et la spécialisation de
+TrackNet, constitue l'approche adoptée dans ce projet pour l'analyse automatique des
+matchs de padel. Elle permet de traiter simultanément l'ensemble des entités de la
+scène tout en garantissant une localisation précise et continue de la balle, qui
+demeure l'élément central de l'analyse tactique.
+
 \section{Méthodologie de travail}
 
 Pour organiser efficacement le développement de la plateforme SmartPlay, nous avons adopté une approche agile basée principalement sur la méthodologie \textbf{Scrum}. Cette méthode nous a permis de structurer le projet en cycles de développement courts appelés \textit{sprints}, chacun ayant des objectifs précis et des livrables clairement définis.

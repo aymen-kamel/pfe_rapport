@@ -2,7 +2,7 @@
 \contentsline {chapter}{Déclaration}{1}{chapter*.1}%
 \contentsline {chapter}{Remerciements}{2}{chapter*.2}%
 \contentsline {chapter}{Résumé}{3}{chapter*.3}%
-\contentsline {chapter}{Liste des Abréviations}{vi}{chapter*.7}%
+\contentsline {chapter}{Liste des Abréviations}{vii}{chapter*.7}%
 \contentsline {chapter}{Introduction}{1}{section*.10}%
 \contentsline {section}{\numberline {0.1}Contexte général}{1}{section.0.1}%
 \contentsline {section}{\numberline {0.2}Solution proposée}{2}{section.0.2}%
@@ -32,142 +32,166 @@
 \contentsline {subsubsection}{Dartfish}{8}{subsubsection*.22}%
 \contentsline {subsection}{\numberline {1.5.4}Analyse comparative des solutions existantes}{8}{subsection.1.5.4}%
 \contentsline {subsection}{\numberline {1.5.5}Bilan et positionnement de SmartPlay}{8}{subsection.1.5.5}%
-\contentsline {section}{\numberline {1.6}Méthodologie de travail}{9}{section.1.6}%
-\contentsline {subsection}{\numberline {1.6.1}Organisation de la méthodologie adoptée}{9}{subsection.1.6.1}%
-\contentsline {subsection}{\numberline {1.6.2}Daily Update}{10}{subsection.1.6.2}%
-\contentsline {subsection}{\numberline {1.6.3}Weekly Meeting}{10}{subsection.1.6.3}%
-\contentsline {subsection}{\numberline {1.6.4}Planification des sprints}{11}{subsection.1.6.4}%
-\contentsline {subsection}{\numberline {1.6.5}Déroulement d’un sprint}{12}{subsection.1.6.5}%
-\contentsline {subsection}{\numberline {1.6.6}Avantages de la méthodologie adoptée}{12}{subsection.1.6.6}%
-\contentsline {section}{\numberline {1.7}Technologies utilisées}{12}{section.1.7}%
-\contentsline {subsection}{\numberline {1.7.1}Interface utilisateur}{13}{subsection.1.7.1}%
-\contentsline {subsection}{\numberline {1.7.2}Vision par ordinateur}{13}{subsection.1.7.2}%
-\contentsline {subsection}{\numberline {1.7.3}Analyse de données}{13}{subsection.1.7.3}%
-\contentsline {subsection}{\numberline {1.7.4}Intelligence artificielle}{13}{subsection.1.7.4}%
-\contentsline {subsection}{\numberline {1.7.5}Infrastructure et déploiement}{13}{subsection.1.7.5}%
-\contentsline {subsection}{\numberline {1.7.6}Fiche technique synthétique}{14}{subsection.1.7.6}%
-\contentsline {section}{\numberline {1.8}Conclusion}{14}{section.1.8}%
-\contentsline {chapter}{\numberline {2}Architecture de la solution}{15}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Introduction}{15}{section.2.1}%
-\contentsline {section}{\numberline {2.2}Architecture générale du système}{15}{section.2.2}%
-\contentsline {subsection}{\numberline {2.2.1}Vue externe du système (boîte noire)}{15}{subsection.2.2.1}%
-\contentsline {subsection}{\numberline {2.2.2}Vue interne du système (boîte blanche)}{16}{subsection.2.2.2}%
-\contentsline {subsection}{\numberline {2.2.3}Composants principaux}{17}{subsection.2.2.3}%
-\contentsline {subsection}{\numberline {2.2.4}Flux de données et intégration des modules}{17}{subsection.2.2.4}%
-\contentsline {paragraph}{Bilan de la section 2.1}{17}{paragraph*.32}%
-\contentsline {subsection}{\numberline {2.2.5}Détection du Terrain}{17}{subsection.2.2.5}%
-\contentsline {subsubsection}{Vue d'ensemble et positionnement dans le pipeline}{18}{subsubsection*.33}%
-\contentsline {subsubsection}{Les douze points de référence du terrain}{20}{subsubsection*.35}%
-\contentsline {subsubsection}{Deux modes de détection selon la configuration de captation}{21}{subsubsection*.38}%
-\contentsline {paragraph}{Mode statique : annotation manuelle pour caméra fixe}{21}{paragraph*.39}%
-\contentsline {paragraph}{Mode dynamique : détection automatique par YOLOv8-Pose}{21}{paragraph*.40}%
-\contentsline {subsubsection}{Comparaison synthétique des deux modes}{22}{subsubsection*.42}%
-\contentsline {subsubsection}{Architecture de détection : YOLOv8}{22}{subsubsection*.44}%
-\contentsline {paragraph}{Principe de la détection de pose appliquée au terrain}{22}{paragraph*.45}%
-\contentsline {paragraph}{Pipeline d'inférence}{22}{paragraph*.46}%
-\contentsline {paragraph}{Précision de localisation}{23}{paragraph*.47}%
-\contentsline {subsubsection}{Calcul de la transformation géométrique}{23}{subsubsection*.49}%
-\contentsline {subsubsection}{Robustesse aux situations critiques}{23}{subsubsection*.50}%
-\contentsline {paragraph}{Occlusion partielle des lignes}{23}{paragraph*.51}%
-\contentsline {paragraph}{Absence totale de détection}{23}{paragraph*.52}%
-\contentsline {subsubsection}{Synthèse}{24}{subsubsection*.53}%
-\contentsline {section}{\numberline {2.3}Suivi de la Balle par Réseau Convolutif Temporel}{24}{section.2.3}%
-\contentsline {subsection}{\numberline {2.3.1}Motivation et Choix Architectural}{24}{subsection.2.3.1}%
-\contentsline {subsection}{\numberline {2.3.2}Pipeline de Traitement}{24}{subsection.2.3.2}%
-\contentsline {subsubsection}{Entrée Séquentielle et Inférence par TrackNet}{24}{subsubsection*.54}%
-\contentsline {subsubsection}{Ensemble Temporel (\textit {Temporal Ensemble})}{26}{subsubsection*.56}%
-\contentsline {subsubsection}{Filtrage des Réflexions (\textit {Reflection Filtering})}{26}{subsubsection*.58}%
-\contentsline {subsubsection}{Détection des Rebonds (\textit {Bounce Detection})}{27}{subsubsection*.59}%
-\contentsline {subsection}{\numberline {2.3.3}Sorties finales du module BallTracker}{28}{subsection.2.3.3}%
-\contentsline {subsection}{\numberline {2.3.4}Perspectives d'amélioration}{28}{subsection.2.3.4}%
-\contentsline {subsection}{\numberline {2.3.5}Synthèse}{29}{subsection.2.3.5}%
-\contentsline {section}{\numberline {2.4}Suivi des Joueurs}{29}{section.2.4}%
-\contentsline {subsection}{\numberline {2.4.1}Vue d'ensemble et positionnement dans le pipeline}{29}{subsection.2.4.1}%
-\contentsline {subsection}{\numberline {2.4.2}Conversion BGR $\rightarrow $ RGB}{30}{subsection.2.4.2}%
-\contentsline {subsection}{\numberline {2.4.3}Détection par YOLO26 fine-tuné}{30}{subsection.2.4.3}%
-\contentsline {subsubsection}{Choix du modèle YOLO26}{31}{subsubsection*.63}%
-\contentsline {subsubsection}{Paramètres d'inférence}{31}{subsubsection*.64}%
-\contentsline {subsubsection}{Paramètres d'inférence}{31}{subsubsection*.65}%
-\contentsline {subsubsection}{Traitement en lot}{31}{subsubsection*.67}%
-\contentsline {subsection}{\numberline {2.4.4}Filtrage spatial par zone polygonale}{31}{subsection.2.4.4}%
-\contentsline {subsubsection}{Définition du polygone de terrain}{31}{subsubsection*.68}%
-\contentsline {subsubsection}{Test d'appartenance à la zone de jeu}{32}{subsubsection*.70}%
-\contentsline {subsubsection}{Association et suivi : algorithme d’identité stable}{32}{subsubsection*.71}%
-\contentsline {paragraph}{Initialisation et assignation des équipes}{32}{paragraph*.72}%
-\contentsline {paragraph}{Extraction du descripteur d’apparence}{33}{paragraph*.73}%
-\contentsline {paragraph}{Prédiction cinématique}{33}{paragraph*.75}%
-\contentsline {paragraph}{Matrice de coûts et algorithme Hongrois}{33}{paragraph*.77}%
-\contentsline {paragraph}{Mise à jour des pistes par moyenne exponentielle mobile}{34}{paragraph*.79}%
-\contentsline {subsection}{\numberline {2.4.5}Robustesse aux situations critiques}{34}{subsection.2.4.5}%
-\contentsline {subsubsection}{Occlusion et croisement de joueurs}{34}{subsubsection*.80}%
-\contentsline {subsubsection}{Disparition temporaire d'un joueur}{34}{subsubsection*.81}%
-\contentsline {subsubsection}{Nombre insuffisant de joueurs détectés}{35}{subsubsection*.82}%
-\contentsline {subsection}{\numberline {2.4.6}Extension par segmentation au niveau pixel}{35}{subsection.2.4.6}%
-\contentsline {subsection}{\numberline {2.4.7}Synthèse}{35}{subsection.2.4.7}%
-\contentsline {section}{\numberline {2.5}Modèle d'Estimation des Points Clés des Joueurs}{35}{section.2.5}%
-\contentsline {subsection}{\numberline {2.5.1}Introduction}{35}{subsection.2.5.1}%
-\contentsline {subsection}{\numberline {2.5.2}Architecture du Modèle YOLOv8-Pose}{36}{subsection.2.5.2}%
-\contentsline {subsection}{\numberline {2.5.3}Estimation des Points Clés}{36}{subsection.2.5.3}%
-\contentsline {subsection}{\numberline {2.5.4}Pipeline d’Inférence}{36}{subsection.2.5.4}%
-\contentsline {subsection}{\numberline {2.5.5}Adaptation au Contexte du Padel}{37}{subsection.2.5.5}%
-\contentsline {subsection}{\numberline {2.5.6}Applications dans SmartPlay}{37}{subsection.2.5.6}%
-\contentsline {subsection}{\numberline {2.5.7}Conclusion}{37}{subsection.2.5.7}%
-\contentsline {section}{\numberline {2.6}Module d'analyse biomécanique : \texttt {DataAnalytics}}{37}{section.2.6}%
-\contentsline {subsection}{\numberline {2.6.1}Vue d'ensemble et positionnement dans le pipeline}{37}{subsection.2.6.1}%
-\contentsline {subsection}{\numberline {2.6.2}Structure du référentiel de coordonnées}{37}{subsection.2.6.2}%
-\contentsline {subsection}{\numberline {2.6.3}Collecte des positions : projection homographique et conversion métrique}{38}{subsection.2.6.3}%
-\contentsline {subsubsection}{Projection homographique (\texttt {projected\_court.py})}{38}{subsubsection*.86}%
-\contentsline {subsubsection}{Conversion pixels $\to $ mètres}{38}{subsubsection*.87}%
-\contentsline {subsubsection}{Enregistrement par trame}{38}{subsubsection*.88}%
-\contentsline {subsection}{\numberline {2.6.4}Construction du DataFrame}{38}{subsection.2.6.4}%
-\contentsline {subsubsection}{Structure brute : 11 colonnes de base}{38}{subsubsection*.89}%
-\contentsline {subsubsection}{Colonne \texttt {time}}{39}{subsubsection*.91}%
-\contentsline {subsection}{\numberline {2.6.5}Pipeline de calcul cinématique}{39}{subsection.2.6.5}%
-\contentsline {subsubsection}{Les quatre intervalles temporels}{39}{subsubsection*.92}%
-\contentsline {subsubsection}{Déplacements $\Delta x_k$, $\Delta y_k$}{40}{subsubsection*.94}%
-\contentsline {subsubsection}{Vitesse par composante}{40}{subsubsection*.95}%
-\contentsline {subsubsection}{Vitesse normée (norme euclidienne)}{40}{subsubsection*.96}%
-\contentsline {subsubsection}{Accélération par composante}{40}{subsubsection*.98}%
-\contentsline {subsubsection}{Accélération normée}{40}{subsubsection*.99}%
-\contentsline {subsubsection}{Distance inter-trame}{41}{subsubsection*.101}%
-\contentsline {subsection}{\numberline {2.6.6}Structure complète du DataFrame enrichi}{41}{subsection.2.6.6}%
-\contentsline {subsection}{\numberline {2.6.7}Module \texttt {ShotCounter} --- Détection et classification des coups}{41}{subsection.2.6.7}%
-\contentsline {subsubsection}{Paramètres d'instanciation}{42}{subsubsection*.102}%
-\contentsline {subsubsection}{Logique de détection en trois phases}{42}{subsubsection*.104}%
-\contentsline {paragraph}{Phase 1 --- Calcul des vitesses pré/post impact.}{42}{paragraph*.105}%
-\contentsline {paragraph}{Phase 2 --- Critères de détection.}{42}{paragraph*.106}%
-\contentsline {paragraph}{Phase 3 --- Attribution au joueur le plus proche.}{42}{paragraph*.107}%
-\contentsline {subsubsection}{Classification des types de coups}{43}{subsubsection*.108}%
-\contentsline {subsection}{\numberline {2.6.8}Automate de scoring (\texttt {PadelScorer})}{43}{subsection.2.6.8}%
-\contentsline {subsection}{\numberline {2.6.9}Vue d'ensemble du flux de données}{43}{subsection.2.6.9}%
-\contentsline {section}{\numberline {2.7}Visualisation et restitution des données à l'interface utilisateur}{44}{section.2.7}%
-\contentsline {subsection}{\numberline {2.7.1}Introduction}{44}{subsection.2.7.1}%
-\contentsline {subsection}{\numberline {2.7.2}Architecture de communication DataAnalytics $\rightarrow $ Frontend}{44}{subsection.2.7.2}%
-\contentsline {subsubsection}{Schéma du flux de données}{44}{subsubsection*.111}%
-\contentsline {subsubsection}{Canaux de communication}{45}{subsubsection*.113}%
-\contentsline {subsubsection}{Format des données échangées}{45}{subsubsection*.115}%
-\contentsline {subsection}{\numberline {2.7.3}Agrégation et préparation des données côté backend}{46}{subsection.2.7.3}%
-\contentsline {subsection}{\numberline {2.7.4}Composants de visualisation côté client}{47}{subsection.2.7.4}%
-\contentsline {subsubsection}{Carte de chaleur de positionnement}{47}{subsubsection*.117}%
-\contentsline {subsubsection}{Courbes de vitesse et d'accélération}{47}{subsubsection*.118}%
-\contentsline {subsubsection}{Tableau des coups et score}{47}{subsubsection*.119}%
-\contentsline {subsubsection}{Lecteur vidéo annoté}{48}{subsubsection*.120}%
-\contentsline {section}{\numberline {2.8}Conclusion}{48}{section.2.8}%
-\contentsline {chapter}{\numberline {3}Réalisation de l'Interface SmartPlay}{49}{chapter.3}%
-\contentsline {chapter}{Réalisation de l'Interface SmartPlay}{49}{section*.121}%
-\contentsline {section}{\numberline {3.1}Introduction}{49}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Objectifs et Spécifications Fonctionnelles}{49}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Conception}{50}{section.3.3}%
-\contentsline {subsection}{\numberline {3.3.1}Diagramme de Cas d'Utilisation}{50}{subsection.3.3.1}%
-\contentsline {subsection}{\numberline {3.3.2}Diagramme de Séquences}{52}{subsection.3.3.2}%
-\contentsline {section}{\numberline {3.4}Choix Technologiques}{53}{section.3.4}%
-\contentsline {subsection}{\numberline {3.4.1}Environnement Matériel}{53}{subsection.3.4.1}%
-\contentsline {subsection}{\numberline {3.4.2}Outils et Technologies Utilisés}{54}{subsection.3.4.2}%
-\contentsline {section}{\numberline {3.5}Interface Utilisateur SmartPlay}{55}{section.3.5}%
-\contentsline {subsection}{\numberline {3.5.1}Chargement de Contenu Multimédia}{55}{subsection.3.5.1}%
-\contentsline {subsection}{\numberline {3.5.2}Panneau des Paramètres}{56}{subsection.3.5.2}%
-\contentsline {subsection}{\numberline {3.5.3}Démarrage de l'Analyse et Journal de Mission}{56}{subsection.3.5.3}%
-\contentsline {subsection}{\numberline {3.5.4}Affichage des Résultats — Tableau de Bord Tactique}{57}{subsection.3.5.4}%
-\contentsline {section}{\numberline {3.6}Workflow Utilisateur et Exemples d'Utilisation}{60}{section.3.6}%
-\contentsline {section}{\numberline {3.7}Conclusion}{61}{section.3.7}%
-\contentsline {chapter}{Conclusion Générale}{62}{chapter*.135}%
+\contentsline {section}{\numberline {1.6}TrackNet : Détection et Suivi d'Objets Sportifs Rapides}{9}{section.1.6}%
+\contentsline {subsection}{\numberline {1.6.1}Introduction}{9}{subsection.1.6.1}%
+\contentsline {subsection}{\numberline {1.6.2}Présentation des Versions}{9}{subsection.1.6.2}%
+\contentsline {subsection}{\numberline {1.6.3}Comparaison des Versions}{10}{subsection.1.6.3}%
+\contentsline {subsection}{\numberline {1.6.4}Justification du Choix de TrackNetV3}{11}{subsection.1.6.4}%
+\contentsline {section}{\numberline {1.7}Le Modèle YOLO (\textit {You Only Look Once})}{11}{section.1.7}%
+\contentsline {subsection}{\numberline {1.7.1}Principe de Fonctionnement}{12}{subsection.1.7.1}%
+\contentsline {subsection}{\numberline {1.7.2}Évolution et Versions Clés}{12}{subsection.1.7.2}%
+\contentsline {subsection}{\numberline {1.7.3}Application au Padel et aux Sports de Raquette}{13}{subsection.1.7.3}%
+\contentsline {section}{\numberline {1.8}Synthèse Comparative : YOLO et TrackNet}{13}{section.1.8}%
+\contentsline {subsection}{\numberline {1.8.1}Deux Paradigmes Complémentaires}{13}{subsection.1.8.1}%
+\contentsline {subsection}{\numberline {1.8.2}Comparaison Structurée}{14}{subsection.1.8.2}%
+\contentsline {subsection}{\numberline {1.8.3}Forces et Limites dans le Contexte du Padel}{14}{subsection.1.8.3}%
+\contentsline {subsection}{\numberline {1.8.4}Complémentarité et Choix Architecturaux du Projet}{15}{subsection.1.8.4}%
+\contentsline {section}{\numberline {1.9}Méthodologie de travail}{15}{section.1.9}%
+\contentsline {subsection}{\numberline {1.9.1}Organisation de la méthodologie adoptée}{15}{subsection.1.9.1}%
+\contentsline {subsection}{\numberline {1.9.2}Daily Update}{16}{subsection.1.9.2}%
+\contentsline {subsection}{\numberline {1.9.3}Weekly Meeting}{17}{subsection.1.9.3}%
+\contentsline {subsection}{\numberline {1.9.4}Planification des sprints}{17}{subsection.1.9.4}%
+\contentsline {subsection}{\numberline {1.9.5}Déroulement d’un sprint}{18}{subsection.1.9.5}%
+\contentsline {subsection}{\numberline {1.9.6}Avantages de la méthodologie adoptée}{19}{subsection.1.9.6}%
+\contentsline {section}{\numberline {1.10}Technologies utilisées}{19}{section.1.10}%
+\contentsline {subsection}{\numberline {1.10.1}Interface utilisateur}{19}{subsection.1.10.1}%
+\contentsline {subsection}{\numberline {1.10.2}Vision par ordinateur}{19}{subsection.1.10.2}%
+\contentsline {subsection}{\numberline {1.10.3}Analyse de données}{20}{subsection.1.10.3}%
+\contentsline {subsection}{\numberline {1.10.4}Intelligence artificielle}{20}{subsection.1.10.4}%
+\contentsline {subsection}{\numberline {1.10.5}Infrastructure et déploiement}{20}{subsection.1.10.5}%
+\contentsline {subsection}{\numberline {1.10.6}Fiche technique synthétique}{20}{subsection.1.10.6}%
+\contentsline {section}{\numberline {1.11}Conclusion}{20}{section.1.11}%
+\contentsline {chapter}{\numberline {2}Architecture de la solution}{21}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Introduction}{21}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Architecture générale du système}{21}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Vue externe du système (boîte noire)}{21}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}Vue interne du système (boîte blanche)}{22}{subsection.2.2.2}%
+\contentsline {subsection}{\numberline {2.2.3}Composants principaux}{23}{subsection.2.2.3}%
+\contentsline {subsection}{\numberline {2.2.4}Flux de données et intégration des modules}{23}{subsection.2.2.4}%
+\contentsline {paragraph}{Bilan de la section 2.1}{23}{paragraph*.35}%
+\contentsline {subsection}{\numberline {2.2.5}Détection du Terrain}{23}{subsection.2.2.5}%
+\contentsline {subsubsection}{Vue d'ensemble et positionnement dans le pipeline}{24}{subsubsection*.36}%
+\contentsline {subsubsection}{Les douze points de référence du terrain}{26}{subsubsection*.38}%
+\contentsline {subsubsection}{Deux modes de détection selon la configuration de captation}{27}{subsubsection*.41}%
+\contentsline {paragraph}{Mode statique : annotation manuelle pour caméra fixe}{27}{paragraph*.42}%
+\contentsline {paragraph}{Mode dynamique : détection automatique par YOLOv8-Pose}{27}{paragraph*.43}%
+\contentsline {subsubsection}{Comparaison synthétique des deux modes}{28}{subsubsection*.45}%
+\contentsline {subsubsection}{Architecture de détection : YOLOv8}{28}{subsubsection*.47}%
+\contentsline {paragraph}{Principe de la détection de pose appliquée au terrain}{28}{paragraph*.48}%
+\contentsline {paragraph}{Pipeline d'inférence}{28}{paragraph*.49}%
+\contentsline {paragraph}{Précision de localisation}{29}{paragraph*.50}%
+\contentsline {subsubsection}{Calcul de la transformation géométrique}{29}{subsubsection*.52}%
+\contentsline {subsubsection}{Robustesse aux situations critiques}{29}{subsubsection*.53}%
+\contentsline {paragraph}{Occlusion partielle des lignes}{29}{paragraph*.54}%
+\contentsline {paragraph}{Absence totale de détection}{29}{paragraph*.55}%
+\contentsline {subsubsection}{Synthèse}{30}{subsubsection*.56}%
+\contentsline {section}{\numberline {2.3}Suivi de la Balle par Réseau Convolutif Temporel}{30}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}Motivation et Choix Architectural}{30}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.2}Pipeline de Traitement}{30}{subsection.2.3.2}%
+\contentsline {subsubsection}{Entrée Séquentielle et Inférence par TrackNet}{30}{subsubsection*.57}%
+\contentsline {subsubsection}{Ensemble Temporel (\textit {Temporal Ensemble})}{32}{subsubsection*.59}%
+\contentsline {subsubsection}{Filtrage des Réflexions (\textit {Reflection Filtering})}{32}{subsubsection*.61}%
+\contentsline {subsubsection}{Détection des Rebonds (\textit {Bounce Detection})}{33}{subsubsection*.62}%
+\contentsline {subsection}{\numberline {2.3.3}Sorties finales du module BallTracker}{34}{subsection.2.3.3}%
+\contentsline {subsection}{\numberline {2.3.4}Perspectives d'amélioration}{34}{subsection.2.3.4}%
+\contentsline {subsection}{\numberline {2.3.5}Synthèse}{35}{subsection.2.3.5}%
+\contentsline {section}{\numberline {2.4}Suivi des Joueurs}{35}{section.2.4}%
+\contentsline {subsection}{\numberline {2.4.1}Vue d'ensemble et positionnement dans le pipeline}{35}{subsection.2.4.1}%
+\contentsline {subsection}{\numberline {2.4.2}Conversion BGR $\rightarrow $ RGB}{36}{subsection.2.4.2}%
+\contentsline {subsection}{\numberline {2.4.3}Détection par YOLO26 fine-tuné}{36}{subsection.2.4.3}%
+\contentsline {subsubsection}{Choix du modèle YOLO26}{37}{subsubsection*.66}%
+\contentsline {subsubsection}{Paramètres d'inférence}{37}{subsubsection*.67}%
+\contentsline {subsubsection}{Paramètres d'inférence}{37}{subsubsection*.68}%
+\contentsline {subsubsection}{Traitement en lot}{37}{subsubsection*.70}%
+\contentsline {subsection}{\numberline {2.4.4}Filtrage spatial par zone polygonale}{37}{subsection.2.4.4}%
+\contentsline {subsubsection}{Définition du polygone de terrain}{37}{subsubsection*.71}%
+\contentsline {subsubsection}{Test d'appartenance à la zone de jeu}{38}{subsubsection*.73}%
+\contentsline {subsubsection}{Association et suivi : algorithme d’identité stable}{38}{subsubsection*.74}%
+\contentsline {paragraph}{Initialisation et assignation des équipes}{38}{paragraph*.75}%
+\contentsline {paragraph}{Extraction du descripteur d’apparence}{39}{paragraph*.76}%
+\contentsline {paragraph}{Prédiction cinématique}{39}{paragraph*.78}%
+\contentsline {paragraph}{Matrice de coûts et algorithme Hongrois}{39}{paragraph*.80}%
+\contentsline {paragraph}{Mise à jour des pistes par moyenne exponentielle mobile}{40}{paragraph*.82}%
+\contentsline {subsection}{\numberline {2.4.5}Robustesse aux situations critiques}{40}{subsection.2.4.5}%
+\contentsline {subsubsection}{Occlusion et croisement de joueurs}{40}{subsubsection*.83}%
+\contentsline {subsubsection}{Disparition temporaire d'un joueur}{40}{subsubsection*.84}%
+\contentsline {subsubsection}{Nombre insuffisant de joueurs détectés}{41}{subsubsection*.85}%
+\contentsline {subsection}{\numberline {2.4.6}Extension par segmentation au niveau pixel}{41}{subsection.2.4.6}%
+\contentsline {subsection}{\numberline {2.4.7}Synthèse}{41}{subsection.2.4.7}%
+\contentsline {section}{\numberline {2.5}Modèle d'Estimation des Points Clés des Joueurs}{41}{section.2.5}%
+\contentsline {subsection}{\numberline {2.5.1}Introduction}{41}{subsection.2.5.1}%
+\contentsline {subsection}{\numberline {2.5.2}Architecture du Modèle YOLOv8-Pose}{42}{subsection.2.5.2}%
+\contentsline {subsection}{\numberline {2.5.3}Estimation des Points Clés}{42}{subsection.2.5.3}%
+\contentsline {subsection}{\numberline {2.5.4}Pipeline d’Inférence}{42}{subsection.2.5.4}%
+\contentsline {subsection}{\numberline {2.5.5}Adaptation au Contexte du Padel}{43}{subsection.2.5.5}%
+\contentsline {subsection}{\numberline {2.5.6}Applications dans SmartPlay}{43}{subsection.2.5.6}%
+\contentsline {subsection}{\numberline {2.5.7}Conclusion}{43}{subsection.2.5.7}%
+\contentsline {section}{\numberline {2.6}Module d'analyse biomécanique : \texttt {DataAnalytics}}{43}{section.2.6}%
+\contentsline {subsection}{\numberline {2.6.1}Vue d'ensemble et positionnement dans le pipeline}{43}{subsection.2.6.1}%
+\contentsline {subsection}{\numberline {2.6.2}Structure du référentiel de coordonnées}{43}{subsection.2.6.2}%
+\contentsline {subsection}{\numberline {2.6.3}Collecte des positions : projection homographique et conversion métrique}{44}{subsection.2.6.3}%
+\contentsline {subsubsection}{Projection homographique (\texttt {projected\_court.py})}{44}{subsubsection*.89}%
+\contentsline {subsubsection}{Conversion pixels $\to $ mètres}{44}{subsubsection*.90}%
+\contentsline {subsubsection}{Enregistrement par trame}{44}{subsubsection*.91}%
+\contentsline {subsection}{\numberline {2.6.4}Construction du DataFrame}{44}{subsection.2.6.4}%
+\contentsline {subsubsection}{Structure brute : 11 colonnes de base}{44}{subsubsection*.92}%
+\contentsline {subsubsection}{Colonne \texttt {time}}{45}{subsubsection*.94}%
+\contentsline {subsection}{\numberline {2.6.5}Pipeline de calcul cinématique}{45}{subsection.2.6.5}%
+\contentsline {subsubsection}{Les quatre intervalles temporels}{45}{subsubsection*.95}%
+\contentsline {subsubsection}{Déplacements $\Delta x_k$, $\Delta y_k$}{46}{subsubsection*.97}%
+\contentsline {subsubsection}{Vitesse par composante}{46}{subsubsection*.98}%
+\contentsline {subsubsection}{Vitesse normée (norme euclidienne)}{46}{subsubsection*.99}%
+\contentsline {subsubsection}{Accélération par composante}{46}{subsubsection*.101}%
+\contentsline {subsubsection}{Accélération normée}{46}{subsubsection*.102}%
+\contentsline {subsubsection}{Distance inter-trame}{47}{subsubsection*.104}%
+\contentsline {subsection}{\numberline {2.6.6}Structure complète du DataFrame enrichi}{47}{subsection.2.6.6}%
+\contentsline {subsection}{\numberline {2.6.7}Module \texttt {ShotCounter} --- Détection et classification des coups}{47}{subsection.2.6.7}%
+\contentsline {subsubsection}{Paramètres d'instanciation}{48}{subsubsection*.105}%
+\contentsline {subsubsection}{Logique de détection en trois phases}{48}{subsubsection*.107}%
+\contentsline {paragraph}{Phase 1 --- Calcul des vitesses pré/post impact.}{48}{paragraph*.108}%
+\contentsline {paragraph}{Phase 2 --- Critères de détection.}{48}{paragraph*.109}%
+\contentsline {paragraph}{Phase 3 --- Attribution au joueur le plus proche.}{48}{paragraph*.110}%
+\contentsline {subsubsection}{Classification des types de coups}{49}{subsubsection*.111}%
+\contentsline {subsection}{\numberline {2.6.8}Automate de scoring (\texttt {PadelScorer})}{49}{subsection.2.6.8}%
+\contentsline {subsection}{\numberline {2.6.9}Vue d'ensemble du flux de données}{49}{subsection.2.6.9}%
+\contentsline {section}{\numberline {2.7}Visualisation et restitution des données à l'interface utilisateur}{50}{section.2.7}%
+\contentsline {subsection}{\numberline {2.7.1}Introduction}{50}{subsection.2.7.1}%
+\contentsline {subsection}{\numberline {2.7.2}Architecture de communication DataAnalytics $\rightarrow $ Frontend}{50}{subsection.2.7.2}%
+\contentsline {subsubsection}{Schéma du flux de données}{50}{subsubsection*.114}%
+\contentsline {subsubsection}{Canaux de communication}{51}{subsubsection*.116}%
+\contentsline {subsubsection}{Format des données échangées}{51}{subsubsection*.118}%
+\contentsline {subsection}{\numberline {2.7.3}Agrégation et préparation des données côté backend}{52}{subsection.2.7.3}%
+\contentsline {subsection}{\numberline {2.7.4}Composants de visualisation côté client}{53}{subsection.2.7.4}%
+\contentsline {subsubsection}{Carte de chaleur de positionnement}{53}{subsubsection*.120}%
+\contentsline {subsubsection}{Courbes de vitesse et d'accélération}{53}{subsubsection*.121}%
+\contentsline {subsubsection}{Tableau des coups et score}{53}{subsubsection*.122}%
+\contentsline {subsubsection}{Lecteur vidéo annoté}{54}{subsubsection*.123}%
+\contentsline {section}{\numberline {2.8}Conclusion}{54}{section.2.8}%
+\contentsline {chapter}{\numberline {3}Réalisation de l'Interface SmartPlay}{55}{chapter.3}%
+\contentsline {chapter}{Réalisation de l'Interface SmartPlay}{55}{section*.124}%
+\contentsline {section}{\numberline {3.1}Introduction}{55}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Objectifs et Spécifications Fonctionnelles}{55}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Conception}{56}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Diagramme de Cas d'Utilisation}{56}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Diagramme de Séquences}{58}{subsection.3.3.2}%
+\contentsline {section}{\numberline {3.4}Choix Technologiques}{59}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Environnement Matériel}{59}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}Outils et Technologies Utilisés}{60}{subsection.3.4.2}%
+\contentsline {section}{\numberline {3.5}Interface Utilisateur SmartPlay}{61}{section.3.5}%
+\contentsline {subsection}{\numberline {3.5.1}Chargement de Contenu Multimédia}{61}{subsection.3.5.1}%
+\contentsline {subsection}{\numberline {3.5.2}Panneau des Paramètres}{62}{subsection.3.5.2}%
+\contentsline {subsection}{\numberline {3.5.3}Démarrage de l'Analyse et Journal de Mission}{62}{subsection.3.5.3}%
+\contentsline {subsection}{\numberline {3.5.4}Affichage des Résultats — Tableau de Bord Tactique}{63}{subsection.3.5.4}%
+\contentsline {section}{\numberline {3.6}Workflow Utilisateur et Exemples d'Utilisation}{66}{section.3.6}%
+\contentsline {section}{\numberline {3.7}Évaluation et Validation de la Solution}{67}{section.3.7}%
+\contentsline {subsection}{\numberline {3.7.1}Protocole de Validation}{67}{subsection.3.7.1}%
+\contentsline {subsection}{\numberline {3.7.2}Validation Fonctionnelle}{68}{subsection.3.7.2}%
+\contentsline {subsection}{\numberline {3.7.3}Évaluation des Performances}{68}{subsection.3.7.3}%
+\contentsline {subsection}{\numberline {3.7.4}Analyse des Résultats}{69}{subsection.3.7.4}%
+\contentsline {section}{\numberline {3.8}Discussion et Limites de la Solution}{69}{section.3.8}%
+\contentsline {subsection}{\numberline {3.8.1}Forces et Contributions de SmartPlay}{69}{subsection.3.8.1}%
+\contentsline {subsection}{\numberline {3.8.2}Limites Techniques Identifiées}{70}{subsection.3.8.2}%
+\contentsline {subsection}{\numberline {3.8.3}Contraintes Matérielles et Opérationnelles}{70}{subsection.3.8.3}%
+\contentsline {subsection}{\numberline {3.8.4}Perspectives d'Amélioration}{72}{subsection.3.8.4}%
+\contentsline {section}{\numberline {3.9}Conclusion}{72}{section.3.9}%
+\contentsline {chapter}{Conclusion Générale}{74}{chapter*.144}%
