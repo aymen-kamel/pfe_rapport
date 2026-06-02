@@ -12,32 +12,33 @@
 \contentsline {table}{\numberline {2.3}{\ignorespaces Paramètres d'inférence de YOLOv8-Pose pour la localisation des points de référence du terrain.}}{27}{table.caption.44}%
 \contentsline {table}{\numberline {2.4}{\ignorespaces Comparaison entre le Mode statique et le Mode dynamique}}{28}{table.caption.46}%
 \contentsline {table}{\numberline {2.5}{\ignorespaces Précision comparative des sources de localisation des points de référence.}}{29}{table.caption.51}%
-\contentsline {table}{\numberline {2.6}{\ignorespaces Comparaison des performances avant et après post-traitement}}{34}{table.caption.63}%
-\contentsline {table}{\numberline {2.7}{\ignorespaces Comparaison des performances des modèles TrackNet}}{35}{table.caption.64}%
-\contentsline {table}{\numberline {2.8}{\ignorespaces Paramètres d'inférence du détecteur YOLO pour la localisation des joueurs}}{37}{table.caption.69}%
-\contentsline {table}{\numberline {2.9}{\ignorespaces Composants principaux de YOLOv8-Pose}}{42}{table.caption.86}%
-\contentsline {table}{\numberline {2.10}{\ignorespaces Applications des points clés dans SmartPlay}}{43}{table.caption.87}%
-\contentsline {table}{\numberline {2.11}{\ignorespaces Dimensions réglementaires et repère de coordonnées du terrain.}}{44}{table.caption.88}%
-\contentsline {table}{\numberline {2.12}{\ignorespaces Colonnes de base du DataFrame brut.}}{45}{table.caption.93}%
-\contentsline {table}{\numberline {2.13}{\ignorespaces Intervalles temporels et niveaux de lissage associés.}}{45}{table.caption.96}%
-\contentsline {table}{\numberline {2.14}{\ignorespaces Plages de vitesse caractéristiques observées en padel.}}{46}{table.caption.100}%
-\contentsline {table}{\numberline {2.15}{\ignorespaces Plages d'accélération caractéristiques observées en padel.}}{47}{table.caption.103}%
-\contentsline {table}{\numberline {2.16}{\ignorespaces Paramètres de configuration du module \texttt {ShotCounter}.}}{48}{table.caption.106}%
-\contentsline {table}{\numberline {2.17}{\ignorespaces Flux entrée $\to $ traitement $\to $ sortie du module \texttt {DataAnalytics}.}}{49}{table.caption.113}%
-\contentsline {table}{\numberline {2.18}{\ignorespaces Canaux de communication entre \texttt {DataAnalytics}, le backend et le frontend.}}{51}{table.caption.117}%
-\contentsline {table}{\numberline {2.19}{\ignorespaces Correspondance donnée $\to $ composant de visualisation côté client.}}{53}{table.caption.119}%
+\contentsline {table}{\numberline {2.6}{\ignorespaces Comparaison des performances avant et après post-traitement}}{35}{table.caption.65}%
+\contentsline {table}{\numberline {2.7}{\ignorespaces Comparaison des performances des modèles TrackNet}}{35}{table.caption.66}%
+\contentsline {table}{\numberline {2.8}{\ignorespaces Paramètres d'inférence du détecteur YOLO pour la localisation des joueurs}}{37}{table.caption.71}%
+\contentsline {table}{\numberline {2.9}{\ignorespaces Composants principaux de YOLOv8-Pose}}{43}{table.caption.89}%
+\contentsline {table}{\numberline {2.10}{\ignorespaces Applications des points clés dans SmartPlay}}{44}{table.caption.90}%
+\contentsline {table}{\numberline {2.11}{\ignorespaces Flux de traitement du module DataAnalytics}}{45}{table.caption.91}%
+\contentsline {table}{\numberline {2.12}{\ignorespaces Constantes réglementaires FIP et bornes du référentiel terrain}}{46}{table.caption.93}%
+\contentsline {table}{\numberline {2.13}{\ignorespaces Colonnes de base du tableau de données brut}}{47}{table.caption.96}%
+\contentsline {table}{\numberline {2.14}{\ignorespaces Intervalles temporels et niveaux de lissage associés}}{48}{table.caption.97}%
+\contentsline {table}{\numberline {2.15}{\ignorespaces Plages de vitesse scalaire caractéristiques observées en match de padel}}{48}{table.caption.100}%
+\contentsline {table}{\numberline {2.16}{\ignorespaces Plages d'accélération scalaire caractéristiques observées en padel}}{49}{table.caption.102}%
+\contentsline {table}{\numberline {2.17}{\ignorespaces Paramètres de configuration du détecteur de frappes}}{50}{table.caption.105}%
+\contentsline {table}{\numberline {2.18}{\ignorespaces Récapitulatif du flux entrée $\to $ traitement $\to $ sortie du module DataAnalytics}}{52}{table.caption.110}%
+\contentsline {table}{\numberline {2.19}{\ignorespaces Canaux de communication entre \texttt {DataAnalytics}, le backend et le frontend.}}{54}{table.caption.114}%
+\contentsline {table}{\numberline {2.20}{\ignorespaces Correspondance donnée $\to $ composant de visualisation côté client.}}{56}{table.caption.116}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {3.1}{\ignorespaces Fonctionnalités primaires de l'interface SmartPlay}}{56}{table.caption.125}%
-\contentsline {table}{\numberline {3.2}{\ignorespaces Fonctionnalités secondaires de l'interface SmartPlay}}{56}{table.caption.126}%
-\contentsline {table}{\numberline {3.3}{\ignorespaces Configuration matérielle utilisée pour le développement de SmartPlay}}{59}{table.caption.129}%
-\contentsline {table}{\numberline {3.4}{\ignorespaces Stack Backend — Couche traitement IA}}{60}{table.caption.130}%
-\contentsline {table}{\numberline {3.5}{\ignorespaces Stack API — Couche communication}}{60}{table.caption.131}%
-\contentsline {table}{\numberline {3.6}{\ignorespaces Stack Frontend — Couche interface utilisateur}}{61}{table.caption.132}%
-\contentsline {table}{\numberline {3.7}{\ignorespaces KPIs globaux du match — Tableau de Bord Tactique}}{65}{table.caption.135}%
-\contentsline {table}{\numberline {3.8}{\ignorespaces Métriques biométriques et tactiques par joueur}}{65}{table.caption.136}%
-\contentsline {table}{\numberline {3.9}{\ignorespaces Latences mesurées sur CPU par module et par résolution d'entrée}}{68}{table.caption.138}%
-\contentsline {table}{\numberline {3.10}{\ignorespaces Impact de la résolution vidéo d'entrée sur la qualité de détection}}{69}{table.caption.139}%
-\contentsline {table}{\numberline {3.11}{\ignorespaces Exigences matérielles minimales et recommandées}}{70}{table.caption.140}%
-\contentsline {table}{\numberline {3.12}{\ignorespaces Comparaison des temps d'inférence CPU versus GPU par module}}{71}{table.caption.141}%
-\contentsline {table}{\numberline {3.13}{\ignorespaces Formats vidéo supportés et recommandations d'acquisition}}{71}{table.caption.142}%
-\contentsline {table}{\numberline {3.14}{\ignorespaces Conditions de luminosité et réglages recommandés pour l'acquisition}}{72}{table.caption.143}%
+\contentsline {table}{\numberline {3.1}{\ignorespaces Fonctionnalités primaires de l'interface SmartPlay}}{59}{table.caption.122}%
+\contentsline {table}{\numberline {3.2}{\ignorespaces Fonctionnalités secondaires de l'interface SmartPlay}}{59}{table.caption.123}%
+\contentsline {table}{\numberline {3.3}{\ignorespaces Configuration matérielle utilisée pour le développement de SmartPlay}}{62}{table.caption.126}%
+\contentsline {table}{\numberline {3.4}{\ignorespaces Stack Backend — Couche traitement IA}}{63}{table.caption.127}%
+\contentsline {table}{\numberline {3.5}{\ignorespaces Stack API — Couche communication}}{63}{table.caption.128}%
+\contentsline {table}{\numberline {3.6}{\ignorespaces Stack Frontend — Couche interface utilisateur}}{64}{table.caption.129}%
+\contentsline {table}{\numberline {3.7}{\ignorespaces KPIs globaux du match — Tableau de Bord Tactique}}{66}{table.caption.131}%
+\contentsline {table}{\numberline {3.8}{\ignorespaces Métriques biométriques et tactiques par joueur}}{67}{table.caption.134}%
+\contentsline {table}{\numberline {3.9}{\ignorespaces Latences mesurées sur CPU par module et par résolution d'entrée}}{71}{table.caption.139}%
+\contentsline {table}{\numberline {3.10}{\ignorespaces Impact de la résolution vidéo d'entrée sur la qualité de détection}}{72}{table.caption.140}%
+\contentsline {table}{\numberline {3.11}{\ignorespaces Exigences matérielles minimales et recommandées}}{73}{table.caption.141}%
+\contentsline {table}{\numberline {3.12}{\ignorespaces Comparaison des temps d'inférence CPU versus GPU par module}}{74}{table.caption.142}%
+\contentsline {table}{\numberline {3.13}{\ignorespaces Formats vidéo supportés et recommandations d'acquisition}}{74}{table.caption.143}%
+\contentsline {table}{\numberline {3.14}{\ignorespaces Conditions de luminosité et réglages recommandés pour l'acquisition}}{75}{table.caption.144}%

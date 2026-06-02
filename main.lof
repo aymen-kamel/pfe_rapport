@@ -11,11 +11,18 @@
 \contentsline {figure}{\numberline {2.5}{\ignorespaces Schéma des douze points de référence et des lignes reconstructibles du terrain de padel.}}{26}{figure.caption.39}%
 \contentsline {figure}{\numberline {2.6}{\ignorespaces Architecture du modèle TrackNet pour le suivi de la balle.}}{32}{figure.caption.58}%
 \contentsline {figure}{\numberline {2.7}{\ignorespaces Schéma de l'ensemble temporel par fenêtres glissantes et fusion pondérée des cartes de chaleur.}}{32}{figure.caption.60}%
-\contentsline {figure}{\numberline {2.8}{\ignorespaces Pipeline de suivi des joueurs et modules d'identification des équipes.}}{36}{figure.caption.65}%
-\contentsline {figure}{\numberline {2.9}{\ignorespaces Représentation schématique du terrain de padel avec la zone de filtrage polygonale.}}{38}{figure.caption.72}%
-\contentsline {figure}{\numberline {2.10}{\ignorespaces Machine à états finis du module \texttt {PadelScorer}.}}{49}{figure.caption.112}%
-\contentsline {figure}{\numberline {2.11}{\ignorespaces Flux de données de \texttt {DataAnalytics} vers le frontend.}}{50}{figure.caption.115}%
+\contentsline {figure}{\numberline {2.8}{\ignorespaces Détection automatique d’un rebond à partir de l’analyse de la trajectoire de la balle.}}{33}{figure.caption.63}%
+\contentsline {figure}{\numberline {2.9}{\ignorespaces Illustrations de la position de la balle à différents instants.}}{34}{figure.caption.64}%
+\contentsline {figure}{\numberline {2.10}{\ignorespaces Pipeline de suivi des joueurs et modules d'identification des équipes.}}{36}{figure.caption.67}%
+\contentsline {figure}{\numberline {2.11}{\ignorespaces Résultat du module de détection des joueurs. Chaque joueur est détecté par le modèle YOLO et associé à une équipe (T1 ou T2) ainsi qu'à un score de confiance. Les masques de segmentation permettent une localisation précise des joueurs sur le terrain.}}{38}{figure.caption.73}%
+\contentsline {figure}{\numberline {2.12}{\ignorespaces Représentation schématique du terrain de padel avec la zone de filtrage polygonale.}}{39}{figure.caption.75}%
+\contentsline {figure}{\numberline {2.13}{\ignorespaces Flux de données de \texttt {DataAnalytics} vers le frontend.}}{53}{figure.caption.112}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Diagramme de cas d'utilisation}}{57}{figure.caption.127}%
-\contentsline {figure}{\numberline {3.2}{\ignorespaces Panneau de configuration SmartPlay — zones 1 à 6}}{62}{figure.caption.133}%
-\contentsline {figure}{\numberline {3.3}{\ignorespaces Workflow utilisateur complet d'une session d'analyse SmartPlay}}{66}{figure.caption.137}%
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Diagramme de cas d'utilisation}}{60}{figure.caption.124}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Panneau de configuration SmartPlay — zones 1 à 6}}{65}{figure.caption.130}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Bloc A — KPIs globaux du match}}{67}{figure.caption.132}%
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Bloc B — Tableau de score}}{67}{figure.caption.133}%
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Bloc C — Cartes statistiques individuelles par joueur}}{68}{figure.caption.135}%
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Bloc D — Graphique de télémétrie de vitesse}}{68}{figure.caption.136}%
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Bloc E — Classification des frappes}}{69}{figure.caption.137}%
+\contentsline {figure}{\numberline {3.8}{\ignorespaces Workflow utilisateur complet d'une session d'analyse SmartPlay}}{69}{figure.caption.138}%
