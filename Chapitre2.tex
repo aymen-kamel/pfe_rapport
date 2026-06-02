@@ -1,4 +1,4 @@
-\chapter{Architecture de la solution}
+... ainsi, un rebond se manifeste naturellement comme un maximum local de cette coordonnée.\chapter{Architecture de la solution}
 
 \section{Introduction}
 
@@ -476,7 +476,12 @@ correspond à une \textbf{augmentation de la valeur de $Y$}
 (contrairement au repère mathématique conventionnel où le sol serait à
 $Y = 0$)~; ainsi, un rebond se manifeste naturellement comme un maximum
 local de cette coordonnée.
- 
+ \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{figures/bounce_detection.png}
+    \caption{Détection automatique d’un rebond à partir de l’analyse de la trajectoire de la balle.}
+    \label{fig:bounce_detection}
+\end{figure}
 Pour être validé comme un véritable rebond et non comme un artefact de
 prédiction, un pic détecté doit satisfaire deux critères
 complémentaires~:
@@ -514,7 +519,14 @@ Le module \textit{BallTracker} produit en sortie les indicateurs analytiques sui
     \item La vitesse instantanée de la balle, estimée par différentiation temporelle des segments de trajectoire filtrés.
     
 \end{itemize}
-
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.32\textwidth]{figures/frame1.png}
+    \includegraphics[width=0.32\textwidth]{figures/frame2.png}
+    \includegraphics[width=0.32\textwidth]{figures/frame3.png}
+    \caption{Illustrations de la position de la balle à différents instants.}
+    \label{fig:ball_sequence}
+\end{figure}
 \subsubsection*{ \textbf{Métriques d'Évaluation et Performances}}
 
 L'évaluation quantitative du système de suivi de balle a été réalisée sur notre base de données de test à l'aide de deux métriques académiques clés :
@@ -680,6 +692,12 @@ au traitement image par image.
 Le dernier lot incomplet en fin de vidéo est géré explicitement.
  
 % ─────────────────────────────────────────────────────────────
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.79\textwidth]{figures/player_detection_result.png}
+    \caption{Résultat du module de détection des joueurs. Chaque joueur est détecté par le modèle YOLO et associé à une équipe (T1 ou T2) ainsi qu'à un score de confiance. Les masques de segmentation permettent une localisation précise des joueurs sur le terrain.}
+    \label{fig:player_detection_result}
+\end{figure}
 \subsection{Filtrage spatial par zone polygonale}
  
 \subsubsection{Définition du polygone de terrain}
@@ -941,418 +959,583 @@ Les données squelettiques permettent ainsi d’enrichir l’analyse tactique et
 \subsection{Conclusion}
 
 Le module YOLOv8-Pose constitue un élément essentiel de SmartPlay. Grâce à l’estimation des points clés, le système dépasse la simple détection des joueurs et fournit une analyse avancée des mouvements, des gestes techniques et des comportements tactiques durant les matchs de padel.
-\section{Module d'analyse biomécanique : \texttt{DataAnalytics}}
-\label{sec:data_analytics}
-% ─────────────────────────────────────────────────────────────────────────────
+% ════════════════════════════════════════════════════════════════════════════
+\section{Module d'analyse biomécanique et tactique}
+% ════════════════════════════════════════════════════════════════════════════
 
-\subsection{Vue d'ensemble et positionnement dans le pipeline}
+\subsection{Objectifs et rôle du module}
 
-Le module \texttt{DataAnalytics} constitue le composant central de la chaîne
-d'analyse quantitative de \smartplayai. À chaque trame vidéo, il reçoit les positions
-projetées des quatre joueurs et de la balle dans le référentiel métrique du terrain,
-les accumule sous la forme de points de données horodatés, puis construit un
-\textit{DataFrame} enrichi de métriques cinématiques --- déplacements, vitesses,
-accélérations --- exploitées par l'ensemble des modules d'analyse et de visualisation
-situés en aval du pipeline.
+Le module d'analyse biomécanique et tactique constitue le noyau analytique de la plateforme
+SmartPlay. Son rôle fondamental est de transformer les coordonnées brutes des joueurs et de
+la balle — issues de la chaîne de détection et de suivi vidéo — en un ensemble structuré
+d'indicateurs quantitatifs exploitables à des fins d'analyse de la performance sportive.
 
-\subsection{Structure du référentiel de coordonnées}
+À partir des positions projetées dans le référentiel métrique du terrain, le module calcule
+un ensemble d'indicateurs cinématiques couvrant les déplacements, les vitesses, les
+accélérations et les distances parcourues. Ces grandeurs servent ensuite à identifier les
+événements de jeu, à caractériser les actions techniques réalisées par les joueurs et à
+alimenter un système automatisé de suivi du score.
 
-L'ensemble du pipeline de calcul repose sur un référentiel cartésien centré sur le
-milieu du filet. Les dimensions réglementaires FIP définissent les bornes du repère :
+Ce module assure ainsi la transition entre les données brutes issues de la vision par
+ordinateur et les informations à forte valeur ajoutée destinées aux entraîneurs, aux
+analystes et aux joueurs. Ses objectifs principaux se déclinent en quatre axes :
 
-\begin{table}[H]
-\centering
-\caption{Dimensions réglementaires et repère de coordonnées du terrain.}
-\label{tab:dimensions_repere}
-\renewcommand{\arraystretch}{1.4}
-\begin{tabular}{@{}llcl@{}}
-\toprule
-\textbf{Constante} & \textbf{Valeur} & \textbf{Axe} & \textbf{Description} \\
-\midrule
-\texttt{BASE\_LINE}          & 10\,m & $X$ & Largeur du terrain \\
-\texttt{SIDE\_LINE}          & 20\,m & $Y$ & Longueur totale \\
-\texttt{SERVICE\_SIDE\_LINE} &  3\,m & $Y$ & Distance ligne de service depuis le fond de court \\
-\texttt{NET\_SIDE\_LINE}     & 10\,m & $Y$ & Distance filet -- fond de court \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-L'origine $(0,\,0)$ est placée au centre du filet (milieu $k_6$--$k_7$). L'axe~$X$
-s'étend de $-5$\,m à $+5$\,m~; l'axe~$Y$ de $-10$\,m (demi-terrain supérieur) à
-$+10$\,m (demi-terrain inférieur).
-
-\subsection{Collecte des positions : projection homographique et conversion métrique}
-
-\subsubsection{Projection homographique (\texttt{projected\_court.py})}
-
-À chaque trame, la position du pied de chaque joueur --- exprimée en pixels dans
-la vidéo originale --- est projetée dans le plan du terrain par la matrice
-d'homographie $H$ calculée en amont :
-
-\begin{equation}
-  \tilde{\mathbf{p}}' = H\,\tilde{\mathbf{p}}, \qquad
-  \tilde{\mathbf{p}} = \begin{pmatrix} p_x \\ p_y \\ 1 \end{pmatrix},
-  \quad
-  \mathbf{p}' = \frac{1}{{\tilde{p}'_3}}\begin{pmatrix} \tilde{p}'_1 \\ \tilde{p}'_2 \end{pmatrix}
-  \label{eq:proj_hom}
-\end{equation}
-
-\subsubsection{Conversion pixels $\to$ mètres}
-
-La fonction \texttt{shift\_point\_origin} soustrait l'origine (centre du filet) puis
-applique le facteur d'échelle :
-
-\begin{equation}
-  x_m = \Delta p_x \cdot \frac{B_{\text{LINE}}}{W_{\text{court\_px}}},
-  \qquad
-  y_m = \Delta p_y \cdot \frac{S_{\text{LINE}}}{H_{\text{court\_px}}}
-  \label{eq:px_to_m}
-\end{equation}
-
-où $B_{\text{LINE}} = 10$\,m, $S_{\text{LINE}} = 20$\,m, et
-$W_{\text{court\_px}}$, $H_{\text{court\_px}}$ désignent les dimensions en pixels
-de la mini-carte du terrain.
-
-\subsubsection{Enregistrement par trame}
-
-Chaque trame produit un objet \texttt{DataPoint} composé des champs suivants :
-\begin{itemize}
-  \item \texttt{frame} : index entier de la trame ;
-  \item \texttt{players\_position} : liste de quatre instances
-        \texttt{PlayerPosition(id,\,(x\_m,\,y\_m))} ;
-  \item \texttt{ball\_position} : instance \texttt{BallPosition((x\_m,\,y\_m))}.
+\begin{itemize}[leftmargin=1.5em]
+  \item Projection et normalisation spatiale des positions détectées dans un référentiel
+        métrique standardisé ;
+  \item Construction d'un modèle de données temporel enrichi regroupant déplacements,
+        vitesses et accélérations à plusieurs granularités temporelles ;
+  \item Détection et classification automatique des événements de jeu (frappes, types
+        de coups) ;
+  \item Suivi automatisé du score conformément aux règles officielles du padel.
 \end{itemize}
 
-\subsection{Construction du DataFrame}
+% ────────────────────────────────────────────────────────────────────────────
+\subsection{Architecture générale du pipeline d'analyse}
+% ────────────────────────────────────────────────────────────────────────────
 
-\subsubsection{Structure brute : 11 colonnes de base}
+Le pipeline d'analyse repose sur une succession d'étapes permettant d'enrichir
+progressivement les données extraites de la vidéo. Chaque étape produit une représentation
+plus élaborée de l'information, depuis les coordonnées pixel brutes jusqu'à un ensemble
+complet d'indicateurs analytiques prêts à l'exportation.
 
-La méthode \texttt{into\_dict()} produit un dictionnaire de 11 colonnes avant
-tout enrichissement cinématique :
+Dans un premier temps, les positions des joueurs et de la balle sont exprimées dans un
+référentiel métrique associé au terrain de padel. Ces positions sont ensuite organisées
+sous la forme d'une structure de données temporelle permettant de suivre l'évolution de
+chaque entité au cours du match. Les données ainsi structurées servent ensuite au calcul
+des indicateurs biomécaniques, lesquels alimentent en aval les modules de détection des
+frappes, de reconnaissance des types de coups et de mise à jour automatique du score.
 
-\begin{table}[H]
-\centering
-\caption{Colonnes de base du DataFrame brut.}
-\label{tab:df_brut}
-\renewcommand{\arraystretch}{1.4}
-\begin{tabular}{@{}llll@{}}
-\toprule
-\textbf{Colonne} & \textbf{Type} & \textbf{Unité} & \textbf{Description} \\
-\midrule
-\texttt{frame}        & \texttt{int}   & ---    & Index de trame ($0, 1, 2, \ldots$) \\
-\texttt{player\{i\}\_x} & \texttt{float} & mètre  & Position $X$ du joueur $i$ \\
-\texttt{player\{i\}\_y} & \texttt{float} & mètre  & Position $Y$ du joueur $i$ \\
-\texttt{ball\_x}      & \texttt{float} & mètre  & Position $X$ de la balle \\
-\texttt{ball\_y}      & \texttt{float} & mètre  & Position $Y$ de la balle \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-Les valeurs manquantes, correspondant à un joueur non détecté, sont enregistrées
-comme \texttt{None}, puis converties en \texttt{NaN} via
-\texttt{pd.to\_numeric(\ldots, errors=\textquotesingle coerce\textquotesingle)}.
-
-\subsubsection{Colonne \texttt{time}}
-
-\begin{equation}
-  t[n] = \frac{n}{\text{fps}}
-  \label{eq:time}
-\end{equation}
-
-où $n$ est l'index de trame et $\text{fps} \in \{25, 30\}$ images par seconde.
-
-\subsection{Pipeline de calcul cinématique}
-
-\subsubsection{Les quatre intervalles temporels}
-
-Afin d'obtenir des estimations de vitesse à différentes granularités temporelles,
-le calcul est réalisé simultanément sur quatre intervalles $k \in \{1,2,3,4\}$ :
-
-\begin{equation}
-  \Delta t_k[n] = t[n] - t[n-k] = \frac{k}{\text{fps}}
-  \label{eq:delta_t}
-\end{equation}
+Le Tableau~\ref{tab:pipeline_dataanalytics} résume les six étapes séquentielles du pipeline
+ainsi que les formats de données produits à chaque niveau de traitement.
 
 \begin{table}[H]
-\centering
-\caption{Intervalles temporels et niveaux de lissage associés.}
-\label{tab:intervalles}
-\renewcommand{\arraystretch}{1.4}
-\begin{tabular}{@{}ccll@{}}
-\toprule
-\textbf{$k$} & \textbf{$\Delta t_k$ à 30\,fps} & \textbf{Lissage} & \textbf{Usage recommandé} \\
-\midrule
-1 & $\approx 33$\,ms  & Aucun    & Signal de référence ; bruit de détection élevé \\
-2 & $\approx 67$\,ms  & Faible   & Détection des changements dynamiques rapides \\
-3 & $\approx 100$\,ms & Modéré   & Analyse des transitions tactiques \\
-4 & $\approx 133$\,ms & Fort     & \textbf{Recommandé} --- lissage optimal pour l'analyse de performance \\
-\bottomrule
-\end{tabular}
+  \centering
+  \renewcommand{\arraystretch}{1.3}
+  \begin{tabularx}{\textwidth}{L{2.8cm} X L{4cm}}
+    \rowcolor{tablehead}
+    \textcolor{white}{\textbf{Étape}} &
+    \textcolor{white}{\textbf{Description}} &
+    \textcolor{white}{\textbf{Format de sortie}} \\
+    \rowcolor{rowalt}
+    Acquisition   & Réception des positions des joueurs et de la balle à chaque trame vidéo
+                  & Coordonnées pixel $(p_x, p_y)$ \\
+    Projection    & Transformation homographique et conversion en unités métriques
+                  & Coordonnées métriques $(x_m, y_m)$ \\
+    \rowcolor{rowalt}
+    Accumulation  & Construction d'un enregistrement par trame et empilement en série temporelle
+                  & Liste de $N$ enregistrements \\
+    Enrichissement & Calcul des déplacements, vitesses et accélérations sur 4 intervalles temporels
+                  & DataFrame de 179 colonnes \\
+    \rowcolor{rowalt}
+    Analyse événementielle & Détection des frappes, classification des coups, suivi du score
+                  & Événements horodatés + score \\
+    Export        & Sérialisation en fichier CSV pour exploitation post-match
+                  & Fichier \texttt{.csv} ($\approx 3{,}2$\,Mo/match) \\
+  \end{tabularx}
+  \caption{Flux de traitement du module DataAnalytics}
+  \label{tab:pipeline_dataanalytics}
 \end{table}
 
-Le choix $k=4$ est justifié par le fait qu'une fenêtre de 133\,ms correspond au seuil
-minimal du temps de réaction humain. Cette valeur lisse le bruit de détection
-($\pm 0{,}1$\,m entraîne une erreur de $\pm 3$\,m/s à $k=1$) sans introduire de
-retard perceptible dans la détection des changements de direction réels.
+% ────────────────────────────────────────────────────────────────────────────
+\subsection{Acquisition et structuration des données}
+% ────────────────────────────────────────────────────────────────────────────
 
-\subsubsection{Déplacements $\Delta x_k$, $\Delta y_k$}
+\subsubsection{Référentiel spatial du terrain}
+
+L'ensemble des calculs est réalisé dans un système de coordonnées métrique centré sur le
+filet. Ce choix garantit une symétrie naturelle entre les deux demi-terrains et simplifie
+les comparaisons entre équipes. Les dimensions réglementaires définies par la Fédération
+Internationale de Padel (FIP) fixent les bornes du référentiel :
+
+\begin{itemize}[leftmargin=1.5em]
+  \item L'axe $X$ (largeur du terrain) s'étend de $-5$\,m à $+5$\,m ;
+  \item L'axe $Y$ (longueur du terrain) s'étend de $-10$\,m à $+10$\,m.
+\end{itemize}
+
+Le Tableau~\ref{tab:constantes_fip} récapitule les constantes réglementaires FIP utilisées
+pour définir les bornes du référentiel.
+
+\begin{table}[H]
+  \centering
+  \renewcommand{\arraystretch}{1.3}
+  \begin{tabularx}{\textwidth}{L{3.5cm} C{2cm} C{1.5cm} X}
+    \rowcolor{tablehead}
+    \textcolor{white}{\textbf{Constante}} &
+    \textcolor{white}{\textbf{Valeur}} &
+    \textcolor{white}{\textbf{Axe}} &
+    \textcolor{white}{\textbf{Description}} \\
+    \rowcolor{rowalt}
+    \texttt{base\_line}         & 10\,m & $X$ & Demi-largeur du terrain \\
+    \texttt{side\_line}         & 20\,m & $Y$ & Longueur totale du terrain \\
+    \rowcolor{rowalt}
+    \texttt{service\_side\_line} & 3\,m  & $Y$ & Distance ligne de service au fond de court \\
+    \texttt{net\_side\_line}    & 10\,m & $Y$ & Distance filet au fond de court \\
+  \end{tabularx}
+  \caption{Constantes réglementaires FIP et bornes du référentiel terrain}
+  \label{tab:constantes_fip}
+\end{table}
+
+\subsubsection{Projection homographique des positions}
+
+La caméra placée en vue aérienne capture le terrain selon une perspective introduisant des
+déformations géométriques. Pour corriger ces distorsions et obtenir des coordonnées métriques
+fidèles, une transformation homographique est appliquée — représentation mathématique standard
+d'une projection plan-à-plan en vision par ordinateur.
+
+Formellement, un point $\mathbf{p} = (p_x, p_y)^\top$ exprimé en pixels est converti en
+coordonnées homogènes $\tilde{\mathbf{p}} = (p_x, p_y, 1)^\top$, puis projeté par la matrice
+d'homographie $H \in \mathbb{R}^{3 \times 3}$ calculée lors de l'étalonnage de la caméra :
 
 \begin{equation}
-  \Delta x_k[n] = x[n] - x[n-k], \qquad
-  \Delta y_k[n] = y[n] - y[n-k]
+  \tilde{\mathbf{p}}' = H \cdot \tilde{\mathbf{p}}, \qquad
+  \mathbf{p}' = \frac{1}{\tilde{p}'_3} \cdot \bigl(\tilde{p}'_1,\, \tilde{p}'_2\bigr)^\top
+  \label{eq:homographie}
+\end{equation}
+
+La conversion vers le référentiel métrique FIP s'effectue ensuite en soustrayant l'origine
+(centre du filet) et en appliquant les facteurs d'échelle correspondant aux dimensions
+réglementaires :
+
+\begin{equation}
+  x_m = \Delta p_x \cdot \frac{B_{\mathrm{LINE}}}{W_{\mathrm{terrain}}}, \qquad
+  y_m = \Delta p_y \cdot \frac{S_{\mathrm{LINE}}}{H_{\mathrm{terrain}}}
+  \label{eq:conversion_metrique}
+\end{equation}
+
+où $\Delta p_x$ et $\Delta p_y$ désignent les déplacements par rapport à l'origine dans la
+mini-carte, et $W_{\mathrm{terrain}}$, $H_{\mathrm{terrain}}$ sont les dimensions en pixels
+de cette mini-carte. On obtient ainsi, pour chaque joueur, une position $(x_m, y_m)$
+exprimée en mètres dans le référentiel centré sur le filet.
+
+\subsubsection{Structuration temporelle des observations}
+
+À chaque trame vidéo, le système constitue un enregistrement structuré regroupant l'ensemble
+des informations spatiales de l'instant considéré. Cet enregistrement comprend : l'indice de
+trame (identifiant entier incrémental), la liste des positions des quatre joueurs exprimées en
+coordonnées métriques, et la position de la balle (ou une valeur nulle si la balle n'est pas
+détectée).
+
+Ces enregistrements sont empilés au fil des trames pour constituer la série temporelle brute
+qui alimente l'étape d'enrichissement cinématique. Cette organisation facilite l'analyse
+dynamique des comportements individuels et collectifs au cours du match.
+
+% ────────────────────────────────────────────────────────────────────────────
+\subsection{Construction du modèle de données analytique}
+% ────────────────────────────────────────────────────────────────────────────
+
+L'ensemble des enregistrements accumulés est converti en un tableau de données tabulaire dont
+chaque ligne correspond à une trame vidéo. Dans sa forme brute, ce tableau comporte 11 colonnes
+de base décrites dans le Tableau~\ref{tab:colonnes_base}.
+
+\begin{table}[H]
+  \centering
+  \renewcommand{\arraystretch}{1.3}
+  \begin{tabularx}{\textwidth}{L{3.5cm} C{2cm} C{2cm} X}
+    \rowcolor{tablehead}
+    \textcolor{white}{\textbf{Colonne}} &
+    \textcolor{white}{\textbf{Type}} &
+    \textcolor{white}{\textbf{Unité}} &
+    \textcolor{white}{\textbf{Description}} \\
+    \rowcolor{rowalt}
+    \texttt{frame}                        & entier & — & Indice de trame (0, 1, 2, \ldots) \\
+    \texttt{player\{i\}\_x} ($i = 1..4$) & réel   & mètre & Position $X$ du joueur $i$ \\
+    \rowcolor{rowalt}
+    \texttt{player\{i\}\_y} ($i = 1..4$) & réel   & mètre & Position $Y$ du joueur $i$ \\
+    \texttt{ball\_x}                      & réel   & mètre & Position $X$ de la balle \\
+    \rowcolor{rowalt}
+    \texttt{ball\_y}                      & réel   & mètre & Position $Y$ de la balle \\
+  \end{tabularx}
+  \caption{Colonnes de base du tableau de données brut}
+  \label{tab:colonnes_base}
+\end{table}
+
+Chaque trame est associée à un horodatage absolu exprimé en secondes, calculé à partir de
+l'indice de trame $n$ et de la cadence d'acquisition $f_s \in \{25, 30\}$ images par
+seconde :
+
+\begin{equation}
+  t[n] = \frac{n}{f_s}
+  \label{eq:horodatage}
+\end{equation}
+
+En ce qui concerne la gestion des données manquantes, lors des phases d'occultation (joueur
+hors-champ, superposition de silhouettes), la détection peut échouer pour un ou plusieurs
+joueurs. Ces absences sont enregistrées comme valeurs nulles puis converties en valeurs
+indéfinies (\texttt{NaN}) lors de la construction du tableau. Ces valeurs manquantes sont
+propagées de façon cohérente lors du calcul des indicateurs cinématiques, garantissant
+qu'aucun artefact numérique n'est introduit dans les séries temporelles.
+
+Enfin, la structure tabulaire unifiée ainsi constituée comporte 179 colonnes au total,
+réparties en trois familles : 11 colonnes fixes (indices, horodatages, coordonnées),
+4 colonnes temporelles (intervalles $\Delta t_k$) et 164 colonnes cinématiques issues de
+l'enrichissement multi-intervalle décrit à la section suivante.
+
+% ────────────────────────────────────────────────────────────────────────────
+\subsection{Extraction des indicateurs biomécaniques}
+% ────────────────────────────────────────────────────────────────────────────
+
+L'enrichissement cinématique repose sur une stratégie multi-intervalle : les déplacements,
+vitesses et accélérations sont calculés simultanément sur quatre fenêtres temporelles
+correspondant à $k \in \{1, 2, 3, 4\}$ trames successives. L'intervalle temporel associé à
+chaque valeur de $k$ est défini par :
+
+\begin{equation}
+  \Delta t_k[n] = t[n] - t[n-k] = \frac{k}{f_s}
+  \label{eq:intervalle}
+\end{equation}
+
+Le Tableau~\ref{tab:niveaux_lissage} résume les quatre niveaux de lissage et leurs usages
+recommandés. Le choix $k = 4$ (fenêtre de 133\,ms) est justifié par le fait que cette durée
+correspond au seuil minimal du temps de réaction humain. Elle permet de réduire l'erreur de
+bruit de position sans introduire de retard perceptible dans la détection des vrais
+changements de direction.
+
+\begin{table}[H]
+  \centering
+  \renewcommand{\arraystretch}{1.3}
+  \begin{tabularx}{\textwidth}{C{1cm} C{2.5cm} C{2cm} X}
+    \rowcolor{tablehead}
+    \textcolor{white}{\textbf{$k$}} &
+    \textcolor{white}{\textbf{$\Delta t_k$ à 30\,fps}} &
+    \textcolor{white}{\textbf{Lissage}} &
+    \textcolor{white}{\textbf{Usage recommandé}} \\
+    \rowcolor{rowalt}
+    1 & $\approx 33$\,ms  & Aucun   & Signal de référence ; bruit de détection élevé \\
+    2 & $\approx 67$\,ms  & Faible  & Détection des changements dynamiques rapides \\
+    \rowcolor{rowalt}
+    3 & $\approx 100$\,ms & Modéré  & Analyse des transitions tactiques \\
+    4 & $\approx 133$\,ms & Fort    & Recommandé — lissage optimal pour la performance \\
+  \end{tabularx}
+  \caption{Intervalles temporels et niveaux de lissage associés}
+  \label{tab:niveaux_lissage}
+\end{table}
+
+\subsubsection{Analyse des déplacements}
+
+Le déplacement entre la trame $n-k$ et la trame $n$ est calculé, pour chaque composante,
+par différence arithmétique des positions :
+
+\begin{equation}
+  \Delta x_k[n] = x[n] - x[n-k], \qquad \Delta y_k[n] = y[n] - y[n-k]
   \label{eq:deplacement}
 \end{equation}
 
-\textbf{Unité :} mètre. Plage typique en padel : $[-3{,}0\;\text{m},\;+3{,}0\;\text{m}]$
-pour $k=4$ à 30\,fps.
+Ces grandeurs sont exprimées en mètres. Pour $k = 4$ à 30\,fps, les plages typiques
+observées en match de padel sont comprises entre $-30$\,cm et $+30$\,cm, reflétant les
+micro-ajustements posturaux et les déplacements courts caractéristiques de ce sport.
 
-\subsubsection{Vitesse par composante}
+\subsubsection{Analyse des vitesses}
+
+La vitesse instantanée est estimée par différences finies du premier ordre appliquées aux
+déplacements. Pour chacune des deux composantes :
 
 \begin{equation}
-  V_{x,k}[n] = \frac{\Delta x_k[n]}{\Delta t_k} = \frac{x[n]-x[n-k]}{k/\text{fps}},
-  \qquad
+  V_{x,k}[n] = \frac{\Delta x_k[n]}{\Delta t_k} = \frac{x[n] - x[n-k]}{k/f_s}
+  \label{eq:vitesse_x}
+\end{equation}
+
+\begin{equation}
   V_{y,k}[n] = \frac{\Delta y_k[n]}{\Delta t_k}
-  \label{eq:vitesse}
+  \label{eq:vitesse_y}
 \end{equation}
 
-\textbf{Unité :} m/s.
-
-\subsubsection{Vitesse normée (norme euclidienne)}
+La vitesse scalaire (norme euclidienne du vecteur vitesse) est définie par :
 
 \begin{equation}
-  V_{\text{norm},k}[n] = \sqrt{V_{x,k}[n]^2 + V_{y,k}[n]^2}
-  \label{eq:vnorm}
+  V_{\mathrm{norm},k}[n] = \sqrt{V_{x,k}[n]^2 + V_{y,k}[n]^2}
+  \label{eq:vitesse_norme}
 \end{equation}
+
+Le Tableau~\ref{tab:vitesses_padel} présente les plages de vitesse scalaire caractéristiques
+observées en match de padel.
 
 \begin{table}[H]
-\centering
-\caption{Plages de vitesse caractéristiques observées en padel.}
-\label{tab:vitesse_padel}
-\renewcommand{\arraystretch}{1.4}
-\begin{tabular}{@{}lc@{}}
-\toprule
-\textbf{Situation locomotrice} & \textbf{$V_{\text{norm}}$ (m/s)} \\
-\midrule
-Joueur immobile (phase d'attente)    & $0{,}0$ -- $0{,}3$ \\
-Déplacement latéral (pas chassés)    & $1{,}5$ -- $3{,}5$ \\
-Sprint en direction d'un smash       & $4{,}0$ -- $6{,}5$ \\
-Vitesse maximale relevée             & $\approx 7{,}0$ \\
-\bottomrule
-\end{tabular}
+  \centering
+  \renewcommand{\arraystretch}{1.3}
+  \begin{tabularx}{\textwidth}{X C{3.5cm}}
+    \rowcolor{tablehead}
+    \textcolor{white}{\textbf{Situation locomotrice}} &
+    \textcolor{white}{\textbf{$V_{\mathrm{norm}}$ (m/s)}} \\
+    \rowcolor{rowalt}
+    Joueur immobile (phase d'attente)    & $0{,}0 - 0{,}3$ \\
+    Déplacement latéral (pas chassés)    & $1{,}5 - 3{,}5$ \\
+    \rowcolor{rowalt}
+    Sprint en direction d'un smash       & $4{,}0 - 6{,}5$ \\
+    Vitesse maximale relevée             & $\approx 7{,}0$ \\
+  \end{tabularx}
+  \caption{Plages de vitesse scalaire caractéristiques observées en match de padel}
+  \label{tab:vitesses_padel}
 \end{table}
 
-\subsubsection{Accélération par composante}
+\subsubsection{Analyse des accélérations}
+
+L'accélération est obtenue par différences finies du second ordre appliquées aux vecteurs
+vitesse :
 
 \begin{equation}
-  A_{x,k}[n] = \frac{V_{x,k}[n] - V_{x,k}[n-k]}{\Delta t_k},
-  \qquad
+  A_{x,k}[n] = \frac{V_{x,k}[n] - V_{x,k}[n-k]}{\Delta t_k}
+  \label{eq:accel_x}
+\end{equation}
+
+\begin{equation}
   A_{y,k}[n] = \frac{V_{y,k}[n] - V_{y,k}[n-k]}{\Delta t_k}
-  \label{eq:acceleration}
+  \label{eq:accel_y}
 \end{equation}
 
-\textbf{Unité :} m/s².
-
-\subsubsection{Accélération normée}
+L'accélération scalaire correspondante est :
 
 \begin{equation}
-  A_{\text{norm},k}[n] = \sqrt{A_{x,k}[n]^2 + A_{y,k}[n]^2}
-  \label{eq:anorm}
+  A_{\mathrm{norm},k}[n] = \sqrt{A_{x,k}[n]^2 + A_{y,k}[n]^2}
+  \label{eq:accel_norme}
 \end{equation}
+
+Le Tableau~\ref{tab:accelerations_padel} répertorie les plages caractéristiques selon les
+événements biomécaniques observés en padel.
 
 \begin{table}[H]
-\centering
-\caption{Plages d'accélération caractéristiques observées en padel.}
-\label{tab:acceleration_padel}
-\renewcommand{\arraystretch}{1.4}
-\begin{tabular}{@{}lc@{}}
-\toprule
-\textbf{Événement biomécanique} & \textbf{$A_{\text{norm}}$ (m/s²)} \\
-\midrule
-Course en régime stabilisé           & $0{,}0$ -- $2{,}0$ \\
-Changement de direction              & $5{,}0$ -- $12{,}0$ \\
-Départ de sprint                     & $8{,}0$ -- $15{,}0$ \\
-Phase de frappe (bras, via points-clés) & $> 20{,}0$ \\
-\bottomrule
-\end{tabular}
+  \centering
+  \renewcommand{\arraystretch}{1.3}
+  \begin{tabularx}{\textwidth}{X C{3.5cm}}
+    \rowcolor{tablehead}
+    \textcolor{white}{\textbf{Événement biomécanique}} &
+    \textcolor{white}{\textbf{$A_{\mathrm{norm}}$ (m/s²)}} \\
+    \rowcolor{rowalt}
+    Course en régime stabilisé                              & $0{,}0 - 2{,}0$ \\
+    Changement de direction                                 & $5{,}0 - 12{,}0$ \\
+    \rowcolor{rowalt}
+    Départ de sprint                                        & $8{,}0 - 15{,}0$ \\
+    Phase de frappe (bras, via points squelettiques)        & $> 20{,}0$ \\
+  \end{tabularx}
+  \caption{Plages d'accélération scalaire caractéristiques observées en padel}
+  \label{tab:accelerations_padel}
 \end{table}
 
-\subsubsection{Distance inter-trame}
+\subsubsection{Distance parcourue et intensité de jeu}
 
-La distance inter-trame est calculée en utilisant systématiquement $k=1$
-(trames consécutives) :
-
-\begin{equation}
-  d[n] = \sqrt{(x[n]-x[n-1])^2 + (y[n]-y[n-1])^2}
-  \label{eq:distance}
-\end{equation}
-
-\textbf{Unité :} mètre. La distance totale parcourue sur une séquence s'obtient par
-\texttt{df[``player\{i\}\_distance''].sum()}, et se situe typiquement entre 50 et 200\,m
-pour un échange complet.
-
-\subsection{Structure complète du DataFrame enrichi}
-
-Le DataFrame final regroupe les familles de colonnes suivantes :
-
-\begin{description}[leftmargin=2.5cm, style=nextline]
-  \item[\textbf{11 colonnes fixes}]
-    \texttt{frame}, \texttt{time}, \texttt{player\{1-4\}\_\{x,y\}},
-    \texttt{ball\_\{x,y\}}.
-
-  \item[\textbf{4 colonnes temporelles}]
-    \texttt{delta\_time\{1,2,3,4\}} --- intervalles $\Delta t_k$ en secondes.
-
-  \item[\textbf{164 colonnes cinématiques}]
-    Pour chaque joueur $i \in \{1,2,3,4\}$ et chaque intervalle $k \in \{1,2,3,4\}$ :
-    $\Delta x_k$, $\Delta y_k$, $V_{x,k}$, $V_{y,k}$, $\Delta V_{x,k}$,
-    $\Delta V_{y,k}$, $A_{x,k}$, $A_{y,k}$, $V_{\text{norm},k}$,
-    $A_{\text{norm},k}$ (10 colonnes $\times$ 4 intervalles $\times$ 4 joueurs = 160)
-    + \texttt{player\{i\}\_distance} ($\times\,4 = 4$).
-\end{description}
+La distance inter-trame est calculée avec $k = 1$ (trames consécutives), afin de minimiser
+les erreurs de rectification liées aux trajectoires curvilignes :
 
 \begin{equation}
-  \text{Total colonnes} = 11 + 4 + 4 \times (4 \times 10 + 1) = \mathbf{179}
-  \label{eq:total_cols}
+  d[n] = \sqrt{\bigl(x[n] - x[n-1]\bigr)^2 + \bigl(y[n] - y[n-1]\bigr)^2}
+  \label{eq:distance_intertrame}
 \end{equation}
 
-\subsection{Module \texttt{ShotCounter} --- Détection et classification des coups}
-
-\subsubsection{Paramètres d'instanciation}
-
-\begin{table}[H]
-\centering
-\caption{Paramètres de configuration du module \texttt{ShotCounter}.}
-\label{tab:shotcounter_params}
-\renewcommand{\arraystretch}{1.4}
-\begin{tabular}{@{}lllp{6cm}@{}}
-\toprule
-\textbf{Paramètre} & \textbf{Valeur} & \textbf{Unité} & \textbf{Interprétation physique} \\
-\midrule
-\texttt{proximity\_px}             & 180   & px      & $\approx 1{,}5$\,m en vue drone (résolution 1080p) \\
-\texttt{cooldown\_frames}          &  25   & trames  & $\approx 0{,}83$\,s à 30\,fps \\
-\texttt{direction\_cos\_threshold} & $0{,}0$ & ---   & Changement d'orientation supérieur à $90°$ \\
-\texttt{speed\_change\_threshold}  & $1{,}6$ & ---   & Ratio vitesse post-impact / pré-impact \\
-\texttt{min\_ball\_speed\_px}      & $1{,}5$ & px/trame & Filtrage des micro-tremblements de détection \\
-\texttt{global\_cooldown\_frames}  &  12   & trames  & $\approx 0{,}4$\,s d'intervalle minimal entre deux coups \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\subsubsection{Logique de détection en trois phases}
-
-\paragraph{Phase 1 --- Calcul des vitesses pré/post impact.}
-Sur une fenêtre glissante de $W = 5$ trames de part et d'autre du moment analysé :
+La distance totale parcourue sur une séquence de $N$ trames s'obtient par sommation
+cumulative :
 
 \begin{equation}
-  \overline{V}_x^{\,\text{pre}} = \frac{1}{W-1} \sum_{i=t-W}^{t-2} \bigl(x[i+1] - x[i]\bigr)
-  \label{eq:pre_vel}
+  D_{\mathrm{tot}} = \sum_{n=1}^{N} d[n]
+  \label{eq:distance_totale}
 \end{equation}
 
-\paragraph{Phase 2 --- Critères de détection.}
-Un coup est détecté si au moins l'un des deux critères suivants est satisfait :
+Les valeurs typiques observées se situent entre 50 et 200\,m pour un échange complet, selon
+l'intensité et la durée du rallye. Combinée aux vitesses et aux accélérations, cette métrique
+permet d'évaluer la charge physique associée aux différentes phases de jeu.
+
+% ────────────────────────────────────────────────────────────────────────────
+\subsection{Analyse événementielle des échanges}
+% ────────────────────────────────────────────────────────────────────────────
+
+\subsubsection{Détection des frappes}
+
+La détection d'un impact raquette-balle repose sur une hypothèse physique fondamentale : une
+frappe se traduit par une discontinuité brutale du vecteur vitesse de la balle, caractérisée
+soit par un changement de direction marqué, soit par une variation soudaine de son énergie
+cinétique. L'algorithme opère en deux phases successives.
+
+Lors de la première phase, les vitesses pré- et post-impact sont estimées sur une fenêtre
+glissante de $W = 5$ trames de part et d'autre du moment analysé :
 
 \begin{equation}
-  \cos\theta = \frac{\overrightarrow{V}_{\text{pre}} \cdot
-                     \overrightarrow{V}_{\text{post}}}
-                    {\|\overrightarrow{V}_{\text{pre}}\|\,
-                     \|\overrightarrow{V}_{\text{post}}\|}
-  \label{eq:cos_theta}
+  \bar{V}^{\mathrm{pre}}_x = \frac{1}{W-1} \sum_{i=t-W}^{t-2} \bigl(x[i+1] - x[i]\bigr)
+  \label{eq:vitesse_pre}
 \end{equation}
 
-\begin{itemize}
-  \item \textbf{Changement de direction :} $\cos\theta < 0$ (angle d'inversion $> 90°$) ;
-  \item \textbf{Accélération brutale :}
-    $\|\overrightarrow{V}_{\text{post}}\| / \|\overrightarrow{V}_{\text{pre}}\| > 1{,}6$.
+et de façon symétrique pour la composante $y$ et la fenêtre post-impact. Lors de la seconde
+phase, un impact est validé si au moins l'un des deux critères suivants est vérifié :
+
+\begin{itemize}[leftmargin=1.5em]
+  \item \textbf{Changement de direction :} le cosinus de l'angle entre les vecteurs vitesse
+        pré- et post-impact est négatif, correspondant à une inversion de trajectoire
+        supérieure à 90° :
+        \begin{equation}
+          \cos\theta = \frac{\vec{V}_{\mathrm{pre}} \cdot \vec{V}_{\mathrm{post}}}%
+                            {\|\vec{V}_{\mathrm{pre}}\| \cdot \|\vec{V}_{\mathrm{post}}\|}
+                      < 0
+          \label{eq:cos_theta}
+        \end{equation}
+  \item \textbf{Accélération brutale :} le rapport des normes de vitesse post-impact et
+        pré-impact dépasse un seuil $\alpha > 1$ :
+        \begin{equation}
+          \frac{\|\vec{V}_{\mathrm{post}}\|}{\|\vec{V}_{\mathrm{pre}}\|} > \alpha, \qquad
+          \alpha = 1{,}6
+          \label{eq:seuil_acceleration}
+        \end{equation}
 \end{itemize}
 
-\paragraph{Phase 3 --- Attribution au joueur le plus proche.}
-La distance effective balle--joueur combine la proximité au centre de la boîte
-englobante et la proximité au poignet (lorsque les points-clés articulaires sont
-disponibles) :
+Un mécanisme de période réfractaire interdit la détection d'un second impact dans un
+intervalle minimal de $\approx 0{,}83$\,s à 30\,fps (25 trames), éliminant ainsi les faux
+positifs liés aux micro-oscillations de détection. Le Tableau~\ref{tab:params_detecteur}
+récapitule les paramètres de configuration du détecteur.
+
+\begin{table}[H]
+  \centering
+  \renewcommand{\arraystretch}{1.3}
+  \begin{tabularx}{\textwidth}{L{5cm} C{3cm} X}
+    \rowcolor{tablehead}
+    \textcolor{white}{\textbf{Paramètre}} &
+    \textcolor{white}{\textbf{Valeur}} &
+    \textcolor{white}{\textbf{Interprétation physique}} \\
+    \rowcolor{rowalt}
+    Seuil de proximité balle-joueur & 180\,px   & $\approx 1{,}5$\,m en vue drone (1080p) \\
+    Période réfractaire individuelle & 25 trames & $\approx 0{,}83$\,s à 30\,fps \\
+    \rowcolor{rowalt}
+    Seuil d'inversion directionnelle & $\cos\theta < 0$ & Angle d'inversion $> 90°$ \\
+    Seuil d'accélération $\alpha$    & 1,6       & Rapport vitesse post/pré-impact \\
+    \rowcolor{rowalt}
+    Vitesse minimale de la balle     & 12\,px/trame & Filtrage des micro-tremblements \\
+    Période réfractaire globale      & 12 trames & $\approx 0{,}4$\,s entre deux coups \\
+  \end{tabularx}
+  \caption{Paramètres de configuration du détecteur de frappes}
+  \label{tab:params_detecteur}
+\end{table}
+
+\subsubsection{Attribution des frappes aux joueurs}
+
+Une fois un impact détecté, il est attribué au joueur le plus vraisemblablement responsable
+de la frappe. Cette attribution repose sur une distance effective combinant deux mesures de
+proximité entre la balle et chaque joueur :
 
 \begin{equation}
-  d_{\text{eff}} = \min\!\bigl(d_{\text{centre}},\; d_{\text{poignet}}\bigr)
-  \label{eq:deff}
+  d_{\mathrm{eff}} = \min\bigl(d_{\mathrm{centre}},\; d_{\mathrm{poignet}}\bigr)
+  \label{eq:distance_effective}
 \end{equation}
 
-Le seuil de proximité est adaptatif : 150\,px en situation standard, porté à
-200--250\,px lors des phases de smash (vitesse balle élevée et $\cos\theta < 0{,}5$).
+où $d_{\mathrm{centre}}$ désigne la distance entre la balle et le centre de la boîte de
+détection du joueur, et $d_{\mathrm{poignet}}$ la distance entre la balle et le poignet du
+joueur (lorsque les points squelettiques articulaires sont disponibles). L'utilisation de la
+position du poignet améliore significativement la précision d'attribution lors des phases de
+smash.
 
 \subsubsection{Classification des types de coups}
 
-La méthode \texttt{classify\_shot()} délègue la classification au sous-module
-\texttt{PadelShotClassifier}, qui identifie le type de coup parmi les six catégories
-suivantes : \textit{Smash}, \textit{Bandeja}, \textit{Forehand}, \textit{Backhand},
-\textit{Volley} et \textit{Service}. L'extraction de caractéristiques analyse une
-fenêtre temporelle de $\pm 10$ trames (soit 700\,ms à 30\,fps) autour du point
-d'impact, en intégrant 21 distances balle--poignet, la hauteur relative de la balle
-par rapport à la tête et les angles articulaires épaule--coude--poignet.
+Chaque coup détecté est classifié en l'une des six catégories techniques du padel :
+Smash, Bandeja, Coup droit (\textit{Forehand}), Revers (\textit{Backhand}), Volley et
+Service. La classification s'appuie sur l'analyse d'une fenêtre temporelle de
+$\pm 10$ trames ($\approx 700$\,ms à 30\,fps) centrée sur le point d'impact. Le vecteur
+de caractéristiques extrait comprend :
 
-\subsection{Automate de scoring (\texttt{PadelScorer})}
+\begin{itemize}[leftmargin=1.5em]
+  \item les 21 distances balle-poignet calculées trame par trame dans la fenêtre d'analyse ;
+  \item la hauteur relative de la balle par rapport à la tête du joueur frappeur ;
+  \item les angles articulaires épaule-coude-poignet au moment de l'impact.
+\end{itemize}
 
-Le module \texttt{PadelScorer} implémente une machine à états finis (FSM) modélisant
-les règles de scoring du padel :
+Ces caractéristiques capturent à la fois la trajectoire de la balle et la cinématique du
+geste technique, permettant de distinguer des coups aussi proches que le smash et la
+bandeja, qui diffèrent principalement par la hauteur de contact et l'angle du bras.
 
-\begin{figure}[H]
-\centering
-\begin{tikzpicture}[
-  state/.style={draw, rounded corners=4pt, fill=lightgray,
-                minimum width=2.5cm, minimum height=1cm,
-                align=center, font=\small\bfseries},
-  arrow/.style={-{Latex[length=3mm]}, thick, black},
-  label/.style={font=\small\itshape}
-]
-  \node[state] (idle)   {IDLE};
-  \node[state, right=3cm of idle]  (play)  {IN\_PLAY};
-  \node[state, right=3cm of play]  (bounce){BOUNCED};
-  \node[state, below=1.5cm of play](ended) {POINT\\ENDED};
+% ────────────────────────────────────────────────────────────────────────────
+\subsection{Automatisation du scoring}
+% ────────────────────────────────────────────────────────────────────────────
 
-  \draw[arrow] (idle)   -- node[above, label]{hit}        (play);
-  \draw[arrow] (play)   -- node[above, label]{bounce(1)}  (bounce);
-  \draw[arrow] (bounce) -- node[right, label]{hit}         (play);
-  \draw[arrow] (bounce.south) -- node[right, label]{\footnotesize bounce(2, même côté)} (ended);
-  \draw[arrow] (ended.west)   -| node[below, label]{reset} (idle);
-\end{tikzpicture}
-\caption{Machine à états finis du module \texttt{PadelScorer}.}
-\label{fig:fsm_scorer}
-\end{figure}
+\subsubsection{Machine à états du score}
 
-La règle de point est conforme au règlement officiel du padel : deux rebonds
-consécutifs du même côté du filet concèdent le point à l'équipe adverse. Le score
-est affiché selon la progression tennis classique : $0 \to 15 \to 30 \to 40 \to
-\text{Jeu}$.
+Le suivi automatique du score est modélisé par une machine à états finis (FSM) à quatre
+états, qui implémente les règles officielles du padel. Les états sont les suivants :
 
-\subsection{Vue d'ensemble du flux de données}
+\begin{itemize}[leftmargin=1.5em]
+  \item \textbf{IDLE :} état initial, aucun échange en cours ;
+  \item \textbf{EN\_JEU :} la balle est en jeu après une frappe valide ;
+  \item \textbf{REBONDI :} la balle a effectué un premier rebond du côté d'une équipe ;
+  \item \textbf{POINT\_TERMINÉ :} un second rebond consécutif du même côté est détecté ;
+        le point est accordé à l'équipe adverse.
+\end{itemize}
+
+\subsubsection{Détermination automatique des points}
+
+La règle fondamentale du padel stipule que deux rebonds consécutifs du même côté du filet
+concèdent le point à l'équipe adverse. La FSM détecte cette condition par la transition
+\textsc{rebondi} $\to$ \textsc{point\_terminé}, puis réinitialise l'état vers \textsc{idle}
+pour le point suivant. Le score est suivi et affiché selon la progression tennis classique :
+$0 \to 15 \to 30 \to 40 \to \text{Jeu}$, avec gestion des égalités (\textit{deuce}) et des
+avantages, conformément au règlement officiel.
+
+% ────────────────────────────────────────────────────────────────────────────
+\subsection{Production et exploitation des données analytiques}
+% ────────────────────────────────────────────────────────────────────────────
+
+À l'issue du traitement complet d'une séquence vidéo, le module produit un fichier de données
+tabulaire au format CSV dont la taille est typiquement de l'ordre de 3,2\,Mo pour un match
+complet. Ce fichier constitue la source de données principale pour les modules d'exploitation
+situés en aval de la plateforme SmartPlay :
+
+\begin{itemize}[leftmargin=1.5em]
+  \item \textbf{Visualisation spatiale :} cartes de chaleur des positions, trajectoires des
+        joueurs sur le terrain ;
+  \item \textbf{Tableaux de bord de performance :} statistiques de vitesse, d'accélération
+        et de distance parcourue par joueur et par set ;
+  \item \textbf{Analyse tactique :} détection des patterns de jeu, analyse des zones de
+        frappe, séquences de coups ;
+  \item \textbf{Reporting post-match :} génération automatique de rapports synthétiques à
+        destination des entraîneurs.
+\end{itemize}
+
+% ────────────────────────────────────────────────────────────────────────────
+\subsection{Synthèse du module}
+% ────────────────────────────────────────────────────────────────────────────
+
+Le module d'analyse biomécanique et tactique constitue le pivot analytique de SmartPlay.
+Partant des coordonnées brutes en pixels issues de la détection vidéo, il produit un tableau
+de données enrichi de 179 colonnes structuré autour de quatre niveaux de lissage cinématique.
+La formule générale du nombre total de colonnes est :
+
+\begin{equation}
+  N_{\mathrm{col}} = \underbrace{11}_{\text{fixes}} + \underbrace{4}_{\text{temporelles}}
+  + \underbrace{4 \times (4 \times 10 + 1)}_{\text{cinématiques}} = 179
+  \label{eq:nb_colonnes}
+\end{equation}
+
+La stratégie multi-intervalle ($k \in \{1, 2, 3, 4\}$) offre un compromis flexible entre
+réactivité et stabilité du signal ; la fenêtre $k = 4$ (133\,ms) est recommandée pour
+l'analyse des performances car elle correspond au seuil minimal du temps de réaction humain
+et élimine le bruit de détection sans masquer les vrais événements biomécaniques.
+
+Le sous-module de détection des frappes enrichit ce flux cinématique par une analyse
+événementielle fondée sur la rupture du vecteur vitesse de la balle, et classe
+automatiquement chaque coup parmi six catégories techniques grâce à un vecteur de
+caractéristiques biomécaniques. Le module de suivi du score assure une automatisation
+complète de l'arbitrage via une machine à états finis conforme aux règles officielles du
+padel.
+
+L'ensemble de ces traitements s'exécute de manière incrémentale, trame par trame, ce qui
+permet une exploitation aussi bien en temps réel que lors d'analyses différées post-match.
+Le Tableau~\ref{tab:synthese_dataanalytics} présente une synthèse du flux
+entrée $\to$ traitement $\to$ sortie du module.
 
 \begin{table}[H]
-\centering
-\caption{Flux entrée $\to$ traitement $\to$ sortie du module \texttt{DataAnalytics}.}
-\label{tab:flux_analytics}
-\renewcommand{\arraystretch}{1.4}
-\begin{tabularx}{\textwidth}{@{}lXl@{}}
-\toprule
-\textbf{Étape} & \textbf{Description} & \textbf{Format} \\
-\midrule
-Entrée        & Positions des joueurs et de la balle (espace pixel vidéo) & \texttt{(px, py)} \\
-Projection    & Transformation homographique et conversion métrique        & \texttt{(x\_m, y\_m)} \\
-Accumulation  & Construction d'un objet \texttt{DataPoint} par trame ($N$ trames) & Liste de dictionnaires \\
-DataFrame brut & 11 colonnes $\times$ $N$ lignes                          & \texttt{pd.DataFrame} \\
-Enrichissement & 4 intervalles $\times$ 4 joueurs $\times$ 10 métriques   & 179 colonnes \\
-Export CSV    & \texttt{data\_new.csv} ($\approx 3{,}2$\,Mo pour un match complet) & \texttt{.csv} \\
-\bottomrule
-\end{tabularx}
+  \centering
+  \renewcommand{\arraystretch}{1.3}
+  \begin{tabularx}{\textwidth}{L{3.5cm} X L{3.5cm}}
+    \rowcolor{tablehead}
+    \textcolor{white}{\textbf{Étape}} &
+    \textcolor{white}{\textbf{Description}} &
+    \textcolor{white}{\textbf{Format}} \\
+    \rowcolor{rowalt}
+    Entrée        & Positions des joueurs et de la balle (espace pixel vidéo) & $(p_x, p_y)$ \\
+    Projection    & Transformation homographique et conversion métrique        & $(x_m, y_m)$ \\
+    \rowcolor{rowalt}
+    Accumulation  & Construction d'un enregistrement par trame ($N$ trames)   & Liste de dicts \\
+    DataFrame brut & 11 colonnes $\times$ $N$ lignes                          & \texttt{pd.DataFrame} \\
+    \rowcolor{rowalt}
+    Enrichissement & 4 intervalles $\times$ 4 joueurs $\times$ 10 métriques   & 179 colonnes \\
+    Export CSV    & Sérialisation complète du match                            & $\approx 3{,}2$\,Mo \\
+  \end{tabularx}
+  \caption{Récapitulatif du flux entrée $\to$ traitement $\to$ sortie du module DataAnalytics}
+  \label{tab:synthese_dataanalytics}
 \end{table}
 
-\begin{synthesebox}[Synthèse --- Module DataAnalytics]
-Le module \texttt{DataAnalytics} transforme les coordonnées brutes en pixels en un
-DataFrame de 179 colonnes structuré autour de quatre niveaux de lissage cinématique.
-La stratégie multi-intervalle $k \in \{1,2,3,4\}$ offre un compromis entre réactivité
-et lissage~; la valeur $k=4$ (fenêtre de 133\,ms) est recommandée pour l'analyse des
-performances. Le sous-module \texttt{ShotCounter} enrichit ce flux par la détection
-événementielle des coups et leur classification biomécanique en six catégories, tandis
-que \texttt{PadelScorer} assure le suivi du score via une FSM conforme aux règles
-officielles du padel.
-\end{synthesebox}
 
 % ─────────────────────────────────────────────────────────────────────────────
 \section{Visualisation et restitution des données à l'interface utilisateur}

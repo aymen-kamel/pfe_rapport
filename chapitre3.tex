@@ -489,12 +489,12 @@ complémentaires, accessibles depuis la vue \textit{Live Overview}.
 % FIGURE 4.4 — Tableau de Bord Tactique
 % Remplacez VOTRE_URL_IMAGE_4_4 par l'URL ou le chemin local de l'image
 % ─────────────────────────────────────────────────────────────────────────────
-\begin{figure}[H]
-    \centering
-      \maybeincludegraphics[width=0.9\textwidth]{images_chap3/statistic.jpeg}
-    \label{Tableau de Bord Tactique : vue complète du rapport SmartPlay
-           (KPIs, Scoreboard, Cartes joueurs, Télémétrie, Strike Classification)}
-\end{figure}
+%\begin{figure}[H]
+%   \centering
+%      \maybeincludegraphics[width=0.9\textwidth]{images_chap3/statistic.jpeg}
+%    \label{Tableau de Bord Tactique : vue complète du rapport SmartPlay
+%           (KPIs, Scoreboard, Cartes joueurs, Télémétrie, Strike Classification)}
+%\end{figure}
  
 \subsubsection*{Bloc A — KPIs Globaux du Match}
  
@@ -521,12 +521,26 @@ Dans l'exemple illustré, ces valeurs s'élèvent respectivement à \textbf{14 e
 \textbf{7 rebonds} et un \textbf{indice d'intensité de 5.6}, reflétant un match de densité
 modérée.
  
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.90\textwidth]{images_chap3/statistic_A.jpeg}
+  \caption{Bloc A — KPIs globaux du match}
+  \label{fig:blockA}
+\end{figure}
+
 \subsubsection*{Bloc B — Tableau de Score}
  
 Affichage du score en temps réel entre \textbf{Team Gold} (Opérateurs 3 \& 4) et
 \textbf{Team Blue} (Opérateurs 1 \& 2), avec un code couleur distinctif mis à jour
 automatiquement par le module de détection de points.
- 
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.90\textwidth]{images_chap3/statistic_B.jpeg}
+  \caption{Bloc B — Tableau de score}
+  \label{fig:blockB}
+\end{figure}
+
 \subsubsection*{Bloc C — Cartes Statistiques Individuelles (4 joueurs)}
  
 Chaque joueur est représenté par une carte statistique affichant neuf métriques biométriques
@@ -563,6 +577,13 @@ Le joueur affichant le meilleur rating est mis en valeur visuellement par un bad
 (Team Blue) se distingue avec \textbf{31 PTS} et un rating de tête, traduisant une
 domination tactique et physique sur le match.
  
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.90\textwidth]{images_chap3/statistic_C.jpeg}
+  \caption{Bloc C — Cartes statistiques individuelles par joueur}
+  \label{fig:blockC}
+\end{figure}
+
 \subsubsection*{Bloc D — Télémétrie de vitesse}
  
 Graphique linéaire multi-courbes généré par Plotly.js, représentant la vitesse de
@@ -576,12 +597,26 @@ Ce graphique interactif permet d'identifier :
   \item Les asymétries d'effort entre partenaires d'une même équipe ou entre les deux équipes
 \end{itemize}
  
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.90\textwidth]{images_chap3/statistic_D.jpeg}
+  \caption{Bloc D — Graphique de télémétrie de vitesse}
+  \label{fig:blockD}
+\end{figure}
+
 \subsubsection*{Bloc E — Strike Classification}
  
 Répartition des types de frappes par joueur, affichée sous forme de badges colorés
 comptabilisés pour chaque opérateur : SMASH, FOREHAND, BACKHAND, BANDEJA, LOB. Cette
 classification croise la trajectoire de la balle et la posture du joueur au moment de
 l'impact pour inférer automatiquement le type de frappe.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.90\textwidth]{images_chap3/statistic_E.jpeg}
+  \caption{Bloc E — Classification des frappes}
+  \label{fig:blockE}
+\end{figure}
  
 \subsubsection*{Bloc F — Historique des Opérations (Recent Operations)}
  
@@ -601,11 +636,13 @@ successives :
 % FIGURE 4.5 — Workflow utilisateur
 % Remplacez VOTRE_URL_IMAGE_4_5 par l'URL ou le chemin local de l'image
 % ─────────────────────────────────────────────────────────────────────────────
-\figureURL{VOTRE\_URL\_IMAGE\_4\_5}
-          {Workflow utilisateur complet d'une session d'analyse SmartPlay}
-          {fig:workflow}
-          {0.90}
- 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.90\textwidth]{images_chap3/place_holder.png}
+    \caption{Workflow utilisateur complet d'une session d'analyse SmartPlay}
+    \label{fig:workflow}
+\end{figure}
+
 \subsection*{Exemple d'utilisation 1 : Analyse post-match d'un tournoi}
  
 Un entraîneur reçoit la vidéo \texttt{.mp4} d'un match joué la veille lors d'un tournoi
