@@ -1,0 +1,26 @@
+# LaTeX build artifacts
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.lof
+*.log
+*.lot
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+*.idx
+*.ilg
+*.ind
+*.nav
+*.snm
+*.vrb
+texput.log
+
+# Stray local files
+dir_list.txt
+output.log
+test_out.txt

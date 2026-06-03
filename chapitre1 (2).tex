@@ -1,0 +1,765 @@
+\chapter{Cadre général du projet et état de l’art}
+
+\section{Introduction}
+
+Ce premier chapitre est consacré à la présentation de l’étude préalable du projet réalisé. Cette présentation commence d’abord par situer le projet dans son cadre général, puis nous présentons l’organisme d’accueil ainsi qu’une étude critique des solutions existantes dans le domaine de l’analyse vidéo sportive. Ensuite, nous décrivons la problématique traitée, la solution proposée et les objectifs visés. Enfin, nous concluons ce chapitre en exposant la méthodologie de travail adoptée ainsi que les technologies utilisées pour la conception et le développement de la plateforme SmartPlayAI.
+
+\section{Cadre général}
+
+Le projet de fin d’études consiste à réaliser une plateforme intelligente d’analyse vidéo dédiée au padel, baptisée SmartPlayAI. Cette solution permet d’exploiter des techniques avancées d’intelligence artificielle et de vision par ordinateur afin d’analyser automatiquement les matchs à partir de simples vidéos.
+
+La plateforme est capable de détecter les joueurs, de suivre la balle, d’identifier les frappes, de générer des statistiques détaillées et de proposer des recommandations tactiques aux joueurs et aux entraîneurs. L’objectif est de rendre l’analyse de performance plus accessible, plus rapide et plus précise, aussi bien pour les amateurs que pour les professionnels.
+\section{Présentation de l’organisme d’accueil}
+
+\subsection{Présentation de l’entreprise}
+
+Ultima est une startup tunisienne, implantée à Tunis, positionnée à l’avant-garde du développement de systèmes intelligents. Spécialisée dans l’intégration de solutions d’intelligence artificielle au domaine du sport, elle conçoit et déploie des produits à forte valeur ajoutée, couvrant la santé, la gestion de l’information des sports collectifs et l’automatisation des processus sportifs. Sa culture d’innovation et son expertise technique en font un environnement de travail dynamique et stimulant.
+
+
+
+\begin{figure}[H]
+    \centering
+    \maybeincludegraphics[width=0.45\textwidth]{images_chap1/logo.png}
+    \caption{Logo de l’entreprise Ultima}
+    \label{fig:logo_ultima}
+\end{figure}
+\subsection{Encadrement du projet}
+
+Le projet SmartPlayAI a été réalisé sous la supervision d’un encadrant académique et d’un encadrant professionnel, qui ont assuré le suivi technique et méthodologique du travail.
+
+\section{Présentation du projet}
+
+\subsection{Contexte du projet}
+
+Le padel connaît une croissance rapide à l’échelle mondiale. Cette discipline, qui combine des éléments du tennis et du squash, attire un nombre croissant de joueurs amateurs et professionnels.
+
+Cependant, contrairement à d’autres sports comme le football ou le basketball, les outils d’analyse automatisée pour le padel restent peu accessibles. Les analyses sont souvent réalisées manuellement, ce qui nécessite beaucoup de temps et d’expertise.
+
+Dans ce contexte, SmartPlayAI vise à démocratiser l’analyse de performance en proposant une solution intelligente capable d’extraire automatiquement des informations stratégiques à partir d’une simple vidéo.
+\subsection{Problématique}
+
+Le défi central de ce projet réside dans la conception d’un système capable d’analyser automatiquement des matchs de padel à partir de flux vidéo bruts, sans intervention humaine. Cette automatisation soulève plusieurs problématiques techniques interdépendantes.
+
+\paragraph{Détection et suivi des éléments de jeu}
+La faible taille de la balle, sa vitesse élevée ainsi que les phénomènes d’occlusion, combinés aux variations d’éclairage et d’angle de capture, rendent particulièrement complexe la détection fiable et le suivi continu des différentes entités du jeu, notamment les joueurs, la balle et les zones du terrain.
+
+\paragraph{Extraction de statistiques et d’indicateurs de performance}
+Les données visuelles brutes doivent être transformées en informations analytiques exploitables permettant d’évaluer les déplacements des joueurs, la dynamique des échanges ainsi que les comportements tactiques observés durant le match.
+
+\paragraph{Interprétation cohérente des événements de jeu}
+Le système doit être capable d’analyser les interactions spatio-temporelles entre les différentes entités détectées afin d’identifier et d’interpréter correctement les événements significatifs du match. Cette tâche demeure complexe en raison de la nature dynamique du jeu et des incertitudes pouvant apparaître lors des phases de détection et de suivi.
+
+\paragraph{Conditions d’acquisition et calibration}
+La variabilité des conditions d’éclairage, des angles de prise de vue et de la qualité des enregistrements affecte la stabilité des modèles de détection et de suivi. La calibration géométrique du dispositif de captation et l’estimation d’une homographie fiable entre le plan image et le plan du terrain constituent dès lors un préalable indispensable à toute mesure spatiale exploitable.
+
+\vspace{0.5cm}
+
+Ces différentes problématiques convergent vers la question centrale suivante :
+
+\begin{quote}
+\textbf{Comment concevoir un système intelligent capable d’analyser automatiquement un flux vidéo de match de padel, d’extraire des statistiques de performance avancées ainsi que des indicateurs tactiques fiables, tout en assurant une interprétation cohérente des événements de jeu observés durant le match ?}
+\end{quote}
+\section{Solution proposée}
+
+Ce projet propose la conception d’un système intelligent d’analyse automatisée des matchs de padel par exploitation de flux vidéo. La solution repose sur une architecture modulaire en pipeline structurée autour de cinq composants complémentaires.
+
+\paragraph{Détection visuelle}
+Des modèles d’apprentissage profond assurent la détection des joueurs, de la balle et des zones du terrain dans des scènes dynamiques et visuellement complexes.
+
+\paragraph{Suivi temporel}
+Un mécanisme de suivi multi-objets reconstruit les trajectoires des entités détectées de manière continue entre les images successives.
+
+\paragraph{Modélisation géométrique}
+Une transformation homographique établit la correspondance entre le référentiel image et le référentiel réel du terrain, permettant une localisation précise des entités dans les zones de jeu.
+
+\paragraph{Analyse événementielle}
+Une machine à états finis modélise les phases des échanges et leurs transitions, assurant une interprétation cohérente du déroulement du match.
+
+\paragraph{Génération de statistiques}
+Les données interprétées alimentent un module de production de métriques avancées : déplacements, trajectoires, zones d’activité et indicateurs tactiques, exploitables par les joueurs, entraîneurs et analystes.
+
+\vspace{0.5cm}
+
+En définitive, la solution proposée combine vision par ordinateur, analyse spatio-temporelle et modélisation logique afin de transformer des flux vidéo bruts en données analytiques exploitables pour le suivi des performances et l’analyse tactique des matchs de padel.
+
+\subsection{Objectifs du projet}
+
+L’objectif principal est de concevoir une plateforme capable d’analyser automatiquement les matchs de padel à partir de flux vidéo, en convertissant des données visuelles brutes en indicateurs de performance structurés et exploitables par les joueurs, les entraîneurs et les analystes sportifs. Cet objectif global se décline en trois objectifs spécifiques complémentaires :
+
+\textbf{Objectif 1 : Automatisation de l’analyse des matchs de padel}  
+
+Le premier objectif consiste à développer un système capable d’analyser automatiquement les matchs de padel à partir de vidéos. Ce système repose sur des techniques de vision par ordinateur permettant la détection et le suivi des joueurs, ainsi que l’identification de la balle et des événements clés du jeu. L’ensemble de ces informations est ensuite utilisé pour générer des statistiques fiables et des indicateurs de performance précis, reflétant le déroulement réel des matchs.
+
+\vspace{0.3cm}
+
+\textbf{Objectif 2 : Génération de recommandations personnalisées}  
+
+Le deuxième objectif vise à exploiter les données analytiques produites par le système afin de proposer des recommandations personnalisées. Ces recommandations ont pour but d’aider les joueurs et les entraîneurs à mieux comprendre leurs performances, à identifier leurs points faibles et à améliorer leurs stratégies tactiques. Cette approche permet d’apporter une valeur ajoutée en transformant les statistiques en insights exploitables.
+
+\vspace{0.3cm}
+
+\textbf{Objectif 3 : Conception d’une interface intuitive}  
+
+Enfin, le troisième objectif consiste à concevoir et développer une interface utilisateur ergonomique et intuitive. Cette interface permet de visualiser facilement les statistiques générées, de suivre l’analyse des matchs en temps réel et d’interpréter efficacement les données produites par le système. L’objectif est de rendre la plateforme accessible même aux utilisateurs non techniques tout en assurant une expérience fluide et interactive.
+
+\section{Étude de l'existant}
+
+Avant de détailler la conception de SmartPlayAI, il convient d’examiner les solutions déjà disponibles sur le marché de l’analyse vidéo sportive, afin d’en dégager les apports et les limites et de situer précisément la contribution de ce projet.
+
+\subsection{Solutions existantes}
+
+\subsubsection{Padelytics}
+Padelytics est une plateforme d'analyse de matchs de padel proposant la génération automatique de statistiques, de cartes de chaleur (\textit{heatmaps}) et de séquences vidéo synthétiques (\textit{highlights}). Elle s'appuie sur des algorithmes de vision par ordinateur pour détecter les joueurs et suivre la trajectoire de la balle. Son déploiement reste limité aux clubs équipés d'une infrastructure caméra compatible et son modèle tarifaire exclut de fait les structures amateur.
+
+\subsubsection{Hudl}
+Hudl est une plateforme multi-sport d'analyse vidéo largement adoptée dans les niveaux semi-professionnels et professionnels. Elle offre des outils de découpage vidéo, d'annotation tactique et de partage entre entraîneurs. Toutefois, son architecture généraliste ne prend pas en charge les spécificités du padel, notamment la détection des frappes et le suivi précis de la balle.
+
+\subsubsection{Dartfish}
+Dartfish est un logiciel d'analyse biomécanique et tactique utilisé dans les fédérations sportives nationales et les programmes olympiques. Il permet une analyse image par image et des superpositions comparatives. Son positionnement haut de gamme, sa complexité de prise en main et l'absence de modules dédiés au padel en limitent l'applicabilité dans ce contexte.
+
+\subsection{Analyse comparative des solutions existantes}
+
+Le tableau~\ref{tab:comparaison} présente une évaluation multicritère des solutions identifiées au regard des exigences fonctionnelles et non-fonctionnelles retenues pour SmartPlayAI.
+
+\begin{table}[H]
+\centering
+\caption{Comparaison multicritère des solutions existantes et de SmartPlayAI}
+\label{tab:comparaison}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{|p{4.5cm}|c|c|c|c|}
+\hline
+\textbf{Critère} & \textbf{Padelytics} & \textbf{Hudl} & \textbf{Dartfish} & \textbf{SmartPlayAI} \\
+\hline
+Spécialisation padel & \checkmark & \texttimes & \texttimes & \checkmark \\
+\hline
+Détection automatique des joueurs & \checkmark & \checkmark & \checkmark & \checkmark \\
+\hline
+Suivi de la balle & \checkmark & Partiel & Partiel & \checkmark \\
+\hline
+Détection des frappes & \checkmark & \texttimes & \texttimes & \checkmark \\
+\hline
+Génération de recommandations tactiques & Limité & \texttimes & \texttimes & \checkmark \\
+\hline
+Accessibilité aux structures amateur & \texttimes & \texttimes & \texttimes & \checkmark \\
+\hline
+Architecture modulaire et évolutive & Non documenté & \texttimes & \texttimes & \checkmark \\
+\hline
+Déploiement sans infrastructure dédiée & \texttimes & Partiel & \texttimes & \checkmark \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Bilan et positionnement de SmartPlayAI}
+
+L'analyse comparative met en évidence trois lacunes structurelles communes aux solutions examinées.
+
+\textbf{Barrière à l'entrée économique.} Les tarifs pratiqués par Padelytics, Hudl et Dartfish sont calibrés pour des organisations professionnelles ou semi-professionnelles, excluant les clubs amateurs et les académies de formation disposant de budgets opérationnels limités.
+
+\textbf{Déficit de spécialisation disciplinaire.} Hudl et Dartfish reposent sur des modèles génériques non adaptés aux contraintes cinématiques du padel : vitesse et trajectoire de balle spécifiques, configuration fermée du terrain, patterns de jeu en double. L'absence de détection des frappes dans ces deux solutions illustre ce manque d'adaptation.
+
+\textbf{Absence de recommandations tactiques automatisées.} Aucune solution existante ne propose de génération automatique de recommandations tactiques fondées sur l'analyse statistique des séquences de jeu. Padelytics offre une amorce fonctionnelle sur ce point, mais sans module d'inférence documenté ni personnalisation par profil de joueur.
+
+SmartPlayAI se positionne comme une réponse directe à ces trois lacunes. La solution combine une spécialisation disciplinaire complète pour le padel, une architecture modulaire permettant un déploiement progressif sans infrastructure lourde, et un moteur de recommandations tactiques fondé sur l'apprentissage automatique. Son modèle de déploiement vise explicitement l'accessibilité aux clubs amateurs, segment non couvert par les acteurs actuels du marché.
+\section{Modèles académiques de référence}
+
+L'analyse vidéo sportive repose aujourd'hui sur plusieurs techniques avancées de vision par ordinateur et d'intelligence artificielle. Parmi les nombreuses approches proposées dans la littérature scientifique, deux modèles sont particulièrement reconnus pour leurs performances dans la détection et le suivi d'objets sportifs : le modèle YOLO (You Only Look Once) et le modèle TrackNet.
+
+YOLO est largement utilisé pour la détection en temps réel des joueurs, de la balle et des différents éléments présents sur le terrain. Grâce à sa rapidité et à sa précision, il constitue l'une des solutions les plus populaires dans les systèmes modernes d'analyse sportive.
+
+De son côté, TrackNet est un modèle spécifiquement conçu pour le suivi de balle dans les vidéos sportives. Son architecture exploite les informations provenant de plusieurs images successives afin d'améliorer la localisation des balles rapides et de petite taille, souvent difficiles à détecter avec les méthodes conventionnelles.
+
+Ces deux modèles représentent aujourd'hui des références majeures dans le domaine de l'analyse vidéo sportive. Les sections suivantes présentent leurs principes de fonctionnement ainsi que leurs principales caractéristiques.
+% ════════════════════════════════════════════════════════════════════════════
+\section{TrackNet : Détection et Suivi d'Objets Sportifs Rapides}
+% ════════════════════════════════════════════════════════════════════════════
+
+% ────────────────────────────────────────────────────────────────────────────
+\subsection{Introduction}
+% ────────────────────────────────────────────────────────────────────────────
+
+Le suivi d'objets de petite taille se déplaçant à haute vitesse dans des vidéos
+sportives constitue l'un des problèmes les plus exigeants de la vision par
+ordinateur. Des objets tels que les balles de tennis ou les volants de badminton
+occupent rarement plus d'une dizaine de pixels à l'écran, subissent un
+\textbf{flou de mouvement} important à haute cadence, et peuvent être
+temporairement occultés par les joueurs, le filet ou d'autres obstacles. Les
+approches de détection généralistes, fondées sur des boîtes englobantes, se
+révèlent inadaptées à ces contraintes.
+
+C'est dans ce contexte qu'a émergé la famille de modèles \textbf{TrackNet},
+initialement développée pour le tennis puis étendue au badminton et à d'autres
+sports de raquette. L'idée centrale de TrackNet est de remplacer la détection par
+boîte englobante par la génération de \textbf{cartes de chaleur gaussiennes}
+(\textit{heatmaps}), permettant une localisation sub-pixel beaucoup plus précise.
+De plus, en analysant plusieurs images consécutives simultanément, le réseau
+apprend à exploiter le \textbf{contexte temporel} pour distinguer l'objet cible du
+bruit visuel et reconstruire des trajectoires cohérentes même en cas de détection
+partielle.
+
+Depuis sa première version en 2019, la série TrackNet a connu plusieurs évolutions
+majeures, chacune répondant aux limitations identifiées dans la version précédente.
+Ces améliorations successives ont porté sur la vitesse de traitement, la robustesse
+aux occlusions, et la compréhension du mouvement, jusqu'à atteindre des
+performances état de l'art en 2025.
+
+% ────────────────────────────────────────────────────────────────────────────
+\subsection{Présentation des Versions}
+% ────────────────────────────────────────────────────────────────────────────
+
+\textbf{TrackNetV1 (2019)} a posé les fondations de la série en adoptant une
+architecture encodeur-décodeur combinant VGG16 et U-Net pour générer des heatmaps
+gaussiennes. Le modèle prend en entrée plusieurs images consécutives et produit une
+carte de chaleur indiquant la position probable de l'objet. Il atteint un score F1
+de 98,5\,\% sur des séquences de tennis, mais sa vitesse de seulement 2,6 FPS le
+rend inutilisable en temps réel.
+
+\textbf{TrackNetV2 (2020)} a résolu le problème de vitesse en passant d'une
+architecture MISO (une seule sortie) à une architecture
+\textbf{MIMO (\textit{Multiple-In Multiple-Out})} : trois images en entrée
+produisent simultanément trois heatmaps en sortie. Cette refonte a multiplié la
+cadence par douze, atteignant 31,8 FPS, tout en réduisant la consommation mémoire
+GPU grâce à l'utilisation de tableaux 2D à la place de tableaux 3D.
+
+\textbf{TrackNetV3 (2023)} — version retenue dans ce projet — s'est concentré sur
+la gestion des \textbf{occlusions}, problématique restée sans réponse dans les
+versions précédentes. Il introduit un module de rectification de trajectoire par
+\textbf{inpainting} et intègre l'image de fond estimé comme données auxiliaires,
+permettant d'interpoler les positions manquantes et de mieux distinguer la cible
+des distractions visuelles. Ces apports sont détaillés dans la section suivante.
+
+\textbf{TrackNetV4 (2024)} a introduit les \textbf{Motion Attention Maps},
+générées par différence inter-images, pour guider le réseau vers les zones de
+mouvement actif. Ce mécanisme préserve les caractéristiques des petits objets lors
+des convolutions profondes mais souffre d'une ambiguïté directionnelle : la
+différence d'images indique qu'un mouvement a eu lieu, sans en préciser le sens.
+
+\textbf{TrackNetV5 (2025)} résout cette ambiguïté grâce au module
+\textbf{MDD (\textit{Motion Direction Decoupling})}, qui encode explicitement la
+direction du déplacement via des champs de polarité signés. Il ajoute également une
+tête de raffinement \textbf{R-STR} basée sur les Transformers pour exploiter le
+contexte spatio-temporel global. Ces innovations portent le score F1 à 0,9859 à
+114 FPS, définissant l'état de l'art actuel.
+
+% ────────────────────────────────────────────────────────────────────────────
+\subsection{Comparaison des Versions}
+% ────────────────────────────────────────────────────────────────────────────
+
+Le tableau suivant synthétise les caractéristiques et performances des différentes
+versions de TrackNet. La version \textbf{V3}, retenue pour ce projet, est mise en
+évidence en raison de son équilibre entre robustesse aux occlusions et complexité
+d'implémentation.
+
+\begin{table}[H]
+  \centering
+  \renewcommand{\arraystretch}{1.3}
+  \begin{tabularx}{\textwidth}{C{2cm} X C{3cm} C{2cm} C{2cm}}
+    \rowcolor{tablehead}
+    \textcolor{white}{\textbf{Version}} &
+    \textcolor{white}{\textbf{Innovation Principale}} &
+    \textcolor{white}{\textbf{Gestion Occlusions}} &
+    \textcolor{white}{\textbf{Vitesse}} &
+    \textcolor{white}{\textbf{Score F1}} \\
+    \rowcolor{rowalt}
+    V1 (2019) &
+    Encodeur-Décodeur VGG16 + U-Net, heatmaps gaussiennes &
+    Aucune &
+    2,6 FPS &
+    98,5\,\% \\
+    V2 (2020) &
+    Architecture MIMO, 3 heatmaps en sortie simultanées &
+    Aucune &
+    31,8 FPS &
+    — \\
+    \rowcolor{tablehead}
+    \textcolor{white}{\textbf{V3 (2023)}} &
+    \textcolor{white}{\textbf{Inpainting de trajectoire + fond estimé comme donnée auxiliaire}} &
+    \textcolor{white}{\textbf{Interpolation des trames manquantes}} &
+    \textcolor{white}{\textbf{Temps réel}} &
+    \textcolor{white}{\textbf{Meilleure robustesse}} \\
+    \rowcolor{rowalt}
+    V4 (2024) &
+    Motion Attention Maps (différence inter-images) &
+    Partielle (attention visuelle) &
+    Temps réel &
+    — \\
+    V5 (2025) &
+    Module MDD + tête R-STR (Transformer) &
+    Récupération spatio-temporelle &
+    114 FPS &
+    0,9859 \\
+  \end{tabularx}
+  \caption{Comparaison des versions de TrackNet — performances et innovations}
+  \label{tab:tracknet_versions}
+\end{table}
+
+% ────────────────────────────────────────────────────────────────────────────
+\subsection{Justification du Choix de TrackNetV3}
+% ────────────────────────────────────────────────────────────────────────────
+
+Le choix de \textbf{TrackNetV3} pour ce projet repose sur plusieurs considérations
+complémentaires. D'une part, la problématique des occlusions est particulièrement
+présente dans le contexte sportif visé — les échanges rapides impliquent
+fréquemment des passages de la balle derrière les joueurs ou les filets. TrackNetV3
+est la première version de la série à traiter ce problème de manière explicite, via
+son module d'inpainting de trajectoire.
+
+D'autre part, l'intégration de \textbf{l'image de fond estimé} comme donnée
+auxiliaire constitue une amélioration ciblée et interprétable, qui améliore la
+discrimination entre l'objet cible et les distractions sans alourdir
+significativement l'architecture. Comparé à V4 et V5, TrackNetV3 présente une
+complexité architecturale moindre, ce qui facilite son adaptation, son entraînement
+et son débogage dans le cadre d'un projet de fin d'études à ressources limitées.
+
+% ════════════════════════════════════════════════════════════════════════════
+\section{Le Modèle YOLO (\textit{You Only Look Once})}
+% ════════════════════════════════════════════════════════════════════════════
+
+Introduit en 2016 par Joseph Redmon et ses collaborateurs, le modèle
+\textbf{YOLO} (\textit{You Only Look Once}) a marqué un changement de paradigme
+dans le domaine de la détection d'objets. Contrairement aux méthodes
+traditionnelles telles que R-CNN, qui reposent sur un pipeline à plusieurs étapes
+— proposition de régions, extraction de caractéristiques, puis classification —
+YOLO traite la détection comme un problème de régression unique, en parcourant
+l'image entière en une seule passe réseau. Cette conception lui confère des vitesses
+de traitement en temps réel remarquables, qui en ont fait la référence pour les
+applications sportives.
+
+% ────────────────────────────────────────────────────────────────────────────
+\subsection{Principe de Fonctionnement}
+% ────────────────────────────────────────────────────────────────────────────
+
+L'architecture de YOLO repose sur la division de l'image d'entrée en une grille de
+cellules $S \times S$. Lorsque le centre d'un objet se trouve dans une cellule
+donnée, c'est cette cellule qui est responsable de sa détection. Pour chaque
+cellule, le modèle prédit simultanément trois types d'informations :
+
+\begin{itemize}[leftmargin=1.5em]
+  \item \textbf{les coordonnées des boîtes de délimitation} (\textit{bounding
+        boxes}), encodant la position et les dimensions de l'objet détecté ;
+  \item \textbf{un score de confiance} exprimant la probabilité qu'un objet soit
+        effectivement présent dans la boîte prédite ;
+  \item \textbf{les probabilités de classe}, permettant d'identifier la nature de
+        l'objet (joueur, balle, arbitre, etc.).
+\end{itemize}
+
+Cette formulation unifiée élimine la redondance des pipelines multi-étapes et
+réduit considérablement la latence d'inférence, ce qui est essentiel pour
+l'analyse vidéo sportive en temps réel.
+
+% ────────────────────────────────────────────────────────────────────────────
+\subsection{Évolution et Versions Clés}
+% ────────────────────────────────────────────────────────────────────────────
+
+Depuis sa création, la famille YOLO a connu de nombreuses itérations qui
+améliorent continuellement le compromis entre précision et vitesse. Les versions
+les plus significatives dans le contexte sportif sont les suivantes.
+
+\textbf{YOLOv3 et YOLOv4} ont introduit la détection multi-échelle, permettant de
+localiser simultanément des objets de tailles très différentes au sein d'une même
+image. YOLOv4 y ajoute des techniques d'augmentation de données telles que le
+Mosaic, particulièrement utile pour entraîner le modèle sur des configurations
+variées rencontrées sur un terrain de sport.
+
+\textbf{YOLOv8}, largement adopté dans les systèmes d'analyse sportive actuels,
+propose une architecture \textit{anchor-free} — sans ancres prédéfinies — ainsi
+qu'une tête de détection découplée séparant la prédiction de la classe de celle des
+coordonnées. Cette architecture améliore la précision de localisation pour des
+objets aussi bien grands (joueurs) que petits (balle).
+
+\textbf{YOLOv10} marque une évolution importante pour le déploiement en
+supprimant le besoin de post-traitement par NMS
+(\textit{Non-Maximum Suppression}). Cette détection de bout en bout réduit la
+latence d'inférence et simplifie le pipeline de traitement, ce qui est avantageux
+pour les systèmes embarqués ou diffusés en direct.
+
+\textbf{YOLOv12 et YOLO26}, les versions les plus récentes, intègrent des
+mécanismes d'attention spatiale (\textit{Area Attention}) et des optimisations pour
+le calcul en périphérie (\textit{edge computing}). Ces avancées permettent de gérer
+des scènes visuelles complexes et des mouvements rapides tout en maintenant une
+compatibilité avec des appareils à ressources limitées.
+
+Le tableau~\ref{tab:yolo_versions} synthétise les principales contributions de
+chaque version.
+
+\begin{table}[H]
+  \centering
+  \renewcommand{\arraystretch}{1.3}
+  \begin{tabularx}{\textwidth}{C{2cm} X X C{2.8cm}}
+    \rowcolor{tablehead}
+    \textcolor{white}{\textbf{Version}} &
+    \textcolor{white}{\textbf{Innovation Principale}} &
+    \textcolor{white}{\textbf{Apport pour le Sport}} &
+    \textcolor{white}{\textbf{Architecture}} \\
+    \rowcolor{rowalt}
+    v3 / v4 &
+    Détection multi-échelle, augmentation Mosaic &
+    Objets de tailles variées (joueurs + balle) &
+    Anchor-based \\
+    v8 &
+    Tête découplée, architecture \textit{anchor-free} &
+    Précision de localisation accrue &
+    Anchor-free \\
+    \rowcolor{rowalt}
+    v10 &
+    Suppression du NMS, détection bout en bout &
+    Réduction de la latence d'inférence &
+    Anchor-free \\
+    v12 / 26 &
+    Area Attention, optimisation \textit{edge computing} &
+    Scènes complexes, déploiement embarqué &
+    Transformer \\
+  \end{tabularx}
+  \caption{Évolution des principales versions de la famille YOLO et leur pertinence
+           pour l'analyse sportive}
+  \label{tab:yolo_versions}
+\end{table}
+
+% ────────────────────────────────────────────────────────────────────────────
+\subsection{Application au Padel et aux Sports de Raquette}
+% ────────────────────────────────────────────────────────────────────────────
+
+Dans des disciplines comme le football ou le padel, YOLO constitue la référence
+pour la détection et le suivi multi-entités. La balle demeure l'objet le plus
+difficile à détecter en raison de sa petite taille et de sa vitesse élevée ;
+l'utilisation de résolutions d'entrée élevées (par exemple $1280 \times 1280$
+pixels) permet néanmoins d'extraire des informations spatiales suffisamment
+précises pour le suivi.
+
+Pour le padel spécifiquement, la complexité des arrière-plans — vitres
+transparentes laissant voir le public, grilles métalliques, lignes de terrain
+superposées — rend la tâche de détection particulièrement exigeante. YOLO y
+apporte une réponse robuste grâce à sa capacité à traiter simultanément les
+joueurs, les arbitres et la balle dans une même passe réseau.
+
+Afin de garantir la continuité du suivi malgré les occlusions fréquentes entre
+joueurs, YOLO est généralement couplé à des algorithmes de ré-identification tels
+que ByteTrack ou DeepSORT. Ces algorithmes maintiennent des identifiants uniques
+pour chaque acteur du match d'une image à l'autre, permettant de reconstruire des
+trajectoires cohérentes même lors de passages occultés.
+
+% ════════════════════════════════════════════════════════════════════════════
+\section{Synthèse Comparative : YOLO et TrackNet}
+% ════════════════════════════════════════════════════════════════════════════
+
+Les deux familles de modèles présentées dans les sections précédentes — YOLO et
+TrackNet — abordent la problématique du suivi d'objets sportifs selon des philosophies
+fondamentalement différentes. L'une est généraliste et orientée détection multi-entités,
+l'autre est spécialisée dans la localisation précise d'objets de petite taille à haute
+vitesse. Comprendre leurs forces et limitations respectives est essentiel pour justifier
+les choix architecturaux retenus dans ce projet.
+
+% ────────────────────────────────────────────────────────────────────────────
+\subsection{Deux Paradigmes Complémentaires}
+% ────────────────────────────────────────────────────────────────────────────
+
+YOLO adopte une approche de détection par régression directe : l'image est divisée en
+grille et chaque cellule prédit simultanément la présence, la position et la classe de
+tous les objets qu'elle contient. Ce paradigme est extrêmement efficace pour détecter
+des entités multiples et de tailles variées — joueurs, arbitres, filet — en une seule
+passe réseau. En revanche, il traite chaque image de manière indépendante, sans
+exploiter explicitement la continuité temporelle entre les trames.
+
+TrackNet, à l'inverse, repose sur un paradigme de localisation par heatmap
+temporelle : il analyse plusieurs images consécutives pour inférer la trajectoire d'un
+objet unique à partir du contexte de mouvement. Cette dépendance temporelle est
+précisément ce qui lui permet de gérer le flou de mouvement et les occlusions, là où
+YOLO échoue à maintenir la cohérence du suivi. En contrepartie, TrackNet n'est pas
+conçu pour la détection multi-classes simultanée.
+
+% ────────────────────────────────────────────────────────────────────────────
+\subsection{Comparaison Structurée}
+% ────────────────────────────────────────────────────────────────────────────
+
+Le tableau~\ref{tab:yolo_vs_tracknet} met en regard les caractéristiques clés des deux
+approches selon les critères les plus pertinents pour l'analyse vidéo en padel.
+
+\begin{table}[H]
+  \centering
+  \renewcommand{\arraystretch}{1.3}
+  \begin{tabularx}{\textwidth}{X C{2.8cm} C{2.8cm} C{2.8cm}}
+    \rowcolor{tablehead}
+    \textcolor{white}{\textbf{Critère}} &
+    \textcolor{white}{\textbf{YOLO}} &
+    \textcolor{white}{\textbf{TrackNet (V3)}} &
+    \textcolor{white}{\textbf{Avantage}} \\
+    \rowcolor{rowalt}
+    Objets ciblés &
+    Multi-classes (joueurs, balle, arbitre) &
+    Objet unique (balle uniquement) &
+    YOLO \\
+    Exploitation temporelle &
+    Aucune (image par image) &
+    Oui (3 trames consécutives) &
+    TrackNet \\
+    \rowcolor{rowalt}
+    Précision sur petits objets &
+    Moyenne (dépend résolution) &
+    Élevée (localisation sub-pixel) &
+    TrackNet \\
+    Gestion des occlusions &
+    Nécessite ByteTrack / DeepSORT &
+    Module d'inpainting intégré &
+    TrackNet \\
+    \rowcolor{rowalt}
+    Vitesse d'inférence &
+    Très élevée (30--200+ FPS) &
+    Élevée (temps réel, V3) &
+    YOLO \\
+    Robustesse arrière-plan complexe &
+    Bonne (augmentation Mosaic) &
+    Bonne (fond estimé auxiliaire) &
+    Équivalent \\
+    \rowcolor{rowalt}
+    Facilité d'entraînement &
+    Écosystème mature, nombreux outils &
+    Architecture plus spécialisée &
+    YOLO \\
+    Déploiement embarqué &
+    Oui (v10, v12, edge computing) &
+    Possible mais moins optimisé &
+    YOLO \\
+  \end{tabularx}
+  \caption{Comparaison entre YOLO et TrackNetV3 selon les critères de l'analyse vidéo en padel}
+  \label{tab:yolo_vs_tracknet}
+\end{table}
+
+% ────────────────────────────────────────────────────────────────────────────
+\subsection{Forces et Limites dans le Contexte du Padel}
+% ────────────────────────────────────────────────────────────────────────────
+
+YOLO excelle dans la détection rapide et simultanée des différents acteurs d'une scène
+sportive. Sa capacité à identifier et localiser les joueurs en temps réel, à des
+résolutions élevées ($1280 \times 1280$), en fait un composant indispensable pour
+toute analyse tactique. Cependant, appliqué seul à la balle de padel, YOLO présente
+des limites importantes : sa petite taille ($<$ 10 pixels dans beaucoup de situations),
+son flou de mouvement et les occlusions fréquentes engendrent un taux de faux négatifs
+élevé. Pour pallier cela, il est nécessaire de le coupler à des algorithmes de
+ré-identification comme ByteTrack, ce qui alourdit le pipeline et augmente la latence
+globale.
+
+TrackNetV3, en revanche, est précisément conçu pour les scénarios où l'objet suivi est
+petit, rapide et temporairement occulté. Son module d'inpainting de trajectoire et
+l'intégration du fond estimé le rendent particulièrement adapté aux spécificités du
+padel : arrière-plans riches (vitres, grilles, public), rebonds multiples sur les
+parois, et échanges au cours desquels la balle peut disparaître momentanément derrière
+un joueur. Sa limite principale reste son incapacité à détecter simultanément plusieurs
+classes d'objets.
+
+% ────────────────────────────────────────────────────────────────────────────
+\subsection{Complémentarité et Choix Architecturaux du Projet}
+% ────────────────────────────────────────────────────────────────────────────
+
+L'analyse comparative révèle que YOLO et TrackNet ne sont pas des alternatives
+concurrentes mais des approches complémentaires, chacune répondant à un sous-problème
+distinct de l'analyse vidéo sportive :
+
+\begin{itemize}
+    \item \textbf{YOLO} est retenu pour la détection des joueurs, des arbitres et de
+    toute entité multi-classe nécessitant une localisation rapide par boîte englobante.
+
+    \item \textbf{TrackNetV3} est retenu pour le suivi précis de la balle, en
+    exploitant le contexte temporel et le module d'inpainting pour maintenir la
+    trajectoire même lors des occlusions.
+\end{itemize}
+
+Cette architecture hybride, combinant la polyvalence de YOLO et la spécialisation de
+TrackNet, constitue l'approche adoptée dans ce projet pour l'analyse automatique des
+matchs de padel. Elle permet de traiter simultanément l'ensemble des entités de la
+scène tout en garantissant une localisation précise et continue de la balle, qui
+demeure l'élément central de l'analyse tactique.
+
+\section{Méthodologie de travail}
+
+Pour organiser efficacement le développement de la plateforme SmartPlayAI, nous avons adopté une approche agile basée principalement sur la méthodologie \textbf{Scrum}. Cette méthode nous a permis de structurer le projet en cycles de développement courts appelés \textit{sprints}, chacun ayant des objectifs précis et des livrables clairement définis.
+
+Chaque sprint correspond à une période de travail d’une semaine, au cours de laquelle un ensemble de fonctionnalités est conçu, développé, testé et validé. Cette organisation a permis de progresser de manière incrémentale tout en maintenant une visibilité claire sur l’état d’avancement du projet.
+
+\subsection{Organisation de la méthodologie adoptée}
+
+La méthodologie mise en place repose sur les éléments suivants :
+
+\begin{itemize}
+    \item \textbf{Product Backlog} : liste complète des fonctionnalités à développer, regroupant l’ensemble des besoins fonctionnels et techniques du projet.
+    
+    \item \textbf{Sprint Planning} : réunion hebdomadaire permettant de définir les objectifs du sprint et les tâches prioritaires à réaliser.
+    
+    \item \textbf{Daily Update} : message quotidien résumant les tâches réalisées, les travaux prévus pour la journée et les éventuels obstacles rencontrés.
+    
+    \item \textbf{Weekly Meeting} : réunion hebdomadaire avec l’encadrant pour présenter les résultats obtenus, recueillir les remarques et ajuster les priorités.
+    
+    \item \textbf{Sprint Review et Retrospective} : évaluation des fonctionnalités développées et identification des améliorations à apporter.
+\end{itemize}
+
+Cette organisation nous a permis d’assurer un suivi rigoureux de l’avancement du projet, de documenter les progrès réalisés et de valider progressivement les différentes composantes de la solution.
+
+\begin{figure}[H]
+    \centering
+    \maybeincludegraphics[width=0.85\textwidth]{images_chap1/scrum_cycle.png}
+    \caption{Cycle Scrum adopté dans le projet SmartPlayAI}
+    \label{fig:scrum_cycle}
+\end{figure}
+
+La figure \ref{fig:scrum_cycle} illustre les principales étapes du cycle Scrum : la définition du Product Backlog, la planification du sprint, le suivi quotidien à travers les Daily Updates, le développement, la revue de sprint et la rétrospective.
+
+\subsection{Daily Update}
+
+Chaque jour, un message de suivi était rédigé afin de communiquer l’état d’avancement du projet. Ce message comportait généralement :
+
+\begin{itemize}
+    \item les tâches réalisées la veille ;
+    \item les tâches prévues pour la journée ;
+    \item les difficultés ou blocages rencontrés.
+\end{itemize}
+
+Cette pratique a permis de maintenir une progression continue et d’identifier rapidement les problèmes techniques.
+
+\subsection{Weekly Meeting}
+
+Une réunion hebdomadaire était organisée avec l’encadrant afin de :
+
+\begin{itemize}
+    \item présenter les fonctionnalités développées ;
+    \item démontrer les résultats obtenus ;
+    \item recueillir les remarques et recommandations ;
+    \item ajuster les priorités du sprint suivant.
+\end{itemize}
+
+Ces réunions ont joué un rôle essentiel dans la validation progressive du projet.
+
+\subsection{Planification des sprints}
+
+Le développement du projet SmartPlayAI a été structuré en onze sprints successifs, correspondant aux principales étapes de conception et de déploiement de la solution.
+
+\begin{table}[H]
+\centering
+\caption{Planification des sprints du projet SmartPlayAI}
+\label{tab:sprints}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{|c|p{5cm}|p{7cm}|}
+\hline
+\textbf{Sprint} & \textbf{Intitulé} & \textbf{Objectif principal} \\
+\hline
+1 & Mise en place du projet & Configuration de l’environnement de développement et organisation des données. \\
+\hline
+2 & Prétraitement vidéo et détection du terrain & Synchronisation des vidéos et calcul de l’homographie. \\
+\hline
+3 & Détection et suivi & Détection des joueurs avec YOLO, tracking avec ByteTrack et détection de la balle avec TrackNet. \\
+\hline
+4 & Reconstruction 3D et analyse des événements & Détection des frappes, rebonds et segmentation des échanges. \\
+\hline
+5 & Classification des coups & Identification des types de coups et analyse de la trajectoire de la balle. \\
+\hline
+6 & Analyse des performances & Calcul des distances, vitesses et indicateurs de performance. \\
+\hline
+7 & Génération des statistiques & Production des statistiques détaillées du match. \\
+\hline
+8 & Modèles prédictifs & Reconnaissance des schémas tactiques et prédiction des coups. \\
+\hline
+9 & Production vidéo automatisée & Génération automatique des highlights et overlays graphiques. \\
+\hline
+10 & Plateforme cloud et coaching & Recommandations personnalisées et fonctionnalités sociales. \\
+\hline
+11 & Déploiement en production & Optimisation, MLOps et intégration avec SUMMA. \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \maybeincludegraphics[width=0.80\textwidth]{images_chap1/sprint_roadmap.png}
+    \caption{Roadmap des sprints du projet SmartPlayAI}
+    \label{fig:sprint_roadmap}
+\end{figure}
+
+La figure \ref{fig:sprint_roadmap} présente la succession chronologique des différents sprints, depuis la mise en place de l’environnement de développement jusqu’au déploiement final de la solution.
+
+\subsection{Déroulement d’un sprint}
+
+Chaque sprint a été réalisé selon les étapes suivantes :
+
+\begin{enumerate}
+    \item Planification des objectifs et des tâches.
+    \item Développement des fonctionnalités.
+    \item Suivi quotidien à travers les Daily Updates.
+    \item Tests et validation.
+    \item Revue de sprint.
+    \item Rétrospective.
+\end{enumerate}
+
+\subsection{Avantages de la méthodologie adoptée}
+
+L’approche Scrum a apporté plusieurs bénéfices :
+
+\begin{itemize}
+    \item une planification claire des objectifs ;
+    \item un suivi quotidien rigoureux ;
+    \item une communication régulière avec l’encadrant ;
+    \item une amélioration continue de la solution ;
+    \item une intégration progressive des différents modules.
+\end{itemize}
+
+En adoptant cette méthodologie agile, nous avons pu structurer efficacement le développement de SmartPlayAI, suivre l’avancement du projet au quotidien et garantir une progression continue jusqu’à la réalisation d’une solution complète et industrialisable.
+\section{Technologies utilisées}
+
+L’architecture technique de SmartPlayAI repose sur une pile technologique moderne combinant la vision par ordinateur, l’intelligence artificielle, l’analyse de données et les technologies de déploiement. Cette stack a été sélectionnée afin de garantir des performances élevées, une bonne modularité ainsi qu’une évolutivité permettant l’intégration future de nouvelles fonctionnalités.
+
+Le développement de la solution a été réalisé principalement avec Python 3.10, un langage particulièrement adapté au prototypage rapide et au développement d’applications d’intelligence artificielle.
+
+\subsection{Interface utilisateur}
+
+L’interface de visualisation a été développée avec Streamlit, un framework permettant de créer rapidement des tableaux de bord interactifs. Cette interface offre aux utilisateurs la possibilité de charger des vidéos, d’exécuter l’analyse automatique et de consulter les statistiques générées sous forme de graphiques et de visualisations dynamiques.
+
+Pour la représentation graphique des données, Plotly a été utilisé afin de produire des courbes interactives, des heatmaps et des tableaux analytiques.
+
+\subsection{Vision par ordinateur}
+
+Le traitement vidéo repose sur OpenCV, qui assure la lecture, le traitement et l’annotation des images. L’outil FFmpeg est utilisé pour la conversion, la compression et la manipulation efficace des vidéos haute résolution.
+
+La bibliothèque Supervision (développée par Roboflow) facilite la gestion des détections, la définition de zones polygonales correspondant au terrain de padel et l’annotation visuelle des résultats.
+
+\subsection{Analyse de données}
+
+Les calculs numériques, notamment les positions, vitesses et accélérations des joueurs et de la balle, sont effectués grâce à NumPy et Pandas. Ces bibliothèques permettent de structurer les données et de produire des indicateurs statistiques détaillés.
+
+\subsection{Intelligence artificielle}
+
+La solution intègre plusieurs modèles et algorithmes d’intelligence artificielle :
+
+\begin{itemize}
+    \item YOLO pour la détection des joueurs et des éléments du terrain ;
+    \item TrackNet pour le suivi précis de la balle ;
+    \item Des trackers personnalisés pour le suivi des joueurs, de la balle et des points clés du terrain ;
+    \item Des algorithmes d’estimation de vitesse et de projection spatiale sur une représentation 2D du court.
+\end{itemize}
+
+\subsection{Infrastructure et déploiement}
+
+Afin de garantir la portabilité de la solution et l’isolation de ses dépendances, l’application est conteneurisée avec Docker. L’orchestration des différents services est assurée par Docker Compose, ce qui simplifie considérablement le déploiement sur différentes machines.
+
+\subsection{Fiche technique synthétique}
+
+\begin{table}[H]
+\centering
+\caption{Fiche technique de SmartPlayAI}
+\label{tab:fiche_technique}
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Composant} & \textbf{Technologies} \\
+\hline
+Langage principal & Python 3.10 \\
+Interface utilisateur & Streamlit, Plotly \\
+Vision par ordinateur & OpenCV, Supervision, FFmpeg \\
+Analyse de données & Pandas, NumPy \\
+Intelligence artificielle & YOLO, TrackNet, trackers personnalisés \\
+Infrastructure & Docker, Docker Compose \\
+\hline
+\end{tabular}
+\end{table}
+
+\section{Conclusion}
+
+Dans ce chapitre, nous avons présenté le cadre général du projet SmartPlayAI, son contexte, la problématique traitée ainsi que les objectifs visés. Nous avons également étudié les solutions existantes, mis en évidence leurs limites et positionné notre solution par rapport à ces outils.
+
+Enfin, nous avons décrit la méthodologie de travail adoptée ainsi que les principales technologies utilisées pour la conception de la plateforme.
+
+Le chapitre suivant sera consacré à l’analyse des besoins et à la conception détaillée de la solution.
