@@ -87,7 +87,7 @@ Projection homographique & Convertir les coordonnées image en coordonnées mét
 \hline
 Analyse événementielle & Détecter les services, frappes et fautes & Automate à états finis \\
 \hline
-Visualisation et Dashboard & Afficher statistiques et heatmaps & Streamlit + Pandas \\
+Visualisation et Dashboard & Afficher statistiques et heatmaps & REACT \\
 \hline
 \end{tabular}
 \end{table}
@@ -290,23 +290,15 @@ Le module de détection du terrain repose sur deux piliers complémentaires : (1
 % ------------------------------------------------------------------
  
 Le suivi de la balle dans un contexte de sport de raquette en salle comme le padel,
-constitue l'un des défis les plus exigeants de la vision par ordinateur
-appliquée au sport. En raison de la vitesse élevée de déplacement, du
-flou de mouvement (\textit{motion blur}) inhérent, et de la petite
-taille apparente de l'objet dans le champ de vision, les approches de
-détection image par image (\textit{frame-by-frame}) s'avèrent
-insuffisantes. En effet, ces méthodes traitent chaque trame de manière
-indépendante, ignorant ainsi la continuité temporelle du mouvement, ce
-qui conduit à des détections instables et à un taux de faux négatifs
-élevé.
- 
-Pour pallier ces limitations, le module de suivi de balle adopte
-\textbf{TrackNet}, un réseau de neurones convolutif à dimension
-temporelle (\textit{Temporal CNN}) reposant sur une structure de type Encoder-Decoder, spécifiquement conçu pour exploiter
-la corrélation entre des trames consécutives. Cette approche permet non
-seulement d'améliorer la robustesse face au flou de mouvement, mais
-également d'inférer la position probable de la balle dans des conditions
-de visibilité dégradée.
+constitue l’un des défis les plus exigeants de la vision par ordinateur appliquée au sport. En
+raison de la vitesse élevée de déplacement, du flou de mouvement (motion blur) inhérent,
+et de la petite taille apparente de l’objet dans le champ de vision, les approches de
+détection image par image (frame-by-frame) s’avèrent insuﬀisantes.
+Comme établi en section 1.7, (\textit{TrackNet V3}) a été retenu pour ce projet en raison de 
+son module d'inpainting de trajectoire et de sa capacité à gérer les occlusions 
+fréquentes dans le contexte du padel. Son architecture Encodeur-Décodeur exploite 
+la continuité temporelle entre trames consécutives, ce qui le rend particulièrement 
+adapté aux conditions de visibilité dégradée rencontrées dans les échanges rapides.
  
 % ------------------------------------------------------------------
 \subsection{Pipeline de traitement}
@@ -321,11 +313,10 @@ et complémentaires, détaillées ci-après.
 \label{subsubsec:tracknet_inference}
  
 Le module reçoit en entrée une \textbf{séquence de  8 Trames
-consécutives }de résolution $288 \times 512$ pixels , constituant une fenêtre temporelle glissante sur le flux
-vidéo. Cette séquence est transmise à TrackNet, un réseau convolutif entraîné spécifiquement pour la détection de petits objets en mouvement rapide. 
-En sortie, le réseau est entraîné à générer une \textbf{distribution Gaussienne} \textbf{2D} (heatmap) centrée sur la balle, plutôt qu'une simple coordonnée dans laquelle
-l'intensité de chaque pixel est proportionnelle à la probabilité de présence de la balle en ce point. 
-La position estimée correspond alors au pixel de valeur maximale dans cette carte.
+consécutives }de résolution $288 \times 512$ pixels , constituant une fenêtre 
+temporelle glissante sur le flux vidéo. Cette séquence est transmise à 
+TrackNet qui produit en sortie \textbf{distribution Gaussienne} \textbf{heatmap 2D} (voir section 1.7.1), 
+dont le pixel de valeur maximale correspond à la position estimée de la balle.
 
 La formule mathématique pour définir la valeur de chaque pixel $(i, j)$ dans la carte de chaleur cible $T_{\text{map}}$ est la suivante :
 
@@ -371,21 +362,6 @@ ou de détection incertaine.
     \label{fig:tracknet_archi}
 \end{figure}
 
-
-
- 
-% ---- b) ----
-\subsubsection{Ensemble temporel (\textit{Temporal Ensemble})}
-\label{subsubsec:temporal_ensemble}
- 
-Afin d'améliorer la précision et de renforcer la stabilité des prédictions, une moyenne pondérée est appliquée sur des fenêtres glissantes à chevauchement
-. On utilise un noyau Gaussien pour attribuer un poids plus élevé aux trames centrales, car elles bénéficient de l'information du passé et du futur proche, les rendant statistiquement plus fiables.
-\begin{figure}[H]
-    \centering
-    \maybeincludegraphics[width=0.9\textwidth]{images_chap2/l'ensemble_temporelle.png}
-    \caption{Schéma de l'ensemble temporel par fenêtres glissantes et fusion pondérée des cartes de chaleur.}
-    \label{fig:ensemble_temporelle}
-\end{figure}
  
 % ---- c) ----
 \subsubsection{Filtrage des réflexions (\textit{Reflection Filtering})}
@@ -534,28 +510,6 @@ Afin de mesurer l'impact de notre chaîne de post-traitement physique et géomé
 
 \textbf{Analyse des résultats :} L'introduction du filtrage robuste permet un gain de \textbf{+9,7 \%} sur le PCK et une division par plus de 2,5 de l'erreur moyenne de trajectoire (RMSE passant de 4,82 à 1,78 pixels). Cette amélioration s'explique par l'élimination systématique des reflets vitrés par le filtre de vitesse et de marge, couplée à la reconstruction fluide des trajectoires d'occlusion par l'interpolation parabolique.
 
-\subsection{Précision, rappel et score F1}
-
-Ces métriques évaluent la capacité du réseau à détecter la présence de la balle sans générer de faux positifs.
-
-\begin{table}[h]
-    \centering
-    \caption{Comparaison des performances des modèles TrackNet}
-    \label{tab:perf_tracknet}
-    \vspace{0.5em}
-    \begin{tabular}{lccc}
-        \toprule
-        \textbf{Modèle} & \textbf{Précision} & \textbf{Rappel (Recall)} & \textbf{Score F1} \\
-        \midrule
-        \textbf{TrackNet (V1)} & 99,7 \% & 97,3 \% & 98,5 \% \\
-        \textbf{TrackNetV2}    & 99,6 \% & 94,5 \% & 97,0 \% \\
-        \textbf{GridTrackNet}  & 96,6 \% & 93,9 \% & 95,3 \% \\
-        \textbf{TrackNetV3}    & 97,8 \%& 99,3 \% & 98,6 \% \\
-        \textbf{TrackNetV4}    & 99,6 \% & 92,2 \% & 95,8 \% \\
-        \textbf{TrackNetV5}    & 99,2 \% & 98,0 \% & 98,6 \% \\
-        \bottomrule
-    \end{tabular}
-\end{table}
 
 \subsection{Perspectives d'amélioration}
 
@@ -586,7 +540,6 @@ et fiable du système d'analyse sportive développé dans ce projet.
 % ─────────────────────────────────────────────────────────────
 \section{Suivi des joueurs}
 % ─────────────────────────────────────────────────────────────
- 
 \subsection{Vue d'ensemble et positionnement dans le pipeline}
  
 Le suivi des joueurs produit, à chaque frame, une représentation stable
@@ -601,7 +554,7 @@ brute jusqu'à la représentation structurée des joueurs, dont les
 
  \begin{figure}[H]
     \centering
-    \maybeincludegraphics[width=0.9\textwidth]{images_chap2/pipeline_joueurs.png}
+    \maybeincludegraphics[width=0.7\textwidth]{images_chap2/pipeline_joueurs.png}
     \caption{Pipeline de suivi des joueurs et modules d'identification des équipes.}
     \label{fig:pipeline_joueurs}
 \end{figure}
@@ -617,7 +570,6 @@ des descripteurs d'apparence extraits en aval.
  
 % ─────────────────────────────────────────────────────────────
 \subsection{Détection par YOLO26 fine-tuné}
- 
 \subsubsection{Choix du modèle YOLO26}
  
 Le choix de YOLO26 résulte d'une comparaison entre plusieurs
