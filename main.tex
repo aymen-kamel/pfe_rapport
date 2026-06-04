@@ -39,13 +39,20 @@
 \usepackage{amssymb}
 \usepackage{textcomp}
 \usepackage[table]{xcolor}
-\definecolor{headerblue}{RGB}{220,230,245}
-\definecolor{tablehead}{RGB}{220,230,245}
-\definecolor{rowalt}{RGB}{248,248,248}
+\definecolor{headerblue}{RGB}{41, 128, 185}
+\definecolor{tablehead}{RGB}{41, 128, 185}
+\definecolor{rowalt}{RGB}{242, 245, 250}
+\definecolor{rowalt2}{RGB}{255, 255, 255}
 \definecolor{smartblue}{RGB}{0, 102, 204}
 \definecolor{smartgray}{RGB}{80, 80, 80}
-\definecolor{tableheadtext}{RGB}{255, 255, 255}
+\definecolor{tableborder}{RGB}{200, 200, 200}
 \usepackage{booktabs}
+% Professional table style command
+\newcommand{\tablestyle}{%
+  \renewcommand{\arraystretch}{1.5}%
+  \setlength{\aboverulesep}{0pt}%
+  \setlength{\belowrulesep}{0pt}%
+}
 \usepackage{array}
 \usepackage{listings}
 \newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}

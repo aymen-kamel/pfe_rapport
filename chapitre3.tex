@@ -35,21 +35,25 @@ primaires et fonctionnalités secondaires.
  
 \begin{table}[H]
   \centering
-  \renewcommand{\arraystretch}{1.3}
-  \begin{tabularx}{\textwidth}{C{1.2cm} X C{2.5cm}}
+  \tablestyle
+  \begin{tabularx}{\textwidth}{C{1.2cm} X C{2.2cm}}
+    \toprule
     \rowcolor{tablehead}
-    \textcolor{white}{\textbf{ID}} &
-    \textcolor{white}{\textbf{Fonctionnalité}} &
-    \textcolor{white}{\textbf{Priorité}} \\
+    \textcolor{white}{\textbf{ID}} & \textcolor{white}{\textbf{Fonctionnalité}} & \textcolor{white}{\textbf{Priorité}} \\
+    \midrule
     \rowcolor{rowalt}
     F01 & Chargement et synchronisation d'une vidéo de match (.mp4) & Haute \\
+    \rowcolor{rowalt2}
     F02 & Capture manuelle d'une frame annotée pour calibration du terrain & Haute \\
     \rowcolor{rowalt}
     F03 & Saisie ou import de keypoints de référence du terrain (JSON) & Haute \\
+    \rowcolor{rowalt2}
     F04 & Déclenchement du pipeline d'analyse neuronale complet & Haute \\
     \rowcolor{rowalt}
     F05 & Affichage du rapport tactique (KPIs, statistiques, graphiques) & Haute \\
+    \rowcolor{rowalt2}
     F06 & Suivi en temps réel de l'état du traitement (journal de mission) & Haute \\
+    \bottomrule
   \end{tabularx}
   \caption{Fonctionnalités primaires de l'interface SmartPlayAI}
   \label{tab:fonctionnalites_primaires}
@@ -59,18 +63,21 @@ primaires et fonctionnalités secondaires.
  
 \begin{table}[H]
   \centering
-  \renewcommand{\arraystretch}{1.3}
-  \begin{tabularx}{\textwidth}{C{1.2cm} X C{2.5cm}}
+  \tablestyle
+  \begin{tabularx}{\textwidth}{C{1.2cm} X C{2.2cm}}
+    \toprule
     \rowcolor{tablehead}
-    \textcolor{white}{\textbf{ID}} &
-    \textcolor{white}{\textbf{Fonctionnalité}} &
-    \textcolor{white}{\textbf{Priorité}} \\
+    \textcolor{white}{\textbf{ID}} & \textcolor{white}{\textbf{Fonctionnalité}} & \textcolor{white}{\textbf{Priorité}} \\
+    \midrule
     \rowcolor{rowalt}
     F07 & Comparaison côte à côte de deux joueurs (Player Comparison) & Moyenne \\
+    \rowcolor{rowalt2}
     F08 & Heatmap 2D de présence sur le terrain (3D Arena Heatmap) & Moyenne \\
     \rowcolor{rowalt}
     F09 & Historique des analyses récentes (Recent Operations) & Basse \\
+    \rowcolor{rowalt2}
     F10 & Export du rapport en format structuré (JSON / MP4 annoté) & Basse \\
+    \bottomrule
   \end{tabularx}
   \caption{Fonctionnalités secondaires de l'interface SmartPlayAI}
   \label{tab:fonctionnalites_secondaires}
@@ -234,27 +241,25 @@ matérielle suivante :
  
 \begin{table}[H]
   \centering
-  \renewcommand{\arraystretch}{1.3}
+  \tablestyle
   \begin{tabularx}{\textwidth}{L{3cm} L{4.5cm} X}
+    \toprule
     \rowcolor{tablehead}
-    \textcolor{white}{\textbf{Composant}} &
-    \textcolor{white}{\textbf{Spécification}} &
-    \textcolor{white}{\textbf{Rôle dans le projet}} \\
+    \textcolor{white}{\textbf{Composant}} & \textcolor{white}{\textbf{Spécification}} & \textcolor{white}{\textbf{Rôle dans le projet}} \\
+    \midrule
     \rowcolor{rowalt}
-    CPU & Intel Core i7 (12\textsuperscript{e} génération)
-        & Traitement des flux vidéo et logique applicative \\
-    GPU & NVIDIA RTX 3060 (12 Go VRAM)
-        & Inférence YOLO, TrackNet, SAM2 \\
+    CPU & Intel Core i7 (12\textsuperscript{e} génération) & Traitement des flux vidéo et logique applicative \\
+    \rowcolor{rowalt2}
+    GPU & NVIDIA RTX 3060 (12 Go VRAM) & Inférence YOLO, TrackNet, SAM2 \\
     \rowcolor{rowalt}
-    RAM & 16 Go DDR5
-        & Chargement des frames vidéo en mémoire tampon \\
-    Stockage & SSD NVMe 512 Go
-        & Lecture/écriture des fichiers vidéo et résultats \\
+    RAM & 16 Go DDR5 & Chargement des frames vidéo en mémoire tampon \\
+    \rowcolor{rowalt2}
+    Stockage & SSD NVMe 512 Go & Lecture/écriture des fichiers vidéo et résultats \\
     \rowcolor{rowalt}
-    OS & Windows 11 / Ubuntu 22.04
-        & Environnement de développement dual-boot \\
-    Caméra & Drone 4K (vue aérienne, 30 FPS)
-        & Source des vidéos de match à analyser \\
+    OS & Windows 11 / Ubuntu 22.04 & Environnement de développement dual-boot \\
+    \rowcolor{rowalt2}
+    Caméra & Drone 4K (vue aérienne, 30 FPS) & Source des vidéos de match à analyser \\
+    \bottomrule
   \end{tabularx}
   \caption{Configuration matérielle utilisée pour le développement de SmartPlayAI}
   \label{tab:config_materielle}
@@ -276,26 +281,31 @@ fonctionnelles distinctes :
  
 \begin{table}[H]
   \centering
-  \renewcommand{\arraystretch}{1.3}
+  \tablestyle
   \begin{tabularx}{\textwidth}{L{2.8cm} C{2cm} X}
+    \toprule
     \rowcolor{tablehead}
-    \textcolor{white}{\textbf{Technologie}} &
-    \textcolor{white}{\textbf{Version}} &
-    \textcolor{white}{\textbf{Usage}} \\
+    \textcolor{white}{\textbf{Technologie}} & \textcolor{white}{\textbf{Version}} & \textcolor{white}{\textbf{Usage}} \\
+    \midrule
     \rowcolor{rowalt}
-    Python   & 3.11   & Langage principal du pipeline de traitement \\
-    PyTorch  & 2.2    & Framework d'inférence des modèles YOLO et TrackNet \\
+    Python & 3.11 & Langage principal du pipeline de traitement \\
+    \rowcolor{rowalt2}
+    PyTorch & 2.2 & Framework d'inférence des modèles YOLO et TrackNet \\
     \rowcolor{rowalt}
-    OpenCV   & 4.9    & Lecture vidéo, manipulation de frames, calcul d'homographie \\
+    OpenCV & 4.9 & Lecture vidéo, manipulation de frames, calcul d'homographie \\
+    \rowcolor{rowalt2}
     Ultralytics & 8.x & API haut niveau pour YOLO (détection, NMS, batch) \\
     \rowcolor{rowalt}
-    NumPy    & 1.26   & Calculs matriciels (homographie, distances euclidiennes) \\
-    Pandas   & 2.1    & Structuration et export des données analytiques \\
+    NumPy & 1.26 & Calculs matriciels (homographie, distances euclidiennes) \\
+    \rowcolor{rowalt2}
+    Pandas & 2.1 & Structuration et export des données analytiques \\
     \rowcolor{rowalt}
     Supervision & 0.19 & Annotations visuelles, zones polygonales, tracking \\
-    SAM2     & —      & Segmentation pixel-level pour localisation précise \\
+    \rowcolor{rowalt2}
+    SAM2 & — & Segmentation pixel-level pour localisation précise \\
     \rowcolor{rowalt}
-    SciPy    & 1.12   & Algorithme Hongrois pour l'association de pistes de suivi \\
+    SciPy & 1.12 & Algorithme Hongrois pour l'association de pistes de suivi \\
+    \bottomrule
   \end{tabularx}
   \caption{Stack Backend — Couche traitement IA}
   \label{tab:stack_backend}
@@ -305,17 +315,19 @@ fonctionnelles distinctes :
  
 \begin{table}[H]
   \centering
-  \renewcommand{\arraystretch}{1.3}
+  \tablestyle
   \begin{tabularx}{\textwidth}{L{2.8cm} C{2cm} X}
+    \toprule
     \rowcolor{tablehead}
-    \textcolor{white}{\textbf{Technologie}} &
-    \textcolor{white}{\textbf{Version}} &
-    \textcolor{white}{\textbf{Usage}} \\
+    \textcolor{white}{\textbf{Technologie}} & \textcolor{white}{\textbf{Version}} & \textcolor{white}{\textbf{Usage}} \\
+    \midrule
     \rowcolor{rowalt}
-    FastAPI  & 0.110 & API REST exposant les endpoints d'analyse \\
-    Uvicorn  & 0.29  & Serveur ASGI pour la gestion des requêtes asynchrones \\
+    FastAPI & 0.110 & API REST exposant les endpoints d'analyse \\
+    \rowcolor{rowalt2}
+    Uvicorn & 0.29 & Serveur ASGI pour la gestion des requêtes asynchrones \\
     \rowcolor{rowalt}
-    Docker   & 25.0  & Containerisation et déploiement du système complet \\
+    Docker & 25.0 & Containerisation et déploiement du système complet \\
+    \bottomrule
   \end{tabularx}
   \caption{Stack API — Couche communication}
   \label{tab:stack_api}
@@ -325,18 +337,21 @@ fonctionnelles distinctes :
  
 \begin{table}[H]
   \centering
-  \renewcommand{\arraystretch}{1.3}
+  \tablestyle
   \begin{tabularx}{\textwidth}{L{2.8cm} C{2cm} X}
+    \toprule
     \rowcolor{tablehead}
-    \textcolor{white}{\textbf{Technologie}} &
-    \textcolor{white}{\textbf{Version}} &
-    \textcolor{white}{\textbf{Usage}} \\
+    \textcolor{white}{\textbf{Technologie}} & \textcolor{white}{\textbf{Version}} & \textcolor{white}{\textbf{Usage}} \\
+    \midrule
     \rowcolor{rowalt}
-    React    & 18.x & Framework de composants pour l'interface dynamique \\
-    Vite     & 5.x  & Bundler rapide pour le développement frontend \\
+    React & 18.x & Framework de composants pour l'interface dynamique \\
+    \rowcolor{rowalt2}
+    Vite & 5.x & Bundler rapide pour le développement frontend \\
     \rowcolor{rowalt}
-    Plotly.js & —   & Graphiques interactifs (télémétrie vitesse, heatmaps) \\
-    CSS3     & —    & Styles personnalisés, animations, thème sombre futuriste \\
+    Plotly.js & — & Graphiques interactifs (télémétrie vitesse, heatmaps) \\
+    \rowcolor{rowalt2}
+    CSS3 & — & Styles personnalisés, animations, thème sombre futuriste \\
+    \bottomrule
   \end{tabularx}
   \caption{Stack Frontend — Couche interface utilisateur}
   \label{tab:stack_frontend}
@@ -507,17 +522,19 @@ Trois indicateurs synthétiques résument l'intensité globale du match :
  
 \begin{table}[H]
   \centering
-  \renewcommand{\arraystretch}{1.3}
+  \tablestyle
   \begin{tabularx}{\textwidth}{L{3.5cm} X}
+    \toprule
     \rowcolor{tablehead}
-    \textcolor{white}{\textbf{Indicateur}} &
-    \textcolor{white}{\textbf{Signification}} \\
+    \textcolor{white}{\textbf{Indicateur}} & \textcolor{white}{\textbf{Signification}} \\
+    \midrule
     \rowcolor{rowalt}
     Total Engagements & Nombre total d'échanges actifs détectés sur l'ensemble de la session \\
+    \rowcolor{rowalt2}
     Ball Bounces & Nombre de rebonds de balle validés par le module BallTracker \\
     \rowcolor{rowalt}
-    Intensity Index & Score composite calculé à partir de la vitesse moyenne et de la densité
-                      des échanges \\
+    Intensity Index & Score composite calculé à partir de la vitesse moyenne et de la densité des échanges \\
+    \bottomrule
   \end{tabularx}
   \caption{KPIs globaux du match — Tableau de Bord Tactique}
   \label{tab:kpis_globaux}
@@ -554,26 +571,31 @@ et tactiques :
  
 \begin{table}[H]
   \centering
-  \renewcommand{\arraystretch}{1.3}
+  \tablestyle
   \begin{tabularx}{\textwidth}{L{3.2cm} X C{1.5cm}}
+    \toprule
     \rowcolor{tablehead}
-    \textcolor{white}{\textbf{Métrique}} &
-    \textcolor{white}{\textbf{Description}} &
-    \textcolor{white}{\textbf{Unité}} \\
+    \textcolor{white}{\textbf{Métrique}} & \textcolor{white}{\textbf{Description}} & \textcolor{white}{\textbf{Unité}} \\
+    \midrule
     \rowcolor{rowalt}
-    Points (PTS)      & Score total accumulé pendant le match & — \\
-    Rating (\%)       & Note de performance globale normalisée sur 100 & \% \\
+    Points (PTS) & Score total accumulé pendant le match & — \\
+    \rowcolor{rowalt2}
+    Rating (\%) & Note de performance globale normalisée sur 100 & \% \\
     \rowcolor{rowalt}
-    Total Strikes     & Nombre total de frappes détectées & — \\
-    Max Velocity      & Vitesse de déplacement maximale atteinte & km/h \\
+    Total Strikes & Nombre total de frappes détectées & — \\
+    \rowcolor{rowalt2}
+    Max Velocity & Vitesse de déplacement maximale atteinte & km/h \\
     \rowcolor{rowalt}
-    Distance Covered  & Distance totale parcourue sur l'ensemble du match & m \\
-    Avg Tempo         & Vitesse de déplacement moyenne pendant les échanges & km/h \\
+    Distance Covered & Distance totale parcourue sur l'ensemble du match & m \\
+    \rowcolor{rowalt2}
+    Avg Tempo & Vitesse de déplacement moyenne pendant les échanges & km/h \\
     \rowcolor{rowalt}
-    Net Presence      & Taux de présence en zone de filet & \% \\
-    Calories Burned   & Dépense énergétique estimée par intégration de la distance & kCal \\
+    Net Presence & Taux de présence en zone de filet & \% \\
+    \rowcolor{rowalt2}
+    Calories Burned & Dépense énergétique estimée par intégration de la distance & kCal \\
     \rowcolor{rowalt}
-    Overheads Ratio   & Ratio de frappes en hauteur sur le total des frappes & \% \\
+    Overheads Ratio & Ratio de frappes en hauteur sur le total des frappes & \% \\
+    \bottomrule
   \end{tabularx}
   \caption{Métriques biométriques et tactiques par joueur}
   \label{tab:metriques_joueur}
@@ -759,31 +781,28 @@ vingt millisecondes même en 4K).
 
 \begin{table}[H]
   \centering
-  \renewcommand{\arraystretch}{1.3}
+  \tablestyle
   \begin{tabularx}{\textwidth}{X C{2.2cm} C{2.2cm} C{2.2cm}}
+    \toprule
     \rowcolor{tablehead}
-    \textcolor{white}{\textbf{Module}} &
-    \textcolor{white}{\textbf{720p (ms)}} &
-    \textcolor{white}{\textbf{1080p (ms)}} &
-    \textcolor{white}{\textbf{4K (ms)}} \\
+    \textcolor{white}{\textbf{Module}} & \textcolor{white}{\textbf{720p (ms)}} & \textcolor{white}{\textbf{1080p (ms)}} & \textcolor{white}{\textbf{4K (ms)}} \\
+    \midrule
     \rowcolor{rowalt}
     Décodage \& Redimensionnement & 2,2 & 3,8 & 16,3 \\
+    \rowcolor{rowalt2}
     Détection joueurs — YOLO26 (\texttt{imgsz=1280}) & 794,7 & 669,2 & 660,7 \\
     \rowcolor{rowalt}
     Estimation pose — YOLOv8-Pose (\texttt{imgsz=1280}) & 856,6 & 698,0 & 682,6 \\
+    \rowcolor{rowalt2}
     Détection terrain — YOLOv8 léger (\texttt{imgsz=640}) & 61,4 & 35,0 & 39,0 \\
     \rowcolor{rowalt}
     Détection balle — TrackNet ($512\times288$, fixe) & 747,1 & 723,5 & 701,6 \\
+    \midrule
     \rowcolor{tablehead}
-    \textcolor{white}{\textbf{Total pipeline / image}} &
-    \textcolor{white}{\textbf{2\,461,9}} &
-    \textcolor{white}{\textbf{2\,129,5}} &
-    \textcolor{white}{\textbf{2\,100,3}} \\
+    \textcolor{white}{\textbf{Total pipeline / image}} & \textcolor{white}{\textbf{2\,461,9}} & \textcolor{white}{\textbf{2\,129,5}} & \textcolor{white}{\textbf{2\,100,3}} \\
     \rowcolor{tablehead}
-    \textcolor{white}{\textbf{FPS équivalent (CPU)}} &
-    \textcolor{white}{\textbf{0,4}} &
-    \textcolor{white}{\textbf{0,5}} &
-    \textcolor{white}{\textbf{0,5}} \\
+    \textcolor{white}{\textbf{FPS équivalent (CPU)}} & \textcolor{white}{\textbf{0,4}} & \textcolor{white}{\textbf{0,5}} & \textcolor{white}{\textbf{0,5}} \\
+    \bottomrule
   \end{tabularx}
   \caption{Latences mesurées sur CPU par module et par résolution d'entrée}
   \label{tab:benchmark_cpu}
@@ -811,19 +830,21 @@ recommandations opérationnelles correspondantes.
 
 \begin{table}[H]
   \centering
-  \renewcommand{\arraystretch}{1.3}
+  \tablestyle
   \begin{tabularx}{\textwidth}{L{3.5cm} C{2.5cm} C{3.5cm} X}
+    \toprule
     \rowcolor{tablehead}
-    \textcolor{white}{\textbf{Résolution}} &
-    \textcolor{white}{\textbf{FPS source}} &
-    \textcolor{white}{\textbf{Qualité de détection}} &
-    \textcolor{white}{\textbf{Recommandation}} \\
+    \textcolor{white}{\textbf{Résolution}} & \textcolor{white}{\textbf{FPS source}} & \textcolor{white}{\textbf{Qualité de détection}} & \textcolor{white}{\textbf{Recommandation}} \\
+    \midrule
     \rowcolor{rowalt}
-    480p ($854\times480$)    & 30    & Insuffisante & Non recommandé \\
-    720p ($1280\times720$)   & 30    & Acceptable   & Minimum opérationnel \\
+    480p ($854\times480$) & 30 & Insuffisante & Non recommandé \\
+    \rowcolor{rowalt2}
+    720p ($1280\times720$) & 30 & Acceptable & Minimum opérationnel \\
     \rowcolor{rowalt}
-    1080p ($1920\times1080$) & 30–60 & Bonne        & Recommandé (\textit{sweet-spot}) \\
-    4K ($3840\times2160$)    & 30–60 & Excellente   & Optimal si GPU $\geq$ 8\,Go VRAM \\
+    1080p ($1920\times1080$) & 30–60 & Bonne & Recommandé (\textit{sweet-spot}) \\
+    \rowcolor{rowalt2}
+    4K ($3840\times2160$) & 30–60 & Excellente & Optimal si GPU $\geq$ 8\,Go VRAM \\
+    \bottomrule
   \end{tabularx}
   \caption{Impact de la résolution vidéo d'entrée sur la qualité de détection}
   \label{tab:resolution_impact}
@@ -923,29 +944,26 @@ dans le tableau~\ref{tab:cpu_gpu_comparison}.
 
 \begin{table}[H]
   \centering
-  \renewcommand{\arraystretch}{1.3}
+  \tablestyle
   \begin{tabularx}{\textwidth}{X C{2.5cm} C{2.8cm} C{2.5cm}}
+    \toprule
     \rowcolor{tablehead}
-    \textcolor{white}{\textbf{Module}} &
-    \textcolor{white}{\textbf{CPU (ms)}} &
-    \textcolor{white}{\textbf{GPU estimé (ms)}} &
-    \textcolor{white}{\textbf{Accélération}} \\
+    \textcolor{white}{\textbf{Module}} & \textcolor{white}{\textbf{CPU (ms)}} & \textcolor{white}{\textbf{GPU estimé (ms)}} & \textcolor{white}{\textbf{Accélération}} \\
+    \midrule
     \rowcolor{rowalt}
-    Détection joueurs — YOLO26        &  795  & $\sim$18 & $\times$44 \\
-    Estimation pose — YOLOv8-Pose     &  857  & $\sim$22 & $\times$39 \\
+    Détection joueurs — YOLO26 & 795 & $\sim$18 & $\times$44 \\
+    \rowcolor{rowalt2}
+    Estimation pose — YOLOv8-Pose & 857 & $\sim$22 & $\times$39 \\
     \rowcolor{rowalt}
-    Détection terrain — YOLOv8 léger  &   61  & $\sim$5  & $\times$12 \\
-    Détection balle — TrackNet (CNN)  &  747  & $\sim$8  & $\times$93 \\
+    Détection terrain — YOLOv8 léger & 61 & $\sim$5 & $\times$12 \\
+    \rowcolor{rowalt2}
+    Détection balle — TrackNet (CNN) & 747 & $\sim$8 & $\times$93 \\
+    \midrule
     \rowcolor{tablehead}
-    \textcolor{white}{\textbf{Total pipeline}} &
-    \textcolor{white}{\textbf{2\,462}} &
-    \textcolor{white}{\textbf{$\sim$55}} &
-    \textcolor{white}{\textbf{$\times$45}} \\
+    \textcolor{white}{\textbf{Total pipeline}} & \textcolor{white}{\textbf{2\,462}} & \textcolor{white}{\textbf{$\sim$55}} & \textcolor{white}{\textbf{$\times$45}} \\
     \rowcolor{tablehead}
-    \textcolor{white}{\textbf{FPS effectif}} &
-    \textcolor{white}{\textbf{0,4\,FPS}} &
-    \textcolor{white}{\textbf{$\sim$18\,FPS}} &
-    \textcolor{white}{\textbf{—}} \\
+    \textcolor{white}{\textbf{FPS effectif}} & \textcolor{white}{\textbf{0,4\,FPS}} & \textcolor{white}{\textbf{$\sim$18\,FPS}} & \textcolor{white}{\textbf{—}} \\
+    \bottomrule
   \end{tabularx}
   \caption{Comparaison des temps d'inférence CPU versus GPU par module}
   \label{tab:cpu_gpu_comparison}
@@ -977,19 +995,21 @@ respectivement sur le format de fichier et les conditions de luminosité.
 
 \begin{table}[H]
   \centering
-  \renewcommand{\arraystretch}{1.3}
+  \tablestyle
   \begin{tabularx}{\textwidth}{L{3.5cm} C{2.5cm} X L{4cm}}
+    \toprule
     \rowcolor{tablehead}
-    \textcolor{white}{\textbf{Situation}} &
-    \textcolor{white}{\textbf{Luminosité (lux)}} &
-    \textcolor{white}{\textbf{Effet sur le pipeline}} &
-    \textcolor{white}{\textbf{Réglage recommandé}} \\
+    \textcolor{white}{\textbf{Situation}} & \textcolor{white}{\textbf{Luminosité (lux)}} & \textcolor{white}{\textbf{Effet sur le pipeline}} & \textcolor{white}{\textbf{Réglage recommandé}} \\
+    \midrule
     \rowcolor{rowalt}
-    Éclairage naturel doux (indoor)       & 300–500    & Bonne visibilité des lignes, balance de couleur neutre          & ISO 400–800, balance automatique \\
+    Éclairage naturel doux (indoor) & 300–500 & Bonne visibilité des lignes, balance de couleur neutre & ISO 400–800, balance automatique \\
+    \rowcolor{rowalt2}
     Lumière forte / plein soleil (outdoor) & $>$\,1\,000 & Reflets et \textit{flare} $\rightarrow$ faux positifs de balle & Filtre polarisant, ISO 200–400, obturateur 1/1\,000\,s \\
     \rowcolor{rowalt}
-    Éclairage faible / soirée (indoor)    & $<$\,200   & Bruit vidéo, perte de contraste, balle $<$ 3\,px               & ISO 800–1\,600, LED diffuse ($\sim$500\,lux), gamma $\approx$ 1,2 \\
-    Éclairage directionnel / spot         & 500–800    & Ombres nettes perturbant la segmentation du fond                & Diffuseur, filtre médian $3\times3$ avant détection \\
+    Éclairage faible / soirée (indoor) & $<$\,200 & Bruit vidéo, perte de contraste, balle $<$ 3\,px & ISO 800–1\,600, LED diffuse ($\sim$500\,lux), gamma $\approx$ 1,2 \\
+    \rowcolor{rowalt2}
+    Éclairage directionnel / spot & 500–800 & Ombres nettes perturbant la segmentation du fond & Diffuseur, filtre médian $3\times3$ avant détection \\
+    \bottomrule
   \end{tabularx}
   \caption{Conditions de luminosité et réglages recommandés pour l'acquisition}
   \label{tab:lighting_conditions}

@@ -2,13 +2,12 @@
 
 \section{Introduction}
 
-Ce premier chapitre est consacré à la présentation de l’étude préalable du projet réalisé. Cette présentation commence d’abord par situer le projet dans son cadre général, puis nous présentons l’organisme d’accueil ainsi qu’une étude critique des solutions existantes dans le domaine de l’analyse vidéo sportive. Ensuite, nous décrivons la problématique traitée, la solution proposée et les objectifs visés. Enfin, nous concluons ce chapitre en exposant la méthodologie de travail adoptée ainsi que les technologies utilisées pour la conception et le développement de la plateforme SmartPlayAI.
+L’analyse de la performance sportive connaît aujourd’hui une évolution majeure grâce aux avancées de l’intelligence artificielle et de la vision par ordinateur. Ces technologies permettent d’exploiter automatiquement les données issues des vidéos afin de fournir des informations objectives sur le déroulement des matchs et les performances des joueurs.
 
-\section{Cadre général}
+Dans ce contexte, le padel représente un domaine particulièrement intéressant. Malgré sa popularité croissante, les outils d’analyse disponibles restent souvent coûteux et principalement destinés aux structures professionnelles. Ce constat met en évidence la nécessité de développer des solutions plus accessibles capables d’automatiser l’analyse des matchs et de fournir des statistiques exploitables.
 
-Le projet de fin d’études consiste à réaliser une plateforme intelligente d’analyse vidéo dédiée au padel, baptisée SmartPlayAI. Cette solution permet d’exploiter des techniques avancées d’intelligence artificielle et de vision par ordinateur afin d’analyser automatiquement les matchs à partir de simples vidéos.
+Ce chapitre présente le cadre général du projet, la problématique étudiée, la solution proposée ainsi qu’une analyse des solutions existantes. Il décrit également la méthodologie adoptée et les principales technologies utilisées.
 
-La plateforme est capable de détecter les joueurs, de suivre la balle, d’identifier les frappes, de générer des statistiques détaillées et de proposer des recommandations tactiques aux joueurs et aux entraîneurs. L’objectif est de rendre l’analyse de performance plus accessible, plus rapide et plus précise, aussi bien pour les amateurs que pour les professionnels.
 \section{Présentation de l’organisme d’accueil}
 
 \subsection{Présentation de l’entreprise}
@@ -49,8 +48,6 @@ Les données visuelles brutes doivent être transformées en informations analyt
 \paragraph{Interprétation cohérente des événements de jeu}
 Le système doit être capable d’analyser les interactions spatio-temporelles entre les différentes entités détectées afin d’identifier et d’interpréter correctement les événements significatifs du match. Cette tâche demeure complexe en raison de la nature dynamique du jeu et des incertitudes pouvant apparaître lors des phases de détection et de suivi.
 
-\paragraph{Conditions d’acquisition et calibration}
-La variabilité des conditions d’éclairage, des angles de prise de vue et de la qualité des enregistrements affecte la stabilité des modèles de détection et de suivi. La calibration géométrique du dispositif de captation et l’estimation d’une homographie fiable entre le plan image et le plan du terrain constituent dès lors un préalable indispensable à toute mesure spatiale exploitable.
 
 \vspace{0.5cm}
 
@@ -61,26 +58,13 @@ Ces différentes problématiques convergent vers la question centrale suivante :
 \end{quote}
 \section{Solution proposée}
 
-Ce projet propose la conception d’un système intelligent d’analyse automatisée des matchs de padel par exploitation de flux vidéo. La solution repose sur une architecture modulaire en pipeline structurée autour de cinq composants complémentaires.
+Afin de répondre aux limites identifiées dans les solutions existantes, nous proposons SmartPlay, un système intelligent d’analyse automatisée des matchs de padel basé sur la vision par ordinateur et l’intelligence artificielle.
 
-\paragraph{Détection visuelle}
-Des modèles d’apprentissage profond assurent la détection des joueurs, de la balle et des zones du terrain dans des scènes dynamiques et visuellement complexes.
+La solution exploite des vidéos de matchs pour détecter automatiquement les joueurs et la balle, suivre leurs déplacements et analyser le déroulement des échanges. Les informations extraites sont ensuite projetées sur une représentation du terrain afin de permettre une analyse spatiale précise.
 
-\paragraph{Suivi temporel}
-Un mécanisme de suivi multi-objets reconstruit les trajectoires des entités détectées de manière continue entre les images successives.
+À partir de ces données, le système génère différentes statistiques de performance ainsi que des visualisations facilitant l’interprétation du match par les joueurs, les entraîneurs et les analystes.
 
-\paragraph{Modélisation géométrique}
-Une transformation homographique établit la correspondance entre le référentiel image et le référentiel réel du terrain, permettant une localisation précise des entités dans les zones de jeu.
-
-\paragraph{Analyse événementielle}
-Une machine à états finis modélise les phases des échanges et leurs transitions, assurant une interprétation cohérente du déroulement du match.
-
-\paragraph{Génération de statistiques}
-Les données interprétées alimentent un module de production de métriques avancées : déplacements, trajectoires, zones d’activité et indicateurs tactiques, exploitables par les joueurs, entraîneurs et analystes.
-
-\vspace{0.5cm}
-
-En définitive, la solution proposée combine vision par ordinateur, analyse spatio-temporelle et modélisation logique afin de transformer des flux vidéo bruts en données analytiques exploitables pour le suivi des performances et l’analyse tactique des matchs de padel.
+L’architecture de la solution repose sur plusieurs modules complémentaires assurant la détection, le suivi, l’analyse des événements et la production des indicateurs statistiques. Le fonctionnement détaillé de ces modules sera présenté dans les sections suivantes.
 
 \subsection{Objectifs du projet}
 
@@ -92,13 +76,7 @@ Le premier objectif consiste à développer un système capable d’analyser aut
 
 \vspace{0.3cm}
 
-\textbf{Objectif 2 : Génération de recommandations personnalisées}  
-
-Le deuxième objectif vise à exploiter les données analytiques produites par le système afin de proposer des recommandations personnalisées. Ces recommandations ont pour but d’aider les joueurs et les entraîneurs à mieux comprendre leurs performances, à identifier leurs points faibles et à améliorer leurs stratégies tactiques. Cette approche permet d’apporter une valeur ajoutée en transformant les statistiques en insights exploitables.
-
-\vspace{0.3cm}
-
-\textbf{Objectif 3 : Conception d’une interface intuitive}  
+\textbf{Objectif 2 : Conception d’une interface intuitive}  
 
 Enfin, le troisième objectif consiste à concevoir et développer une interface utilisateur ergonomique et intuitive. Cette interface permet de visualiser facilement les statistiques générées, de suivre l’analyse des matchs en temps réel et d’interpréter efficacement les données produites par le système. L’objectif est de rendre la plateforme accessible même aux utilisateurs non techniques tout en assurant une expérience fluide et interactive.
 
