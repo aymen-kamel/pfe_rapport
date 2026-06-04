@@ -142,10 +142,6 @@ SmartPlayAI se positionne comme une réponse directe à ces trois lacunes. La so
 
 L'analyse vidéo sportive repose aujourd'hui sur plusieurs techniques avancées de vision par ordinateur et d'intelligence artificielle. Parmi les nombreuses approches proposées dans la littérature scientifique, deux modèles sont particulièrement reconnus pour leurs performances dans la détection et le suivi d'objets sportifs : le modèle YOLO (You Only Look Once) et le modèle TrackNet.
 
-YOLO est largement utilisé pour la détection en temps réel des joueurs, de la balle et des différents éléments présents sur le terrain. Grâce à sa rapidité et à sa précision, il constitue l'une des solutions les plus populaires dans les systèmes modernes d'analyse sportive.
-
-De son côté, TrackNet est un modèle spécifiquement conçu pour le suivi de balle dans les vidéos sportives. Son architecture exploite les informations provenant de plusieurs images successives afin d'améliorer la localisation des balles rapides et de petite taille, souvent difficiles à détecter avec les méthodes conventionnelles.
-
 Ces deux modèles représentent aujourd'hui des références majeures dans le domaine de l'analyse vidéo sportive. Les sections suivantes présentent leurs principes de fonctionnement ainsi que leurs principales caractéristiques.
 % ════════════════════════════════════════════════════════════════════════════
 \section{TrackNet : Détection et Suivi d'Objets Sportifs Rapides}
@@ -548,111 +544,70 @@ demeure l'élément central de l'analyse tactique.
 
 \section{Méthodologie de travail}
 
-Pour organiser efficacement le développement de la plateforme SmartPlayAI, nous avons adopté une approche agile basée principalement sur la méthodologie \textbf{Scrum}. Cette méthode nous a permis de structurer le projet en cycles de développement courts appelés \textit{sprints}, chacun ayant des objectifs précis et des livrables clairement définis.
+\subsection{Introduction}
+La réalisation du projet SmartPlayAI a nécessité la mise en place d'une méthodologie de travail permettant de structurer efficacement les différentes activités de conception, de développement et de validation. Compte tenu de la complexité du projet et de son caractère évolutif, une approche agile inspirée de la méthodologie Scrum a été adoptée.
 
-Chaque sprint correspond à une période de travail d’une semaine, au cours de laquelle un ensemble de fonctionnalités est conçu, développé, testé et validé. Cette organisation a permis de progresser de manière incrémentale tout en maintenant une visibilité claire sur l’état d’avancement du projet.
+Cette approche favorise un développement progressif de la solution à travers des cycles courts et itératifs, permettant d'intégrer régulièrement les retours de l'encadrant, de valider les fonctionnalités développées et d'adapter les priorités selon l'avancement du projet.
 
-\subsection{Organisation de la méthodologie adoptée}
+\subsection{Approche agile adoptée}
+La méthodologie retenue repose sur un développement incrémental où le projet est découpé en plusieurs phases successives. Chaque phase possède des objectifs précis et aboutit à la production d'un livrable fonctionnel pouvant être testé et évalué.
 
-La méthodologie mise en place repose sur les éléments suivants :
+La méthodologie mise en place s'appuie sur les éléments suivants :
 
 \begin{itemize}
     \item \textbf{Product Backlog} : liste complète des fonctionnalités à développer, regroupant l’ensemble des besoins fonctionnels et techniques du projet.
-    
     \item \textbf{Sprint Planning} : réunion hebdomadaire permettant de définir les objectifs du sprint et les tâches prioritaires à réaliser.
-    
     \item \textbf{Daily Update} : message quotidien résumant les tâches réalisées, les travaux prévus pour la journée et les éventuels obstacles rencontrés.
-    
     \item \textbf{Weekly Meeting} : réunion hebdomadaire avec l’encadrant pour présenter les résultats obtenus, recueillir les remarques et ajuster les priorités.
-    
     \item \textbf{Sprint Review et Retrospective} : évaluation des fonctionnalités développées et identification des améliorations à apporter.
 \end{itemize}
 
-Cette organisation nous a permis d’assurer un suivi rigoureux de l’avancement du projet, de documenter les progrès réalisés et de valider progressivement les différentes composantes de la solution.
+Le cycle de développement suivi durant le projet est présenté par la figure suivante.
 
 \begin{figure}[H]
     \centering
     \maybeincludegraphics[width=0.85\textwidth]{images_chap1/scrum_cycle.png}
-    \caption{Cycle Scrum adopté dans le projet SmartPlayAI}
+    \caption{Cycle de développement adopté}
     \label{fig:scrum_cycle}
 \end{figure}
 
-La figure \ref{fig:scrum_cycle} illustre les principales étapes du cycle Scrum : la définition du Product Backlog, la planification du sprint, le suivi quotidien à travers les Daily Updates, le développement, la revue de sprint et la rétrospective.
+Cette organisation a permis de réduire les risques liés au développement, de détecter rapidement les anomalies et d'assurer une progression régulière jusqu'à la réalisation de la solution finale.
 
-\subsection{Daily Update}
-
-Chaque jour, un message de suivi était rédigé afin de communiquer l’état d’avancement du projet. Ce message comportait généralement :
-
-\begin{itemize}
-    \item les tâches réalisées la veille ;
-    \item les tâches prévues pour la journée ;
-    \item les difficultés ou blocages rencontrés.
-\end{itemize}
-
-Cette pratique a permis de maintenir une progression continue et d’identifier rapidement les problèmes techniques.
-
-\subsection{Weekly Meeting}
-
-Une réunion hebdomadaire était organisée avec l’encadrant afin de :
+\subsection{Organisation du projet}
+Le développement de SmartPlayAI a été organisé autour de réunions régulières avec l'encadrant. Ces réunions avaient pour objectif :
 
 \begin{itemize}
-    \item présenter les fonctionnalités développées ;
-    \item démontrer les résultats obtenus ;
-    \item recueillir les remarques et recommandations ;
-    \item ajuster les priorités du sprint suivant.
+    \item de présenter les fonctionnalités réalisées ;
+    \item d'évaluer l'avancement du projet ;
+    \item d'identifier les difficultés techniques rencontrées ;
+    \item de définir les priorités des prochaines phases de développement.
 \end{itemize}
 
-Ces réunions ont joué un rôle essentiel dans la validation progressive du projet.
+Cette démarche a permis d'assurer un suivi continu du projet et une validation progressive des différents modules développés.
 
-\subsection{Planification des sprints}
+\subsection{Planification des travaux}
+Le projet a été décomposé en plusieurs phases principales :
 
-Le développement du projet SmartPlayAI a été structuré en onze sprints successifs, correspondant aux principales étapes de conception et de déploiement de la solution.
+\subsubsection{Phase 1 : Analyse et étude de l'existant}
+Cette phase a consisté à étudier les besoins du projet, analyser les solutions existantes du marché et identifier les fonctionnalités à intégrer dans SmartPlayAI.
 
-\begin{table}[H]
-\centering
-\caption{Planification des sprints du projet SmartPlayAI}
-\label{tab:sprints}
-\renewcommand{\arraystretch}{1.3}
-\begin{tabular}{|c|p{5cm}|p{7cm}|}
-\hline
-\textbf{Sprint} & \textbf{Intitulé} & \textbf{Objectif principal} \\
-\hline
-1 & Mise en place du projet & Configuration de l’environnement de développement et organisation des données. \\
-\hline
-2 & Prétraitement vidéo et détection du terrain & Synchronisation des vidéos et calcul de l’homographie. \\
-\hline
-3 & Détection et suivi & Détection des joueurs avec YOLO, tracking avec ByteTrack et détection de la balle avec TrackNet. \\
-\hline
-4 & Reconstruction 3D et analyse des événements & Détection des frappes, rebonds et segmentation des échanges. \\
-\hline
-5 & Classification des coups & Identification des types de coups et analyse de la trajectoire de la balle. \\
-\hline
-6 & Analyse des performances & Calcul des distances, vitesses et indicateurs de performance. \\
-\hline
-7 & Génération des statistiques & Production des statistiques détaillées du match. \\
-\hline
-8 & Modèles prédictifs & Reconnaissance des schémas tactiques et prédiction des coups. \\
-\hline
-9 & Production vidéo automatisée & Génération automatique des highlights et overlays graphiques. \\
-\hline
-10 & Plateforme cloud et coaching & Recommandations personnalisées et fonctionnalités sociales. \\
-\hline
-11 & Déploiement en production & Optimisation, MLOps et intégration avec SUMMA. \\
-\hline
-\end{tabular}
-\end{table}
+\subsubsection{Phase 2 : Conception de la solution}
+Durant cette étape, l'architecture générale du système a été définie ainsi que les interactions entre les différents modules de traitement.
 
-\begin{figure}[H]
-    \centering
-    \maybeincludegraphics[width=0.80\textwidth]{images_chap1/sprint_roadmap.png}
-    \caption{Roadmap des sprints du projet SmartPlayAI}
-    \label{fig:sprint_roadmap}
-\end{figure}
+\subsubsection{Phase 3 : Développement des modules de vision par ordinateur}
+Cette phase a porté sur l'implémentation des modules responsables de la détection des joueurs, de la balle et des éléments du terrain.
 
-La figure \ref{fig:sprint_roadmap} présente la succession chronologique des différents sprints, depuis la mise en place de l’environnement de développement jusqu’au déploiement final de la solution.
+\subsubsection{Phase 4 : Développement des modules d'analyse}
+Les mécanismes de suivi, d'analyse des événements de jeu et de génération des statistiques ont été développés durant cette phase.
+
+\subsubsection{Phase 5 : Réalisation de l'interface utilisateur}
+Cette étape a permis de concevoir une interface de visualisation facilitant l'exploitation des résultats générés par le système.
+
+\subsubsection{Phase 6 : Intégration et validation}
+La dernière phase a été consacrée à l'intégration de l'ensemble des modules, aux tests fonctionnels et à la validation globale de la solution.
+
 
 \subsection{Déroulement d’un sprint}
-
 Chaque sprint a été réalisé selon les étapes suivantes :
 
 \begin{enumerate}
@@ -664,19 +619,19 @@ Chaque sprint a été réalisé selon les étapes suivantes :
     \item Rétrospective.
 \end{enumerate}
 
-\subsection{Avantages de la méthodologie adoptée}
-
-L’approche Scrum a apporté plusieurs bénéfices :
+\subsection{Bilan de la méthodologie adoptée}
+L'approche agile adoptée a permis :
 
 \begin{itemize}
-    \item une planification claire des objectifs ;
-    \item un suivi quotidien rigoureux ;
-    \item une communication régulière avec l’encadrant ;
+    \item une meilleure organisation du travail ;
+    \item une validation progressive des fonctionnalités ;
+    \item une meilleure maîtrise des risques techniques ;
     \item une amélioration continue de la solution ;
-    \item une intégration progressive des différents modules.
+    \item une communication régulière avec l'encadrant.
 \end{itemize}
 
-En adoptant cette méthodologie agile, nous avons pu structurer efficacement le développement de SmartPlayAI, suivre l’avancement du projet au quotidien et garantir une progression continue jusqu’à la réalisation d’une solution complète et industrialisable.
+Grâce à cette méthodologie, le développement de SmartPlayAI a pu être mené de manière structurée tout en conservant la flexibilité nécessaire à l'intégration des améliorations et à la résolution des problèmes rencontrés au cours du projet.
+
 \section{Technologies utilisées}
 
 L’architecture technique de SmartPlayAI repose sur une pile technologique moderne combinant la vision par ordinateur, l’intelligence artificielle, l’analyse de données et les technologies de déploiement. Cette stack a été sélectionnée afin de garantir des performances élevées, une bonne modularité ainsi qu’une évolutivité permettant l’intégration future de nouvelles fonctionnalités.
@@ -685,9 +640,11 @@ Le développement de la solution a été réalisé principalement avec Python 3.
 
 \subsection{Interface utilisateur}
 
-L’interface de visualisation a été développée avec Streamlit, un framework permettant de créer rapidement des tableaux de bord interactifs. Cette interface offre aux utilisateurs la possibilité de charger des vidéos, d’exécuter l’analyse automatique et de consulter les statistiques générées sous forme de graphiques et de visualisations dynamiques.
+L’interface utilisateur de SmartPlayAI a été conçue comme une application web moderne basée sur React. Le front-end utilise HTML/CSS et Tailwind CSS pour un rendu clair, responsive et professionnel. React Router assure la navigation fluide entre les pages, React Flow facilite la visualisation des flux interactifs, et React Spring anime les transitions pour une expérience utilisateur plus riche.
 
-Pour la représentation graphique des données, Plotly a été utilisé afin de produire des courbes interactives, des heatmaps et des tableaux analytiques.
+Le backend de l’interface s’appuie sur Node.js et Express pour exposer des API performantes, gérer les requêtes utilisateur et orchestrer la communication avec les modules d’intelligence artificielle et de traitement vidéo.
+
+Pour la représentation graphique des résultats, Plotly est utilisé afin de créer des graphiques interactifs, des diagrammes et des tableaux analytiques.
 
 \subsection{Vision par ordinateur}
 
@@ -722,14 +679,37 @@ Afin de garantir la portabilité de la solution et l’isolation de ses dépenda
 \label{tab:fiche_technique}
 \begin{tabular}{|l|l|}
 \hline
-\textbf{Composant} & \textbf{Technologies} \\
+\textbf{Technologie} & \textbf{Rôle} \\
 \hline
-Langage principal & Python 3.10 \\
-Interface utilisateur & Streamlit, Plotly \\
-Vision par ordinateur & OpenCV, Supervision, FFmpeg \\
-Analyse de données & Pandas, NumPy \\
-Intelligence artificielle & YOLO, TrackNet, trackers personnalisés \\
-Infrastructure & Docker, Docker Compose \\
+Python & Développement du backend et des algorithmes d'analyse \\
+\hline
+OpenCV & Traitement d'images et manipulation vidéo \\
+\hline
+YOLO & Détection des joueurs \\
+\hline
+TrackNet & Détection et suivi de la balle \\
+\hline
+NumPy / Pandas & Manipulation et analyse des données \\
+\hline
+HTML/CSS & Structure et mise en forme de l'interface utilisateur \\
+\hline
+Tailwind CSS & Conception responsive et style moderne \\
+\hline
+React & Interface web utilisateur \\
+\hline
+React Router & Navigation côté client \\
+\hline
+React Flow & Visualisation de flux interactifs \\
+\hline
+React Spring & Animations et transitions UX \\
+\hline
+Node.js & Serveur d'API et orchestration \\
+\hline
+Express & Framework backend pour les API \\
+\hline
+Plotly & Visualisation analytique et graphiques interactifs \\
+\hline
+Docker & Conteneurisation et déploiement \\
 \hline
 \end{tabular}
 \end{table}
