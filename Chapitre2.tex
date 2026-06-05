@@ -290,7 +290,8 @@ Si aucun point de référence n'est détecté avec un niveau de confiance suffis
 
 \subsubsection{Synthèse}
 
-Le module de détection du terrain repose sur deux piliers complémentaires : (1) un mode statique à annotation unique, qui offre une précision maximale et un coût computationnel nul pour les captations sur caméra fixe ; (2) un mode dynamique par YOLOv8-Pose (640 px, lots de 8 frames), qui localise les douze points de référence à chaque frame et recalcule la transformation géométrique en temps réel, assurant une robustesse aux mouvements et variations d'angle de la caméra. Dans les deux cas, un mécanisme d'estimation robuste (RANSAC) écarte les correspondances aberrantes, et une persistance de la dernière matrice valide garantit la continuité de l'analyse face aux défaillances ponctuelles de détection. Ce socle géométrique conditionne la fiabilité de l'ensemble des modules analytiques en aval.
+
+Le module de détection du terrain combine une approche statique par annotation unique et une approche dynamique basée sur YOLOv8-Pose afin d’assurer une localisation fiable du terrain dans différentes conditions de captation. L’utilisation de RANSAC et d’un mécanisme de persistance des transformations garantit la robustesse et la continuité de l’analyse, constituant ainsi une base géométrique essentielle pour les modules analytiques suivants.
 
 \section{Suivi de la balle par réseau convolutif temporel}
 \label{sec:ball_tracking}
@@ -828,15 +829,24 @@ fine, post-traitement hors ligne — et peut être désactivée sans affecter le
 du pipeline.
  
 % ─────────────────────────────────────────────────────────────
+\subsection{Perspectives d'amélioration}
+
+La détection YOLO26 constitue un fondement solide, mais plusieurs axes d'optimisation méritent investigation :
+
+\textbf{Robustesse en occlusion.} Lorsque deux joueurs se chevauchent, la prédiction de boîtes englobantes peut s'en trouver dégradée. Une approche multi-hypothèses ou l'intégration d'un module de déocclusion par apprentissage pourrait améliorer la stabilité du suivi.
+
+\textbf{Variabilité des conditions d'éclairage.} Le modèle a été entraîné sur des données capturées en conditions maîtrisées. L'augmentation du jeu de données d'entraînement par des scènes extérieures en lumière naturelle renforcerait la généralisation.
+
+\textbf{Latence de détection.} À 114 FPS, le traitement demeure acceptable, mais le déploiement sur dispositifs embarqués (caméras intelligentes, drones) exigerait des modèles allégés type YOLOv8n ou YOLO-NAS-Tiny sans dégrader significativement la précision.
+
+\textbf{Gestion des cas limites.} Les joueurs partiellement visibles ou en mouvement rapide produisent occasionnellement des faux négatifs. Un post-traitement basé sur la continuité temporelle ou un module de prédiction de trajectoire permettrait de les récupérer.
+
 \subsection{Synthèse}
-Le module de suivi des joueurs repose sur un enchaînement séquentiel de cinq étapes clés :
-\begin{enumerate}
-    \item \textbf{Prétraitement colorimétrique :} La conversion de l'espace $BGR \rightarrow RGB$ afin d'éviter tout décalage colorimétrique lors de l'inférence et de l'extraction des signatures.
-    \item \textbf{Détection et filtrage spatial :} L'inférence par le modèle YOLO26 fine-tuné à haute résolution ($1280$~px) couplée à un filtrage géométrique par lancer de rayon (\textit{ray-casting}) dans le polygone convexe défini par les limites du court.
-    \item \textbf{Partitionnement géographique initial :} L'attribution déterministe des équipes lors du premier frame valide (moitié supérieure pour l'équipe A, moitié inférieure pour l'équipe B), évitant l'instabilité des méthodes de clustering non supervisées au démarrage.
-    \item \textbf{Association globale optimale :} L'appariement des pistes et des détections via l'algorithme Hongrois, en minimisant une matrice de coûts composite associant distance euclidienne spatiale, distance colorimétrique RGB du torse et pénalité de disparition temporelle.
-    \item \textbf{Gestion robuste des occlusions :} La persistance prédictive des pistes par extrapolation cinématique et maintien de la mémoire couleur (\textit{slot-holding}) jusqu'à $90$~frames (environ $3$~secondes à $30$~fps).
-\end{enumerate}
+
+Le module de suivi des joueurs repose sur une chaîne de traitement intégrant le prétraitement colorimétrique, 
+la détection et le filtrage spatial des joueurs, l’attribution initiale des équipes, l’association optimale entre 
+détections et pistes à l’aide de l’algorithme Hongrois, ainsi qu’un mécanisme de gestion des occlusions. Cette approche 
+permet d’assurer un suivi fiable, cohérent et robuste des joueurs tout au long de la séquence vidéo.
 
 Cet ensemble de mécanismes garantit un suivi stable et continu sur toute la durée du match, ce qui constitue une condition \textit{sine qua non} pour la fiabilité des modules d'analyse statistique situés en aval du pipeline.
 
