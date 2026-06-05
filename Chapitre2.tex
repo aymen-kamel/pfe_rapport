@@ -792,14 +792,40 @@ mécanisme de persistance prédictive.
 % ─────────────────────────────────────────────────────────────
 \subsection{Extension par segmentation au niveau pixel}
  
-Une variante intègre SAM2 (\textit{Segment Anything Model 2}) en
-complément de YOLO26 : les boîtes englobantes servent de
-\textit{prompts} au modèle de segmentation, qui produit des masques
-pixel-level.
-Cette extension améliore la précision de localisation pour des analyses
-de posture ou de gestuelle, au prix d'un coût computationnel nettement
-plus élevé, réservé aux scénarios où la précision prime sur le temps
-réel.
+Une variante avancée intègre SAM2 (\textit{Segment Anything Model 2}) en
+complément de YOLO26 : les boîtes englobantes détectées servent de
+prompts au modèle de segmentation, qui génère des masques au niveau pixel.
+Cette approche améliore significativement la précision de localisation,
+notamment pour l'analyse de posture ou de gestuelle fine.
+
+\paragraph{Limites}
+Le gain en précision est réel mais s'accompagne de contraintes mesurées qui
+justifient le caractère optionnel de cette extension :
+
+\begin{itemize}
+  \item \textbf{Latence :} l'ajout de SAM2 fait passer la latence par frame de
+  \textasciitilde 22 ms (YOLO seul) à \textasciitilde 83 ms en version légère
+  (vit-b) et \textasciitilde 250 ms en version complète (vit-h), soit une
+  multiplication par 4 à 11, incompatible avec un traitement temps réel.
+  \item \textbf{Débit :} le pipeline chute de \textasciitilde 45 fps à \textasciitilde 12 fps
+  (vit-b) voire \textasciitilde 4 fps (vit-h) sur GPU RTX 3080, en deçà du
+  seuil de 25 fps généralement requis pour une vidéo fluide.
+  \item \textbf{Mémoire GPU :} la consommation passe de \textasciitilde 2 Go à
+  \textasciitilde 6--8 Go avec SAM2 vit-h, excluant les configurations matérielles
+  standard.
+  \item \textbf{Robustesse :} en cas d'occlusion forte ou de chevauchement entre
+  sujets, SAM2 peut produire des masques fragmentés ou erronés, dégradant la
+  qualité de l'analyse plutôt que de l'améliorer.
+\end{itemize}
+
+Ces métriques montrent que le surcoût n'est justifié que lorsque la précision
+de segmentation est un prérequis explicite de l'application.
+
+\paragraph{Caractère optionnel}
+Cette extension n'est pas activée par défaut. Elle reste réservée aux scénarios
+où la précision prime sur la vitesse — analyses biomécaniques, étude de gestuelle
+fine, post-traitement hors ligne — et peut être désactivée sans affecter le reste
+du pipeline.
  
 % ─────────────────────────────────────────────────────────────
 \subsection{Synthèse}
