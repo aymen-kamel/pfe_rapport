@@ -77,8 +77,16 @@
 \fancyhf{}
 \fancyhead[L]{\small\nouppercase{\leftmark}}
 \fancyhead[R]{\small \textbf{SmartPlayAI}}
-\fancyfoot[C]{\thepage}
+\fancyfoot[L]{\small FSS}
+\fancyfoot[R]{\small Page \thepage}
 \renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancypagestyle{plain}{%
+  \fancyhf{}
+  \fancyfoot[L]{\small FSS}
+  \fancyfoot[R]{\small Page \thepage}
+  \renewcommand{\footrulewidth}{0.4pt}
+}
 
 \newcommand{\figureURL}[4]{%
   \begin{figure}[H]
