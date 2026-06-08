@@ -1,62 +1,17 @@
-\chapter*{Introduction}
+\chapter*{Introduction Générale}
 \phantomsection
-\addcontentsline{toc}{chapter}{Introduction}
+\addcontentsline{toc}{chapter}{Introduction Générale}
 
-\section{Contexte général}
-Au cours des dernières années, le domaine du sport a connu une transformation significative sous l'impulsion des avancées technologiques, notamment dans les domaines de l'intelligence artificielle et de la vision par ordinateur. Ces technologies ont progressivement redéfini la manière dont les performances sportives sont analysées, interprétées et exploitées, tant dans un cadre professionnel qu'amateur.
+L'essor de l'intelligence artificielle et de la vision par ordinateur a profondément transformé de nombreux secteurs, et le domaine sportif ne fait pas exception. Aujourd'hui, l'analyse des matchs repose encore majoritairement sur l'observation humaine, une approche qui présente des limites inhérentes~: subjectivité, fatigue, et difficulté à traiter des situations de jeu rapides et complexes.
 
-Traditionnellement, l'analyse des matchs et la gestion des événements de jeu reposaient en grande partie sur l'intervention humaine. Qu'il s'agisse de l'arbitrage, du suivi des actions ou de l'évaluation des performances, ces tâches impliquaient une observation continue et une prise de décision sujette à des limitations liées à la fatigue, à la subjectivité ou à la complexité des situations de jeu. Dans ce contexte, l'automatisation de ces processus apparaît comme un enjeu majeur pour améliorer la fiabilité, la précision et la continuité de l'analyse sportive.
+Dans des disciplines telles que le tennis ou le padel, la détection automatique des événements clés~--- points gagnants, fautes, échanges~--- représente un défi technique considérable. La vitesse élevée de la balle, les phénomènes d'occlusion, les variations d'éclairage et la qualité variable des flux vidéo sont autant de facteurs qui compliquent cette tâche. Par ailleurs, les solutions actuelles restent souvent inaccessibles en raison de leur coût élevé ou de la complexité de leur déploiement.
 
-Parallèlement, l'essor des systèmes embarqués, des caméras à haute résolution et des capacités de calcul a ouvert la voie à de nouvelles approches basées sur l'analyse vidéo. Ces approches permettent de capturer, traiter et interpréter des flux visuels, offrant ainsi la possibilité de détecter automatiquement des objets, de suivre leurs mouvements et d'identifier des événements significatifs au sein d'un match.
+Face à ces constats, ce projet propose \textbf{SmartPlayAI}, un système intelligent d'analyse automatique des matchs sportifs. La solution repose sur une architecture modulaire intégrant un pipeline de vision par ordinateur pour la détection et le suivi des joueurs et de la balle, une modélisation géométrique du terrain, un moteur de raisonnement logique fondé sur une machine à états finis, ainsi qu'un module de génération automatique de statistiques et de visualisations.
 
-Dans cette dynamique, les solutions dites de « sport-tech » émergent comme un levier d'innovation, visant à digitaliser et optimiser les processus liés à la gestion et à l'analyse des activités sportives. Elles s'inscrivent dans une volonté plus large de rendre les données sportives plus accessibles, exploitables et pertinentes pour différents acteurs, qu'il s'agisse des joueurs, des entraîneurs ou des organisateurs.
+La question de recherche qui guide ce travail est la suivante~:
 
-C'est dans ce cadre général que s'inscrit le présent travail, qui explore l'apport des techniques d'intelligence artificielle et de vision par ordinateur dans l'automatisation de l'analyse des matchs, avec un intérêt particulier pour la détection des événements de jeu et la génération d'analyses fiables et exploitables.
-
-\section*{Problématique}
-
-Malgré les avancées technologiques observées dans le domaine de l'analyse sportive, la détection des événements de jeu et la production d'analyses reposent encore majoritairement sur des interventions humaines ou sur des systèmes semi-automatisés. Cette dépendance introduit un certain nombre de limites, notamment en termes de fiabilité, de continuité et de précision, en particulier dans des contextes de jeu rapides et dynamiques.
-
-Dans des disciplines telles que le tennis ou le padel, où les échanges sont courts mais intenses, l'identification des événements clés --- tels que les points gagnants, les fautes ou les sorties de balle --- constitue un défi complexe. Ce défi est accentué par plusieurs facteurs critiques :
-
-\begin{itemize}
-    \item La vitesse élevée de la balle et les variations brusques de trajectoire ;
-    \item Les phénomènes d'occlusion (joueurs masquant la balle ou le terrain) ;
-    \item Les conditions environnementales variables (éclairage, angles de vue, qualité du flux vidéo).
-\end{itemize}
-
-Par ailleurs, les solutions existantes présentent souvent des limites en termes d'accessibilité, de coût ou de complexité d'installation, ce qui restreint leur adoption à grande échelle. Les systèmes les plus avancés nécessitent généralement des infrastructures lourdes, tandis que les approches plus légères peinent à garantir un niveau de précision suffisant.
-
-Dans ce contexte, la problématique centrale de ce travail consiste à concevoir un système capable d'automatiser, de manière fiable, la détection et l'interprétation des événements de jeu à partir de flux vidéo, en vue de produire des analyses précises sans intervention humaine. Il s'agit de répondre aux contraintes de robustesse face aux incertitudes visuelles et d'assurer une cohérence logique dans l'interprétation des données.
-
-\subsection*{Question de recherche}
-Ainsi, la question à laquelle ce projet cherche à répondre peut être formulée comme suit :
 \begin{quote}
-    \textit{« Comment concevoir un système intelligent, basé sur l'analyse vidéo, capable de détecter et d'interpréter automatiquement les événements de jeu afin de générer des analyses fiables et exploitables dans des conditions réelles d'utilisation ? »}
+    \textit{«~Comment concevoir un système intelligent, basé sur l'analyse vidéo, capable de détecter et d'interpréter automatiquement les événements de jeu afin de générer des analyses fiables et exploitables dans des conditions réelles d'utilisation~?~»}
 \end{quote}
 
-\section{Solution proposée}
-
-Afin de répondre à la problématique identifiée, ce travail propose la conception et la mise en œuvre d'un système intelligent d'analyse automatique des matchs, basé sur le traitement de flux vidéo. L'objectif principal est de détecter, interpréter et exploiter les événements de jeu afin de générer des analyses fiables sans intervention humaine.
-
-La solution adoptée repose sur une architecture modulaire, structurée en plusieurs niveaux de traitement complémentaires. Dans un premier temps, un pipeline de vision par ordinateur est mis en place pour assurer la détection et le suivi des éléments principaux du jeu, notamment les joueurs et la balle. Cette étape s'appuie sur des modèles d'apprentissage profond permettant d'extraire des informations pertinentes à partir des images vidéo.
-
-Ensuite, les données issues de la détection sont enrichies par une phase de modélisation spatiale du terrain. Cette étape permet de contextualiser les positions et les trajectoires observées, en les projetant dans un référentiel cohérent, facilitant ainsi l'interprétation des interactions entre les éléments du jeu.
-
-Sur cette base, un module de raisonnement est introduit afin d'identifier les événements clés du match, tels que les échanges, les fautes ou les points marqués. Ce module s'appuie sur une logique formelle, implémentée à travers une machine à états finis, permettant de modéliser le déroulement du jeu et d'assurer la cohérence des décisions prises.
-
-Enfin, les informations extraites sont utilisées pour générer automatiquement des analyses détaillées, ainsi que des statistiques et des visualisations exploitables par les différents acteurs concernés. L'ensemble du système est conçu pour fonctionner dans des conditions proches du réel, en tenant compte des contraintes de performance, de robustesse et de précision.
-
-Ainsi, la solution proposée se distingue par l'intégration cohérente de techniques de vision par ordinateur, de modélisation géométrique et de raisonnement logique, au sein d'un pipeline unifié dédié à l'automatisation de l'analyse des matchs sportifs.
-
-\section*{Organisation du rapport}
-
-Le présent rapport est structuré en trois chapitres principaux, organisés de manière à présenter progressivement le contexte du projet, la solution proposée, ainsi que sa mise en œuvre et son évaluation.
-
-Le premier chapitre, intitulé « Positionnement du projet et état de l'art », introduit le cadre général du travail. Il présente le contexte dans lequel s'inscrit le projet, précise la problématique étudiée et décrit les principales solutions existantes dans le domaine. Une analyse comparative est ensuite réalisée afin de mettre en évidence les limites des approches actuelles et de justifier les choix technologiques adoptés.
-
-Le deuxième chapitre, « Architecture de la solution », est consacré à la conception du système proposé. Il détaille l'architecture globale ainsi que les différents modules qui la composent. Ce chapitre décrit notamment le pipeline de traitement vidéo, les méthodes de détection et de suivi des joueurs et de la balle, la modélisation du terrain, ainsi que les mécanismes de projection géométrique. Il présente également le moteur d'analyse automatique, les techniques de génération des statistiques, ainsi que les aspects liés aux performances et à l'optimisation du système.
-
-Le troisième chapitre, « Réalisation », porte sur la mise en œuvre pratique de la solution. Il expose l'environnement de développement, les outils utilisés et l'organisation du code. Les différentes étapes de développement sont décrites, suivies d'une présentation de la méthodologie de test et des scénarios de validation. Enfin, ce chapitre propose une analyse des résultats obtenus à travers des métriques quantitatives, tout en discutant les points forts, les limites du système et les perspectives d'amélioration.
-
-Le rapport se conclut par une conclusion générale qui synthétise les contributions du projet et ouvre sur des pistes de recherche et d'évolution futures.
+Le rapport est organisé en trois chapitres. Le premier dresse un état de l'art et positionne le projet par rapport aux solutions existantes. Le second détaille l'architecture de la solution et ses différents modules. Le troisième présente la réalisation, les tests effectués et l'analyse des résultats obtenus.

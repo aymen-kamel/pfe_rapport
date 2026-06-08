@@ -1,5 +1,0 @@
-% Résumé du rapport
-\chapter*{Résumé}
-\addcontentsline{toc}{chapter}{Résumé}
-
-Ce mémoire présente SmartPlay, une plateforme d'analyse vidéo automatisée dédiée au padel. Le système combine des modèles de détection (YOLOv8), un suivi multi-objets, une projection homographique et un moteur d'analyse événementielle pour extraire des métriques tactiques et biométriques.

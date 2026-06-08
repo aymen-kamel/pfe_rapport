@@ -13,7 +13,7 @@
 %
 % #######################################
 
-\documentclass[12pt, a4paper, oneside, openany]{report}
+\documentclass[12pt, a4paper]{report}
 
 % Basic packages (replacing the external `thesis` package to avoid class/package conflict)
 \usepackage{ifthen}
@@ -24,7 +24,6 @@
 \babelfont[arabic]{sf}[Script=Arabic,Language=Arabic]{Arial}
 \babelfont[arabic]{tt}[Script=Arabic,Language=Arabic]{Courier New}
 \usepackage[a4paper,top=2.5cm,bottom=2.5cm,left=2.5cm,right=2.5cm]{geometry}
-\setlength{\headheight}{14pt}
 \usepackage{titlesec}
 \usepackage{fancyhdr}
 \usepackage{tikz}
@@ -57,11 +56,6 @@
   \setlength{\aboverulesep}{0pt}%
   \setlength{\belowrulesep}{0pt}%
 }
-\newcommand{\compacttablestyle}{%
-  \renewcommand{\arraystretch}{1.15}%
-  \setlength{\aboverulesep}{0pt}%
-  \setlength{\belowrulesep}{0pt}%
-}
 \usepackage{array}
 \usepackage{listings}
 \newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
@@ -81,11 +75,6 @@
 \titleformat{\subsubsection}
   {\normalfont\normalsize\bfseries\color{smartblue}}
   {\thesubsubsection}{1em}{}
-
-\titlespacing*{\chapter}{0pt}{-4pt}{18pt}
-\titlespacing*{\section}{0pt}{2.5ex plus .2ex minus .2ex}{1.2ex plus .1ex}
-\titlespacing*{\subsection}{0pt}{2ex plus .2ex minus .2ex}{1ex plus .1ex}
-\titlespacing*{\subsubsection}{0pt}{1.5ex plus .1ex minus .1ex}{0.8ex plus .1ex}
 
 \pagestyle{fancy}
 \fancyhf{}
@@ -177,40 +166,52 @@
 \begin{document}
 
 % ------------------ Front matter ------------------
+% Title page, declaration, acknowledgements, abstract
 \input{misc/titlepage}
-\clearpage
+\cleardoublepage
 \input{misc/declaration}
+\cleardoublepage
 \input{misc/acknowledgements}
+\cleardoublepage
 \input{misc/abstract}
-\clearpage
+\cleardoublepage
 
 % ------------------ Table of contents and lists ------------------
 \pagenumbering{roman}
 \setcounter{page}{1}
 \tableofcontents
-\clearpage
+\cleardoublepage
 \listoffigures
-\clearpage
+\cleardoublepage
 \listoftables
-\clearpage
+\cleardoublepage
 \input{misc/abbreviations}
-\clearpage
+\cleardoublepage
 
 % switch to main numbering
 \pagenumbering{arabic}
 \setcounter{page}{1}
 
 % ------------------ Chapters ------------------
+% Use the chapter files present in the workspace. If you prefer to move them
+% into a `chapters/` folder I can do that for you.
+% Include the general introduction
+\cleardoublepage
 \input{introduction_generale.tex}
+\cleardoublepage
 \input{chapitre1 (2).tex}
 \input{Chapitre2.tex}
 \input{chapitre3.tex}
+
+% Include general conclusion
+\cleardoublepage
 \input{conclusion_generale.tex}
 
 % ------------------ Bibliography ------------------
-\clearpage
+\cleardoublepage
 \phantomsection
 \addcontentsline{toc}{chapter}{Références}
+% Si vous utilisez biblatex, assurez-vous que le fichier `references.bib` existe.
 \printbibliography[title=Références]
 
 \renewcommand{\thechapter}{\arabic{chapter}}
