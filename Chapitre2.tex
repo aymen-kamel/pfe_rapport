@@ -2,7 +2,7 @@
 
 \section{Introduction}
 
-L’analyse automatisée de matchs sportifs à partir de flux vidéo constitue une problématique pluridisciplinaire située à l’intersection de la vision par ordinateur, de l’apprentissage automatique et de la modélisation géométrique. Dans le cas spécifique du padel, cette problématique présente une complexité accrue en raison de plusieurs facteurs : la vitesse élevée de la balle, la densité des échanges, les interactions simultanées entre quatre joueurs, ainsi que les multiples réflexions de la balle sur les parois vitrées du terrain. L’enjeu consiste donc à transformer un simple flux vidéo en un ensemble de données structurées, fiables et exploitables, tout en respectant les contraintes de précision et de traitement en temps réel.
+L’analyse automatisée de matchs sportifs à partir de flux vidéo constitue une problématique pluridisciplinaire située à l’intersection de la vision par ordinateur, de l’apprentissage automatique et de la modélisation géométrique. Dans le cas spécifique du padel, cette problématique présente une complexité accrue en raison de plusieurs facteurs : la vitesse élevée de la balle, la densité des échanges, les interactions simultanées entre quatre joueurs, ainsi que les multiples réflexions de la balle sur les parois vitrées du terrain. L’enjeu consiste donc à transformer un simple flux vidéo en un ensemble de données structurées, fiables et exploitables, tout en respectant les contraintes de précision et de traitement  .
 
 Afin de répondre à ces exigences, nous avons conçu SmartPlayAI, une plateforme intelligente d’analyse vidéo dédiée au padel. L’architecture du système repose sur un pipeline modulaire dans lequel chaque composant remplit une fonction clairement définie et produit des résultats exploités par les modules situés en aval. Les choix technologiques effectués ont été guidés par une étude comparative des solutions existantes, dans le but d’obtenir le meilleur compromis entre précision, robustesse et efficacité computationnelle.
 
@@ -80,7 +80,6 @@ Sur le plan interne, SmartPlayAI est organisé sous la forme d’un pipeline de 
     Modélisation du terrain & Détecter les lignes et coins du court & YOLOv8 Keypoints \\
     \rowcolor{rowalt}
     Segmentation des joueurs & Isoler précisément les silhouettes & SAM2 \\
-    Suivi multi-objets & Maintenir des identifiants stables & ByteTrack \\
     \rowcolor{rowalt}
     Projection homographique & Convertir les coordonnées image en coordonnées métriques & OpenCV \\
     Analyse événementielle & Détecter les services, frappes et fautes & Automate à états finis \\
@@ -190,7 +189,7 @@ Durant le traitement, ces positions sont réutilisées pour toutes les frames sa
 
 Lorsque la caméra est mobile — typiquement un drone en vol — les points de référence se déplacent dans l'image à chaque instant. Le module recourt alors à YOLOv8-Pose, un réseau de détection de pose entraîné spécifiquement sur des images de terrains de padel, pour localiser automatiquement les douze points de référence à chaque frame.
 
-YOLOv8-Pose traite le terrain comme un objet unique auquel sont associés douze points de référence, à l'image d'un squelette dans les applications de reconnaissance de posture. Le réseau prédit simultanément les coordonnées des douze points directement en pixels, à chaque frame, ce qui permet de recalculer la transformation géométrique en temps réel et d'adapter en permanence la projection spatiale aux variations de point de vue de la caméra.
+YOLOv8-Pose traite le terrain comme un objet unique auquel sont associés douze points de référence, à l'image d'un squelette dans les applications de reconnaissance de posture. Le réseau prédit simultanément les coordonnées des douze points directement en pixels, à chaque frame, ce qui permet de recalculer la transformation géométrique   et d'adapter en permanence la projection spatiale aux variations de point de vue de la caméra.
 
 \begin{table}[H]
   \centering
@@ -208,7 +207,7 @@ YOLOv8-Pose traite le terrain comme un objet unique auquel sont associés douze 
     Seuil IoU (NMS) & 0.7 & Supprime les détections redondantes \\
     \rowcolor{rowalt}
     Taille des lots & 8 frames & Exploite le parallélisme GPU \\
-    Fréquence de détection & À chaque frame & Recalcul de H en temps réel \\
+    Fréquence de détection & À chaque frame & Recalcul de H   \\
   \end{tabularx}
   \caption{Paramètres d'inférence de YOLOv8-Pose pour la localisation des points de référence du terrain.}
   \label{tab:yolopose_params}
@@ -248,7 +247,7 @@ Cette formulation présente un avantage décisif pour la robustesse : en apprena
 
 Chaque frame est redimensionnée à 640 × 640 pixels et normalisée avant d'être soumise au réseau. Les frames sont regroupées en lots de 8 pour une seule passe d'inférence, réduisant significativement le temps de traitement global par rapport à une approche image par image. En sortie, le réseau produit les coordonnées en pixels des douze points de référence, assorties d'un score de confiance par point. Seules les détections dépassant le seuil de confiance de 0.5 sont retenues ; l'étape de suppression des détections redondantes élimine les prédictions dont le chevauchement dépasse 0.7.
 
-La transformation géométrique est recalculée immédiatement après chaque détection à partir des nouveaux points localisés. Cette recalcul en temps réel est la clé de la robustesse du mode dynamique : toute variation de l'angle ou de l'altitude de la caméra est absorbée dès la frame suivante, sans accumulation d'erreur.
+La transformation géométrique est recalculée immédiatement après chaque détection à partir des nouveaux points localisés. Cette recalcul   est la clé de la robustesse du mode dynamique : toute variation de l'angle ou de l'altitude de la caméra est absorbée dès la frame suivante, sans accumulation d'erreur.
 
 \paragraph{Précision de localisation}
 
@@ -591,7 +590,7 @@ architectures de détection.
 Les modèles de petite taille (nano, small) offrent une vitesse
 supérieure mais une précision insuffisante pour des silhouettes filmées
 à 15--20\,m de hauteur.
-Les modèles larges sont trop coûteux pour un déploiement en temps réel.
+Les modèles larges sont trop coûteux pour un déploiement  .
 L'architecture medium constitue le meilleur compromis
 précision/vitesse.
 Par rapport aux détecteurs génériques, YOLO26 bénéficie d'un
@@ -859,11 +858,11 @@ Cet ensemble de mécanismes garantit un suivi stable et continu sur toute la dur
 
 La détection des joueurs par boîtes englobantes permet uniquement de localiser les athlètes dans l’image. Cependant, cette représentation reste insuffisante pour analyser précisément les mouvements, les postures et les gestes techniques durant un match de padel.
 
-Afin d’obtenir une compréhension plus détaillée des actions des joueurs, la plateforme SmartPlayAI intègre un module d’estimation de pose basé sur YOLOv8-Pose. Ce modèle permet d’extraire automatiquement les points clés squelettiques des joueurs à partir des séquences vidéo et de représenter leur posture en temps réel.
+Afin d’obtenir une compréhension plus détaillée des actions des joueurs, la plateforme SmartPlayAI intègre un module d’estimation de pose basé sur YOLOv8-Pose. Ce modèle permet d’extraire automatiquement les points clés squelettiques des joueurs à partir des séquences vidéo et de représenter leur posture  .
 
 \subsection{Architecture du modèle YOLOv8-Pose}
 
-Le modèle utilisé repose sur l’architecture YOLOv8-Pose, capable d’effectuer simultanément la détection des joueurs et l’estimation de leurs points clés dans une seule passe d’inférence. Cette approche améliore considérablement les performances temps réel.
+Le modèle utilisé repose sur l’architecture YOLOv8-Pose, capable d’effectuer simultanément la détection des joueurs et l’estimation de leurs points clés dans une seule passe d’inférence. Cette approche améliore considérablement les performances.
 
 L’architecture comprend trois composants principaux :
 
@@ -908,7 +907,7 @@ Les points clés couvrent les principales régions anatomiques : tête, épaules
 
 \subsection{Pipeline d’inférence}
 
-Le traitement d’une trame vidéo commence par une phase de prétraitement et de normalisation de l’image d’entrée. Les caractéristiques visuelles profondes sont ensuite extraites à l’aide du Backbone, puis fusionnées à différentes échelles grâce au module Neck afin d’améliorer la détection des structures anatomiques. Le modèle réalise ensuite la détection des joueurs ainsi que l’estimation simultanée des points clés corporels. Les détections redondantes sont supprimées à l’aide de l’algorithme NMS (\textit{Non-Maximum Suppression}), avant de générer les squelettes associés aux joueurs détectés. Cette pipeline permet d’obtenir en temps réel une représentation squelettique complète et précise des joueurs présents sur le terrain.
+Le traitement d’une trame vidéo commence par une phase de prétraitement et de normalisation de l’image d’entrée. Les caractéristiques visuelles profondes sont ensuite extraites à l’aide du Backbone, puis fusionnées à différentes échelles grâce au module Neck afin d’améliorer la détection des structures anatomiques. Le modèle réalise ensuite la détection des joueurs ainsi que l’estimation simultanée des points clés corporels. Les détections redondantes sont supprimées à l’aide de l’algorithme NMS (\textit{Non-Maximum Suppression}), avant de générer les squelettes associés aux joueurs détectés. Cette pipeline permet d’obtenir   une représentation squelettique complète et précise des joueurs présents sur le terrain.
 
 \subsection{Adaptation au contexte du padel}
 
@@ -1493,7 +1492,7 @@ complète de l'arbitrage via une machine à états finis conforme aux règles of
 padel.
 
 L'ensemble de ces traitements s'exécute de manière incrémentale, trame par trame, ce qui
-permet une exploitation aussi bien en temps réel que lors d'analyses différées post-match.
+permet une exploitation aussi bien   que lors d'analyses différées post-match.
 Le Tableau~\ref{tab:synthese_dataanalytics} présente une synthèse du flux
 entrée $\to$ traitement $\to$ sortie du module.
 
@@ -1597,14 +1596,14 @@ le rôle de médiateur entre les données brutes et le client.
     \texttt{GET /analytics/score} & État courant du score de la session & Scoreboard \\
     \rowcolor{rowalt}
     \texttt{GET /analytics/video} & Métadonnées de la vidéo annotée & Lecteur vidéo overlay \\
-    \texttt{WS /analytics/live} & Flux temps réel de mise à jour des métriques & Rafraîchissement dynamique \\
+    \texttt{WS /analytics/live} & Flux de mise à jour des métriques & Rafraîchissement dynamique \\
   \end{tabularx}
   \caption{Canaux de communication entre \texttt{DataAnalytics}, le backend et le frontend.}
   \label{tab:endpoints}
 \end{table}
 
 Les canaux REST conviennent aux échanges structurés en mode différé ou à la demande ;
-le canal WebSocket (\texttt{WS}) assure la mise à jour en temps réel durant le
+le canal WebSocket (\texttt{WS}) assure la mise à jour   durant le
 visionnage de la session.
 
 \subsubsection{Format des données échangées}
@@ -1674,7 +1673,7 @@ L'agrégation se déroule en deux phases complémentaires :
 \begin{enumerate}
   \item \textbf{Traitement par lot (\textit{batch processing}) :} génération du JSON
         agrégé à partir du fichier CSV exporté en fin de session ;
-  \item \textbf{Mise à jour en temps réel (\textit{runtime update}) :} actualisation
+  \item \textbf{Mise à jour   (\textit{runtime update}) :} actualisation
         incrémentale par WebSocket lors d'un suivi en direct.
 \end{enumerate}
 

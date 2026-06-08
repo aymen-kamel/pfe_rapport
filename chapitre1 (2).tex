@@ -76,9 +76,16 @@ Le premier objectif consiste à développer un système capable d’analyser aut
 
 \vspace{0.3cm}
 
-\textbf{Objectif 2 : Conception d’une interface intuitive}  
+\textbf{Objectif 2 : Génération de recommandations personnalisées }  
 
-Enfin, le troisième objectif consiste à concevoir et développer une interface utilisateur ergonomique et intuitive. Cette interface permet de visualiser facilement les statistiques générées, de suivre l’analyse des matchs en temps réel et d’interpréter efficacement les données produites par le système. L’objectif est de rendre la plateforme accessible même aux utilisateurs non techniques tout en assurant une expérience fluide et interactive.
+Le deuxième objectif vise à exploiter les données analytiques produites par le système
+afin de proposer des recommandations personnalisées. Ces recommandations ont pour but d’aider les joueurs et les entraîneurs à mieux comprendre leurs performances, à identifier leurs points faibles et à améliorer leurs stratégies tactiques. Cette approche permet
+d’apporter une valeur ajoutée en transformant les statistiques en insights exploitables.
+\vspace{0.3cm}
+
+\textbf{Objectif 3 : Conception d’une interface intuitive}  
+
+Enfin, le troisième objectif consiste à concevoir et développer une interface utilisateur ergonomique et intuitive. Cette interface permet de visualiser facilement les statistiques générées, de suivre l’analyse des matchs  et d’interpréter efficacement les données produites par le système. L’objectif est de rendre la plateforme accessible même aux utilisateurs non techniques tout en assurant une expérience fluide et interactive.
 
 \section{Étude de l'existant}
 
@@ -184,7 +191,7 @@ architecture encodeur-décodeur combinant VGG16 et U-Net pour générer des heat
 gaussiennes. Le modèle prend en entrée plusieurs images consécutives et produit une
 carte de chaleur indiquant la position probable de l'objet. Il atteint un score F1
 de 98,5\,\% sur des séquences de tennis, mais sa vitesse de seulement 2,6 FPS le
-rend inutilisable en temps réel.
+rend inutilisable .
 
 \textbf{TrackNetV2 (2020)} a résolu le problème de vitesse en passant d'une
 architecture MISO (une seule sortie) à une architecture
@@ -294,7 +301,7 @@ traditionnelles telles que R-CNN, qui reposent sur un pipeline à plusieurs éta
 — proposition de régions, extraction de caractéristiques, puis classification —
 YOLO traite la détection comme un problème de régression unique, en parcourant
 l'image entière en une seule passe réseau. Cette conception lui confère des vitesses
-de traitement en temps réel remarquables, qui en ont fait la référence pour les
+de traitement  remarquables, qui en ont fait la référence pour les
 applications sportives.
 
 % ────────────────────────────────────────────────────────────────────────────
@@ -317,7 +324,7 @@ cellule, le modèle prédit simultanément trois types d'informations :
 
 Cette formulation unifiée élimine la redondance des pipelines multi-étapes et
 réduit considérablement la latence d'inférence, ce qui est essentiel pour
-l'analyse vidéo sportive en temps réel.
+l'analyse vidéo sportive .
 
 % ────────────────────────────────────────────────────────────────────────────
 \subsection{Évolution et Versions Clés}
@@ -501,7 +508,7 @@ approches selon les critères les plus pertinents pour l'analyse vidéo en padel
 % ────────────────────────────────────────────────────────────────────────────
 
 YOLO excelle dans la détection rapide et simultanée des différents acteurs d'une scène
-sportive. Sa capacité à identifier et localiser les joueurs en temps réel, à des
+sportive. Sa capacité à identifier et localiser les joueurs , à des
 résolutions élevées ($1280 \times 1280$), en fait un composant indispensable pour
 toute analyse tactique. Cependant, appliqué seul à la balle de padel, YOLO présente
 des limites importantes : sa petite taille ($<$ 10 pixels dans beaucoup de situations),
