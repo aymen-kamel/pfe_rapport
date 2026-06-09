@@ -2,16 +2,39 @@
 \phantomsection
 \addcontentsline{toc}{chapter}{Introduction Générale}
 
-L'essor de l'intelligence artificielle et de la vision par ordinateur a profondément transformé de nombreux secteurs, et le domaine sportif ne fait pas exception. Aujourd'hui, l'analyse des matchs repose encore majoritairement sur l'observation humaine, une approche qui présente des limites inhérentes~: subjectivité, fatigue, et difficulté à traiter des situations de jeu rapides et complexes.
-
-Dans des disciplines telles que le tennis ou le padel, la détection automatique des événements clés~--- points gagnants, fautes, échanges~--- représente un défi technique considérable. La vitesse élevée de la balle, les phénomènes d'occlusion, les variations d'éclairage et la qualité variable des flux vidéo sont autant de facteurs qui compliquent cette tâche. Par ailleurs, les solutions actuelles restent souvent inaccessibles en raison de leur coût élevé ou de la complexité de leur déploiement.
-
-Face à ces constats, ce projet propose \textbf{SmartPlayAI}, un système intelligent d'analyse automatique des matchs sportifs. La solution repose sur une architecture modulaire intégrant un pipeline de vision par ordinateur pour la détection et le suivi des joueurs et de la balle, une modélisation géométrique du terrain, un moteur de raisonnement logique fondé sur une machine à états finis, ainsi qu'un module de génération automatique de statistiques et de visualisations.
-
-La question de recherche qui guide ce travail est la suivante~:
-
+L’essor de l’intelligence artificielle (IA) et, plus particulièrement, de la vision par
+ordinateur a profondément transformé de nombreux secteurs, et le domaine sportif ne fait pas
+exception. Aujourd’hui, l’analyse des matchs repose encore majoritairement sur l’observation
+humaine, une approche qui présente des limites inhérentes telles que la subjectivité, la fatigue,
+et la difficulté à traiter en temps limite des situations de jeu rapides et complexes.
+Pour pallier ces limites, la littérature scientifique récente a vu émerger de nombreux
+travaux dédiés à l'automatisation de cette tâche. Dans des disciplines de raquette telles que le
+tennis ou le padel, la détection automatique d’événements clés, points gagnants, fautes, types
+de coups ou trajectoires d'échanges, représente un défi technique considérable.
+Plusieurs travaux existants ont tenté de répondre à cette problématique en exploitant des
+modèles de deep learning performants, tels que les architectures de la famille YOLO pour la
+détection de la balle et des joueurs, ou des réseaux récurrents (LSTM) et des Transformers
+pour l'analyse temporelle et la reconnaissance d'actions. Cependant, ces solutions se heurtent
+fréquemment à des obstacles majeurs : la vitesse élevée de la balle, les phénomènes
+d’occlusion ainsi les variations d’éclairage, que la qualité variable des flux vidéo. De plus, les
+systèmes commerciaux actuels, bien que performants, restent souvent inaccessibles au grand
+public en raison de leur coût élevé et de la complexité logistique de leur déploiement
+(nécessitant parfois l'installation de multiples caméras calibrées).
+Face à ces constats et pour surmonter les verrous technologiques non résolus par les
+approches traditionnelles, ce projet propose SmartPlayAI, un système intelligent d’analyse
+automatique des matchs sportifs conçu pour être à la fois accessible et robuste. La solution
+repose sur une architecture modulaire innovante intégrant : un pipeline de vision par
+ordinateur pour la détection et le suivi des joueurs et de la balle, une modélisation
+géométrique du terrain, un moteur de raisonnement logique fondé sur une machine à états
+finis (permettant de contextualiser les événements de jeu), ainsi qu'un module de génération
+automatique de statistiques et de visualisations.
+La question de recherche qui guide ce travail est la suivante :
 \begin{quote}
-    \textit{«~Comment concevoir un système intelligent, basé sur l'analyse vidéo, capable de détecter et d'interpréter automatiquement les événements de jeu afin de générer des analyses fiables et exploitables dans des conditions réelles d'utilisation~?~»}
+    \textit{«~Comment concevoir un système intelligent, basé sur l’analyse vidéo, capable de détecter et
+d’interpréter automatiquement les événements de jeu afin de générer des analyses fiables et
+exploitables dans des conditions réelles d’utilisation~?~»}
 \end{quote}
 
-Le rapport est organisé en trois chapitres. Le premier dresse un état de l'art et positionne le projet par rapport aux solutions existantes. Le second détaille l'architecture de la solution et ses différents modules. Le troisième présente la réalisation, les tests effectués et l'analyse des résultats obtenus.
+Le rapport est organisé en trois chapitres. Le premier dresse un état de l’art approfondi de lavision par ordinateur appliquée au sport et positionne le projet par rapport aux solutions
+existantes. Le second détaille l’architecture globale de la solution ainsi que la conception de
+ses différents modules. Enfin, le troisième présente la réalisation technique, 
